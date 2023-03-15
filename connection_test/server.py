@@ -1,8 +1,11 @@
 import socket
 import sys
 import subprocess
+import os
+import threading
+from _thread import interrupt_main
 
-from connection_test.escape_codes import *
+from escape_codes import *
 
 class Device:
     def __init__(self, nmcli_line) -> None:
@@ -31,24 +34,28 @@ for line in nmcli_d:
     if ":connected" in line:
         devices.append(Device(line))
 
-print("Devices connected:\n"+"\n".join([f'{yellow(i)}: {devices[i].name}' for i in range(len(devices))]))
-device = devices[int(input(f"Choose the {yellow('index')} of a device to use: "))]
+def getDevice():
+    print("Devices connected:\n"+"\n".join([f'{yellow(i)}: {devices[i].name}' for i in range(len(devices))]))
+    return devices[int(input(f"Choose the {yellow('index')} of a device to use: "))]
+# args
+device = getDevice() if not "--device" in sys.argv else [device for device in devices if device.name == sys.argv[sys.argv.index("--device")+1]][0]
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, device.getInterface().encode("utf-8"))
 s.bind(("", 8123))
 s.listen()
-try:
+
+def main():
     i= 0
-    hide()
-    print()
     while True:
         c, _ = s.accept()
         while True:
             recv = c.recv(1024).decode("utf-8")
             if recv == "": break
             i+=1
-            print_up(f'{i}: [{recv}]')
-except:
-    s.close()
-    unhide()
+            print_up(f'{yellow(i)}: [{recv}]\033[0K')
+threading.Thread(target=main, daemon=True).start()
+hide()
+input("\nPress enter to exit...\r")
+s.close()
+unhide()
