@@ -42,7 +42,7 @@ for line in nmcli_d:
         devices.append(Device(line))
 
 print("Devices connected:\n"+"\n".join([f'{yellow(i)}: {devices[i].name}' for i in range(len(devices))]))
-device = devices[int(input("Choose the index of a device to use: "))]
+device = devices[int(input(f"Choose the {yellow('index')} of a device to use: "))]
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, device.getInterface().encode("utf-8"))
