@@ -14,7 +14,7 @@ white = lambda s: "\u001B[37m"+str(s)+RESET
 
 class Device:
     def __init__(self, nmcli_line) -> None:
-        print(nmcli_line)
+        #print(nmcli_line)
         data = nmcli_line.split(":")
         self.name = data[0]
         self.type = data[1]
@@ -31,12 +31,14 @@ class Device:
                 
             case "wifi":
                 return self.name
+            case _:
+                return self.name
 
 nmcli_d = subprocess.check_output("nmcli -t d".split(" ")).decode("utf-8").split("\n")
 nmcli_d.remove("")
 devices:list[Device] = []
 for line in nmcli_d:
-    if ":connected:" in line:
+    if ":connected" in line:
         devices.append(Device(line))
 
 print("Devices connected:\n"+"\n".join([f'{yellow(i)}: {devices[i].name}' for i in range(len(devices))]))
