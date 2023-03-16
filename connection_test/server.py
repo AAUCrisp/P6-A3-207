@@ -42,7 +42,10 @@ device = getDevice() if not "--device" in sys.argv else [device for device in de
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, device.getInterface().encode("utf-8"))
-s.bind(("", 8123))
+
+address = subprocess.check_output(f"nmcli -t d show {device.name} | grep IP4.ADDRESS", shell=True).decode("utf-8").split(":")[1].split("/")[0]
+print(address)
+s.bind((address, 8123))
 s.listen()
 
 def main():
