@@ -8,7 +8,8 @@ class Device:
         self.data = {key:value for key, value in [(item for item in line.split(":", 1)) for line in device_data.split("\n") if not line == ""]}
         self.name = self.data["GENERAL.DEVICE"]
         self.type = self.data["GENERAL.TYPE"]
-        self.connection = Connection(self.data["GENERAL.CONNECTION"])
+        
+        self.connection = Connection(self.data["GENERAL.CONNECTION"]) if not self.data["GENERAL.CONNECTION"] == "" else None
 
 
     def getInterface(self) -> str:
