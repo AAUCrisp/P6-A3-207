@@ -64,7 +64,7 @@ if "main" in __name__:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     info = TCP_INFO(s)
     i = 0
-    print(" "*(int(os.get_terminal_size().columns/2)-5)+"TCP_INFO:\n"+"-"*os.get_terminal_size().columns)
+    print(" "*(int(os.get_terminal_size().columns/2)-(int(len("TCP_INFO:")/2)))+"TCP_INFO:\n"+"-"*os.get_terminal_size().columns)
     cols = math.floor(os.get_terminal_size().columns/24)
     for key in info.keys():
         value = info[key]

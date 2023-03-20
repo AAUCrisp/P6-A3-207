@@ -7,21 +7,16 @@ import pickle
 import base64
 
 from formatting import *
-from NetworkDevice import Device
+from Networking.NetworkManager import Device, NMCLI
 
 def main():
-    nmcli_d = subprocess.check_output("nmcli -t d".split(" ")).decode("utf-8").split("\n")
-    nmcli_d.remove("")
-    devices:list[Device] = []
-    for line in nmcli_d:
-        if ":connected" in line:
-            devices.append(Device(line))
+    nmcli = NMCLI()
 
     def getDevice():
-        print("Devices connected:\n"+"\n".join([f'{yellow(i)}: {devices[i].name}' for i in range(len(devices))]))
-        return devices[int(input(f"Choose the {yellow('index')} of a device to use: "))]
+        print("Devices connected:\n"+"\n".join([f'{yellow(i)}: {nmcli.devices[i].name}' for i in range(len(nmcli.devices))]))
+        return nmcli.devices[int(input(f"Choose the {yellow('index')} of a device to use: "))]
     # args
-    device = getDevice() if not "--device" in sys.argv else [device for device in devices if device.name == sys.argv[sys.argv.index("--device")+1]][0]
+    device = getDevice() if not "--device" in sys.argv else [device for device in nmcli.devices if device.name == sys.argv[sys.argv.index("--device")+1]][0]
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, device.getInterface().encode("utf-8"))
@@ -32,16 +27,24 @@ def main():
     s.listen()
 
     def main():
+        import time
         i= 0
         while True:
             c, _ = s.accept()
             while True:
-                recv = c.recv(1024).decode("utf-8")
+                c.recv(1, socket.MSG_PEEK)
+                prop_delay = time.time()
+                packet_length = c.recv(1024, socket.MSG_PEEK).decode().find("}\n{")+1
+                
+                recv = c.recv(packet_length if packet_length > 0 else 1024).decode()
                 if recv == "": break
                 i+=1
-                data = json.loads(recv)
-                device = pickle.loads(base64.b64decode(data["device"].encode("ascii")))
-                print(f'\033[0Kindex: {yellow(i)},\ttimestamp: {yellow(data["timestamp"])},\tp_time: {yellow(data["p_time"])},\tdev_data: {device.__dict__}\tdata: {data["data"]}\nPress enter to exit...', end="\r")
+                data:dict = json.loads(recv)
+                print(f'\r\033[0K', end="")
+                print(f'index: {yellow(i)}', end=",\t")
+                for key in data.keys():
+                    print(f'{key}: {data[key]}', end=",\t")
+                print(f'propagation delay: {prop_delay-data["timestamp"]}')
     threading.Thread(target=main, daemon=True).start()
     hide()
     input("Press enter to exit...\r")
