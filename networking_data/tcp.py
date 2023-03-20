@@ -52,6 +52,7 @@ class TCP_INFO:
         
 if "main" in __name__:
     import os
+    import math
     RESET = "\033[0m"
     UP = "\033[A"
     DOWN = "\033[B"
@@ -63,17 +64,18 @@ if "main" in __name__:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     info = TCP_INFO(s)
     i = 0
-    print("TCP_INFO:\n"+"_"*os.get_terminal_size().columns)
+    print(" "*(int(os.get_terminal_size().columns/2)-5)+"TCP_INFO:\n"+"-"*os.get_terminal_size().columns)
+    cols = math.floor(os.get_terminal_size().columns/24)
     for key in info.keys():
         value = info[key]
         spacing = 25
-        if i == 8:
+        if i == cols:
             print(f"\r{RIGHT*os.get_terminal_size().columns}|{DOWN}|", end="")
-            print("\n"+"_"*os.get_terminal_size().columns)
+            print("\n"+"-"*os.get_terminal_size().columns)
             i = 0
         print(f'| {cyan(key)}:')
         print(f'{f"{RIGHT*((i)*spacing)}"}| {magenta(value)}{UP}', end=f"\r{RIGHT*((i+1)*spacing)}")
         i+=1
     print(f"\r{RIGHT*os.get_terminal_size().columns}|{DOWN}|", end="")
-    print("\n"+"_"*os.get_terminal_size().columns)
+    print("\n"+"-"*os.get_terminal_size().columns)
     s.close()
