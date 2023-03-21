@@ -43,7 +43,7 @@ def main():
                 if sample == "": break
 
                 packet_length = sample.find(SEPERATOR)
-                recv = c.recv(packet_length if not packet_length == 0 else 8192).decode()
+                recv = c.recv(packet_length if not packet_length <= 0 else 8192).decode()
                 c.recv(len(SEPERATOR.encode())) #remove the seperator after transmission ended
 
                 jobs.append((recv, prop_delay))
@@ -60,10 +60,11 @@ def main():
 
         recv, prop_delay = data
 
+        print(recv)
         data:dict = json.loads(recv)
         data["propagation delay"] = prop_delay - data["timestamp"]
 
-        table = Table(data, cyan("TOTAL PACKETS: ")+magenta(packets))
+        table = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets))
         print(f'{UP}{CLEAR}')
         table.print()
         print("Press enter to exit...\r")

@@ -55,10 +55,10 @@ if "main" in __name__:
     print("DEVICES")
     for device in nmcli.devices:
         table = Table(device.data, f'{device.name}:')
-        table.print(45)
+        table.print(55)
 
     
     print("\nCONNECTIONS")
     for device, connection in [(device, device.connection) for device in nmcli.devices]:
         table = Table(connection.data, f'{device.name}->{connection.name}:')
-        table.print(45)
+        table.print(55)
