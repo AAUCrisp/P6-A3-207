@@ -12,7 +12,7 @@ from Networking.TCP import TCP_INFO
 
 jobs = []
 packets = 0
-c = None
+c:socket.socket = None
 
 def main():
     global packets
@@ -64,8 +64,9 @@ def main():
         data:dict = json.loads(recv)
 
         data["lost packets"] = info["tcpi_lost"]
+        data["buf_max"] = c.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
 
-        table = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets) + f" received data to be processed: {len(jobs)}")
+        table = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets) + f" {cyan('TO BE PROCESSED')}: {magenta(len(jobs))}" + f'{cyan(" BUFFER SPACE")}: {percentage(len(c.recv(20000, socket.MSG_PEEK)), data["buf_max"])}')
         print(f'{UP}{CLEAR}')
         table.print()
         print("Press enter to exit...\r")

@@ -21,6 +21,8 @@ strikethrough = lambda s:   "\033[9m"+str(s)+"\033[29m"
 
 hexcolor = lambda s, c, bg=False: f'\033[{48 if bg else 38};2;{int(c[0:2], 16)};{int(c[2:4], 16)};{int(c[4:6], 16)}m{s}{RESET}'
 
+percentage = lambda val, max: f'\033[38;2;{int((255 * val)/max)};{int((255*(max-val))/max)};0m{int(val/max*100)}%{RESET}'
+
 UP = "\033[A"
 print_up = lambda s: print(f'{UP}{s}\r',)
 DOWN = "\033[B"
@@ -64,12 +66,5 @@ if "main" in __name__:
     table.print(8, 5)
     table.print()
 
-    
-    hide()
-    try:
-        for i in range(int("ffffff", 16)+1):
-            print(f'color code #{hex(i)[2:]}: ', end="")
-            print(hexcolor(" "*10, f'{"0"*(6-len(hex(i)[2:]))}{hex(i)[2:]}', True), end="\r")
-    except KeyboardInterrupt:
-        unhide()
-        print(RESET)
+    for i in range(11):
+        print(percentage(i, 10))
