@@ -40,7 +40,7 @@ class NMCLI:
 
     def __init__(self) -> None:
         device_data = check_output("nmcli -t d".split(" ")).decode()
-        for device_name in [line.split(":")[0] for line in device_data.split("\n") if not line == ""]:
+        for device_name in [line.replace("\\:", SEPERATOR).split(":")[0].replace(SEPERATOR, ":") for line in device_data.split("\n") if not line == ""]:
             self.devices.append(Device(device_name))
 
 if "main" in __name__:

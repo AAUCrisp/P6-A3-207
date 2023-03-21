@@ -36,8 +36,6 @@ def main():
         while True:
             c, _ = s.accept()
             while True:
-                c.recv(1, socket.MSG_PEEK)
-                prop_delay = time.time()
                 try: sample = c.recv(8192, socket.MSG_PEEK).decode()
                 except UnicodeDecodeError: continue
                 if sample == "": break
@@ -46,7 +44,7 @@ def main():
                 recv = c.recv(packet_length if not packet_length <= 0 else 8192).decode()
                 c.recv(len(SEPERATOR.encode())) #remove the seperator after transmission ended
 
-                jobs.append((recv, prop_delay))
+                jobs.append(recv)
     
     def worker():
         global jobs
@@ -54,15 +52,12 @@ def main():
             if len(jobs) > 0: process_data(jobs.pop(0))
             else: time.sleep(.1)
 
-    def process_data(data):
+    def process_data(recv):
         global packets
         packets+=1
 
-        recv, prop_delay = data
 
-        print(recv)
         data:dict = json.loads(recv)
-        data["propagation delay"] = prop_delay - data["timestamp"]
 
         table = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets))
         print(f'{UP}{CLEAR}')
