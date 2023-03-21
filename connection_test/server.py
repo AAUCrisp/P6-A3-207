@@ -13,6 +13,7 @@ jobs = []
 packets = 0
 
 def main():
+    global packets
     nmcli = NMCLI()
 
     def getDevice():
@@ -31,19 +32,19 @@ def main():
 
 
     def mainloop():
+        global packets
         while True:
             c, _ = s.accept()
             while True:
                 c.recv(1, socket.MSG_PEEK)
                 prop_delay = time.time()
-                sample = c.recv(8192, socket.MSG_PEEK).decode()
+                try: sample = c.recv(8192, socket.MSG_PEEK).decode()
+                except UnicodeDecodeError: continue
                 if sample == "": break
 
                 packet_length = sample.find(SEPERATOR)
                 recv = c.recv(packet_length if not packet_length == 0 else 8192).decode()
                 c.recv(len(SEPERATOR.encode())) #remove the seperator after transmission ended
-
-                recv.replace(SEPERATOR, "")
 
                 jobs.append((recv, prop_delay))
     
