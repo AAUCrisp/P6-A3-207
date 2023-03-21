@@ -3,11 +3,13 @@ import sys
 import subprocess
 import threading
 import json
-import pickle
-import base64
+import time
 
 from formatting import *
-from Networking.NetworkManager import Device, NMCLI
+from Networking.NetworkManager import NMCLI
+
+
+jobs = []
 
 def main():
     nmcli = NMCLI()
@@ -26,28 +28,41 @@ def main():
     s.bind((address, 8123))
     s.listen()
 
-    def main():
-        import time
-        i= 0
+
+    def mainloop():
         while True:
             c, _ = s.accept()
             while True:
                 c.recv(1, socket.MSG_PEEK)
                 prop_delay = time.time()
-                packet_length = c.recv(1024, socket.MSG_PEEK).decode().find("}\n{")+1
-                
-                recv = c.recv(packet_length if packet_length > 0 else 1024).decode()
-                if recv == "": break
-                i+=1
-                data:dict = json.loads(recv)
-                print(f'\r\033[0K', end="")
-                print(f'index: {yellow(i)}', end=",\t")
-                for key in data.keys():
-                    print(f'{key}: {data[key]}', end=",\t")
-                print(f'propagation delay: {prop_delay-data["timestamp"]}')
-    threading.Thread(target=main, daemon=True).start()
+                sample = c.recv(1024, socket.MSG_PEEK).decode()
+                packet_length = sample.find("}\n{")+1
+                if sample == "": break
+                if not packet_length > 0 and not sample[-2:-1] == "}": continue
+                recv = c.recv(packet_length if not packet_length == 0 else 1024).decode()
+
+                jobs.append((recv, prop_delay))
+    
+    def worker():
+        global jobs
+        while True:
+            if len(jobs) > 0: process_data(jobs.pop(0))
+            else: time.sleep(.1)
+
+    def process_data(data):
+        recv, prop_delay = data
+
+        data:dict = json.loads(recv)
+        print(f'{UP}\r\033[0K', end="")
+        for key in data.keys():
+            print(f'{key}: {yellow(data[key])}', end=",\t")
+        print(f'propagation delay: {yellow(prop_delay-data["timestamp"])}')
+        print("Press enter to exit...\r")
+
+    threading.Thread(target=mainloop, daemon=True).start()
+    threading.Thread(target=worker, daemon=True).start()
     hide()
-    input("Press enter to exit...\r")
+    input("Press enter to exit...\n\r")
     s.close()
     unhide()
 

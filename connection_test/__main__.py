@@ -1,5 +1,6 @@
 import sys
-sys.path.append("../P6-A3-207")
+import os
+sys.path.append(f"../{os.path.abspath('.').split('/').pop()}")
 
 import server
 import client

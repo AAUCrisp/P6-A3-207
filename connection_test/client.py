@@ -7,7 +7,7 @@ import pickle
 import base64
 
 from formatting import *
-from Networking.NetworkManager import Device, NMCLI
+from Networking.NetworkManager import NMCLI
 from Networking.TCP import TCP_INFO
 
 def main():
@@ -43,6 +43,7 @@ def main():
         }
 
         s.send(f'{json.dumps(dataframe)}\n'.encode())
+    s.send(b"")
     s.close()
 
 if "main" in __name__:
