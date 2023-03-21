@@ -1,5 +1,7 @@
 from subprocess import check_output
 
+SEPERATOR = "\uFFFF"
+
 class Device:
     data:dict[str, str] = {}
 
@@ -42,55 +44,21 @@ class NMCLI:
             self.devices.append(Device(device_name))
 
 if "main" in __name__:
-    from os import get_terminal_size
     import os
-    import math
-    RESET = "\033[0m"
-    UP = "\033[A"
-    DOWN = "\033[B"
-    RIGHT = "\033[C"
-    LEFT = "\033[D"
-    magenta = lambda s: "\033[35m"+str(s)+RESET
-    cyan = lambda s: "\033[36m"+str(s)+RESET
-    red = lambda s: "\033[31m"+str(s)+RESET
+    import sys
+
+    sys.path.append(f"../{os.path.abspath('.').split('/').pop()}")
+    from Terminal.Formatting import Table
 
     nmcli = NMCLI()
-    width = get_terminal_size().columns
 
-    print(red("DEVICES"))
-
+    print("DEVICES")
     for device in nmcli.devices:
-        i = 0
-        print(" "*(int(os.get_terminal_size().columns/2)-(int(len(device.name)/2)))+f"{device.name}:\n"+"-"*os.get_terminal_size().columns)
-        spacing = 45
-        cols = math.floor(os.get_terminal_size().columns/spacing)
-        for key in device.data.keys():
-            value = device.data[key]
-            if i == cols:
-                print(f"\r{RIGHT*os.get_terminal_size().columns}|{DOWN}|", end="")
-                print("\n"+"-"*os.get_terminal_size().columns)
-                i = 0
-            print(f'| {cyan(key)}:')
-            print(f'{f"{RIGHT*((i)*spacing)}"}| {magenta(value)}{UP}', end=f"\r{RIGHT*((i+1)*spacing)}")
-            i+=1
-        print(f"\r{RIGHT*os.get_terminal_size().columns}|{DOWN}|", end="")
-        print("\n"+"-"*os.get_terminal_size().columns+"\n")
-    
-    print(red("\nCONNECTIONS"))
+        table = Table(device.data, f'{device.name}:')
+        table.print(45)
 
+    
+    print("\nCONNECTIONS")
     for device, connection in [(device, device.connection) for device in nmcli.devices]:
-        i = 0
-        print(" "*(int(os.get_terminal_size().columns/2)-(int(len(f'{device.name}->{connection.name}')/2)))+f"{device.name}->{connection.name}:\n"+"-"*os.get_terminal_size().columns)
-        spacing = 45
-        cols = math.floor(os.get_terminal_size().columns/spacing)
-        for key in device.data.keys():
-            value = device.data[key]
-            if i == cols:
-                print(f"\r{RIGHT*os.get_terminal_size().columns}|{DOWN}|", end="")
-                print("\n"+"-"*os.get_terminal_size().columns)
-                i = 0
-            print(f'| {cyan(key)}:')
-            print(f'{f"{RIGHT*((i)*spacing)}"}| {magenta(value)}{UP}', end=f"\r{RIGHT*((i+1)*spacing)}")
-            i+=1
-        print(f"\r{RIGHT*os.get_terminal_size().columns}|{DOWN}|", end="")
-        print("\n"+"-"*os.get_terminal_size().columns+"\n")
+        table = Table(connection.data, f'{device.name}->{connection.name}:')
+        table.print(45)

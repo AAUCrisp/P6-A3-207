@@ -6,8 +6,8 @@ import json
 import pickle
 import base64
 
-from formatting import *
-from Networking.NetworkManager import NMCLI
+from Terminal.Formatting import *
+from Networking.NetworkManager import NMCLI, SEPERATOR
 from Networking.TCP import TCP_INFO
 
 def main():
@@ -42,8 +42,8 @@ def main():
             "lost_packets":tcp_info["tcpi_lost"]
         }
 
-        s.send(f'{json.dumps(dataframe)}\n'.encode())
-    s.send(b"")
+        s.send(f'{json.dumps(dataframe)}{SEPERATOR}'.encode())
+    s.send("".encode())
     s.close()
 
 if "main" in __name__:

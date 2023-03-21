@@ -52,30 +52,16 @@ class TCP_INFO:
         
 if "main" in __name__:
     import os
-    import math
-    RESET = "\033[0m"
-    UP = "\033[A"
-    DOWN = "\033[B"
-    RIGHT = "\033[C"
-    LEFT = "\033[D"
-    magenta = lambda s: "\033[35m"+str(s)+RESET
-    cyan = lambda s: "\033[36m"+str(s)+RESET
+    import sys
 
+    sys.path.append(f"../{os.path.abspath('.').split('/').pop()}")
+    from Terminal.Formatting import Table
+
+    import socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     info = TCP_INFO(s)
-    i = 0
-    print(" "*(int(os.get_terminal_size().columns/2)-(int(len("TCP_INFO:")/2)))+"TCP_INFO:\n"+"-"*os.get_terminal_size().columns)
-    cols = math.floor(os.get_terminal_size().columns/24)
-    for key in info.keys():
-        value = info[key]
-        spacing = 25
-        if i == cols:
-            print(f"\r{RIGHT*os.get_terminal_size().columns}|{DOWN}|", end="")
-            print("\n"+"-"*os.get_terminal_size().columns)
-            i = 0
-        print(f'| {cyan(key)}:')
-        print(f'{f"{RIGHT*((i)*spacing)}"}| {magenta(value)}{UP}', end=f"\r{RIGHT*((i+1)*spacing)}")
-        i+=1
-    print(f"\r{RIGHT*os.get_terminal_size().columns}|{DOWN}|", end="")
-    print("\n"+"-"*os.get_terminal_size().columns)
+
+    table = Table(info.data, "TCP_INFO:")
+    table.print()
+
     s.close()

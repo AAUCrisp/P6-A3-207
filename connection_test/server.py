@@ -5,11 +5,12 @@ import threading
 import json
 import time
 
-from formatting import *
-from Networking.NetworkManager import NMCLI
+from Terminal.Formatting import *
+from Networking.NetworkManager import NMCLI, SEPERATOR
 
 
 jobs = []
+packets = 0
 
 def main():
     nmcli = NMCLI()
@@ -23,7 +24,7 @@ def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, device.getInterface().encode("utf-8"))
 
-    address = subprocess.check_output(f"nmcli -t d show {device.name} | grep IP4.ADDRESS", shell=True).decode("utf-8").split(":")[1].split("/")[0]
+    address = device.data["IP4.ADDRESS[1]"].split("/")[0]
     print(f'Address: {".".join([cyan(num) for num in address.split(".")])}')
     s.bind((address, 8123))
     s.listen()
@@ -35,11 +36,14 @@ def main():
             while True:
                 c.recv(1, socket.MSG_PEEK)
                 prop_delay = time.time()
-                sample = c.recv(1024, socket.MSG_PEEK).decode()
-                packet_length = sample.find("}\n{")+1
+                sample = c.recv(8192, socket.MSG_PEEK).decode()
                 if sample == "": break
-                if not packet_length > 0 and not sample[-2:-1] == "}": continue
-                recv = c.recv(packet_length if not packet_length == 0 else 1024).decode()
+
+                packet_length = sample.find(SEPERATOR)
+                recv = c.recv(packet_length if not packet_length == 0 else 8192).decode()
+                c.recv(len(SEPERATOR.encode())) #remove the seperator after transmission ended
+
+                recv.replace(SEPERATOR, "")
 
                 jobs.append((recv, prop_delay))
     
@@ -50,13 +54,17 @@ def main():
             else: time.sleep(.1)
 
     def process_data(data):
+        global packets
+        packets+=1
+
         recv, prop_delay = data
 
         data:dict = json.loads(recv)
-        print(f'{UP}\r\033[0K', end="")
-        for key in data.keys():
-            print(f'{key}: {yellow(data[key])}', end=",\t")
-        print(f'propagation delay: {yellow(prop_delay-data["timestamp"])}')
+        data["propagation delay"] = prop_delay - data["timestamp"]
+
+        table = Table(data, cyan("TOTAL PACKETS: ")+magenta(packets))
+        print(f'{UP}{CLEAR}')
+        table.print()
         print("Press enter to exit...\r")
 
     threading.Thread(target=mainloop, daemon=True).start()
