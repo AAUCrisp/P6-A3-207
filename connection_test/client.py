@@ -38,8 +38,7 @@ def main():
             "timestamp":ntp(),
             "data":message,
             "p_time":time.time()-processing_t1,
-            "packet_index":packetIndex,
-            "lost_packets":tcp_info["tcpi_lost"]
+            "packet_index":packetIndex
         }
 
         s.send(f'{json.dumps(dataframe)}{SEPERATOR}'.encode())

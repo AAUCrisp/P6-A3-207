@@ -7,10 +7,12 @@ import time
 
 from Terminal.Formatting import *
 from Networking.NetworkManager import NMCLI, SEPERATOR
+from Networking.TCP import TCP_INFO
 
 
 jobs = []
 packets = 0
+c = None
 
 def main():
     global packets
@@ -32,13 +34,14 @@ def main():
 
 
     def mainloop():
-        global packets
+        global packets, c
         while True:
             c, _ = s.accept()
             while True:
                 try: sample = c.recv(8192, socket.MSG_PEEK).decode()
                 except UnicodeDecodeError: continue
                 if sample == "": break
+                if not SEPERATOR in sample: continue
 
                 packet_length = sample.find(SEPERATOR)
                 recv = c.recv(packet_length if not packet_length <= 0 else 8192).decode()
@@ -53,13 +56,16 @@ def main():
             else: time.sleep(.1)
 
     def process_data(recv):
-        global packets
+        global packets, c
         packets+=1
+        info = TCP_INFO(c)
 
 
         data:dict = json.loads(recv)
 
-        table = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets))
+        data["lost packets"] = info["tcpi_lost"]
+
+        table = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets) + f" received data to be processed: {len(jobs)}")
         print(f'{UP}{CLEAR}')
         table.print()
         print("Press enter to exit...\r")
