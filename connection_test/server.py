@@ -12,12 +12,14 @@ from Networking.TCP import TCP_INFO
 
 jobs = []
 packets = 0
+bufferSize = 0
 
 def receiver(c:socket.socket):
     while True:
-        try: sample = c.recv(8192, socket.MSG_PEEK).decode()
+        bufferSize = TCP_INFO(c)["tcpi_rcv_space"]
+        try: sample = c.recv(bufferSize, socket.MSG_PEEK).decode()
         except UnicodeDecodeError: continue
-        if sample == "": break
+        if sample == SEPERATOR: break
         if not SEPERATOR in sample: continue
 
         packet_length = sample.find(SEPERATOR)
@@ -28,23 +30,25 @@ def receiver(c:socket.socket):
 
 
 def process_data():
-    global jobs
     packets = 0
+    up = False
     while True:
-        if len(jobs) == 0: time.sleep(.1)
+        time.sleep(.1)
+        if len(jobs) == 0: pass
         else:
             recv, c = jobs.pop(0)
-            info = TCP_INFO(c)
 
             packets+=1
             data:dict = json.loads(recv)
 
-            data["lost packets"] = info["tcpi_lost"]
-            data["buf_max"] = c.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
+            data["rcv_buf"] = bufferSize
+            if up:
+                print(UP*10)
+            else: up = True
 
-            table = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets) + f" {cyan('TO BE PROCESSED')}: {magenta(len(jobs))}" + f'{cyan(" BUFFER SPACE")}: {percentage(len(c.recv(data["buf_max"], socket.MSG_PEEK)), data["buf_max"])}')
+            table = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets) + f" {cyan('TO BE PROCESSED')}: {magenta(len(jobs))}" + f'{cyan(" BUFFER SPACE")}: {percentage(len(c.recv(bufferSize, socket.MSG_PEEK)), bufferSize)}{CLEAR}')
             print(f'{UP}{CLEAR}')
-            table.print()
+            table.print(spacing=30)
             print("Press enter to exit...\r")
 
 def server(s:socket.socket):
@@ -53,6 +57,7 @@ def server(s:socket.socket):
         threading.Thread(target=receiver, args=(c,), daemon=True).start()
 
 def main():
+    global bufferSize
     nmcli = NMCLI()
 
     # args
@@ -65,6 +70,7 @@ def main():
     print(f'Address: {".".join([cyan(num) for num in address.split(".")])}')
     s.bind((address, 8123))
     s.listen()
+    bufferSize = s.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
 
     threading.Thread(target=process_data, daemon=True).start()
     threading.Thread(target=server, args=(s,), daemon=True).start()

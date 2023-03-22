@@ -41,7 +41,7 @@ v_lines = lambda cols, spacing: f"|{DOWN}{LEFT}|{UP}{LEFT}{RIGHT*(spacing)}"*(co
 class Table:
 
     def __init__(self, data:dict[str, str], header:str) -> None:
-        self.width = os.get_terminal_size().columns
+        self.width = os.get_terminal_size().columns-1
         self.data = data
         self.header = header
 

@@ -32,17 +32,17 @@ def main():
     s.connect((address, 44261 if address == "skademaskinen.win" else 8123))
     tcp_info = TCP_INFO(s)
 
-    processing_t1 = time.time()
     for packetIndex in range(numPackets):
+        processing_t1 = time.time()
         dataframe = {
             "timestamp":ntp(),
             "data":message,
-            "p_time":time.time()-processing_t1,
-            "packet_index":packetIndex
+            "processing":time.time()-processing_t1,
+            "index":packetIndex
         }
 
         s.send(f'{json.dumps(dataframe)}{SEPERATOR}'.encode())
-    s.send("".encode())
+    s.send(SEPERATOR.encode())
     s.close()
 
 if "main" in __name__:
