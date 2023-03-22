@@ -12,7 +12,6 @@ from Networking.TCP import TCP_INFO
 
 jobs = []
 packets = 0
-c:socket.socket = None
 
 def receiver(c:socket.socket):
     while True:
@@ -25,7 +24,7 @@ def receiver(c:socket.socket):
         recv = c.recv(packet_length if not packet_length <= 0 else 8192).decode()
         c.recv(len(SEPERATOR.encode())) #remove the seperator after transmission ended
 
-        jobs.append((recv, TCP_INFO(c)))
+        jobs.append((recv, c))
 
 
 def process_data():
@@ -34,13 +33,16 @@ def process_data():
     while True:
         if len(jobs) == 0: time.sleep(.1)
         else:
-            recv, info = jobs.pop(0)
+            recv, c = jobs.pop(0)
+            info = TCP_INFO(c)
+
             packets+=1
             data:dict = json.loads(recv)
 
             data["lost packets"] = info["tcpi_lost"]
+            data["buf_max"] = c.getsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF)
 
-            table = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets) + f" {cyan('TO BE PROCESSED')}: {magenta(len(jobs))}" + f'{cyan(" BUFFER SPACE")}: {percentage(len(c.recv(20000, socket.MSG_PEEK)), data["buf_max"])}')
+            table = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets) + f" {cyan('TO BE PROCESSED')}: {magenta(len(jobs))}" + f'{cyan(" BUFFER SPACE")}: {percentage(len(c.recv(data["buf_max"], socket.MSG_PEEK)), data["buf_max"])}')
             print(f'{UP}{CLEAR}')
             table.print()
             print("Press enter to exit...\r")
