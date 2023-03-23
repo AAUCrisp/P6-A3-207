@@ -52,8 +52,8 @@ class Table:
         print(self.header)
         print(h_line(cols, spacing))
         for key, value in self.data.items():
-            print(f'  {cyan(bold(key))}:')
-            print(f'{RIGHT*(index*spacing)}  {magenta(value)}{UP}', end=f"\r{RIGHT*(index+1)*spacing}")
+            print(f'  {cyan(bold(key))}:{CLEAR}')
+            print(f'{RIGHT*(index*spacing)}  {magenta(value)}{CLEAR}{UP}', end=f"\r{RIGHT*(index+1)*spacing}")
             index+=1
             if index == cols or key is list(self.data.keys())[-1]:
                 print("\r"+v_lines(cols, spacing))

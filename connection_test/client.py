@@ -28,17 +28,20 @@ def main():
     numPackets = 1 if not "--packets" in sys.argv else int(sys.argv[sys.argv.index("--packets")+1])
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setblocking(True)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, device.getInterface().encode("utf-8"))
     s.connect((address, 44261 if address == "skademaskinen.win" else 8123))
-    tcp_info = TCP_INFO(s)
 
     for packetIndex in range(numPackets):
-        processing_t1 = time.time()
+        t1 = time.time()
         dataframe = {
-            "timestamp":ntp(),
             "data":message,
-            "processing":time.time()-processing_t1,
-            "index":packetIndex
+            "index":packetIndex,
+            "delays":{
+                "t1":t1,
+                "t2":time.time()
+            }
+            
         }
 
         s.send(f'{json.dumps(dataframe)}{SEPERATOR}'.encode())

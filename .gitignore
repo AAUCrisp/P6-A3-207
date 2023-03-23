@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 
 *.pcap
+
+test*
