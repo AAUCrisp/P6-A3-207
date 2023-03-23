@@ -17,8 +17,6 @@ def main():
         print("Devices connected:\n"+"\n".join([f'{yellow(i)}: {nmcli.devices[i].name}' for i in range(len(nmcli.devices))]))
         return nmcli.devices[int(input(f"Choose the {yellow('index')} of a device to use: "))]
 
-    def ntp():
-        return time.time() #change to an ntp function later
 
 
     # args:
@@ -37,9 +35,11 @@ def main():
         dataframe = {
             "data":message,
             "index":packetIndex,
+            "lost packets":TCP_INFO(s)["tcpi_lost"],
+            "RTT":TCP_INFO(s)["tcpi_rtt"],
             "delays":{
-                "t1":t1,
-                "t2":time.time()
+                "start_meas":t1,
+                "end_meas":time.time()
             }
             
         }

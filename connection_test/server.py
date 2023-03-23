@@ -18,6 +18,8 @@ bufferSize = 0
 def receiver(c:socket.socket):
     bufferSize = TCP_INFO(c)["tcpi_rcv_space"]
     while True:
+        start_recv = time.time()
+
         sample = c.recv(bufferSize, socket.MSG_PEEK)
         if sample == SEPERATOR.encode(): break
         if not SEPERATOR.encode() in sample: continue
@@ -26,8 +28,10 @@ def receiver(c:socket.socket):
         recv = c.recv(packet_length).decode()
         c.recv(len(SEPERATOR.encode())) #remove the seperator after transmission ended
 
+        end_recv = time.time()
+
         jobLock.acquire()
-        jobs.append((recv, c))
+        jobs.append((recv, c, start_recv, end_recv))
         jobLock.release()
 
 
@@ -39,24 +43,30 @@ def process_data():
         if len(jobs) == 0: pass
         else:
             jobLock.acquire()
-            recv, c = jobs.pop(0)
+            recv, c, start_recv, end_recv = jobs.pop(0)
             jobLock.release()
 
             packets+=1
             data:dict = json.loads(recv)
 
-            delays = data.pop("delays")
+            dicts = {key:data.pop(key) for key in list(data.keys()).copy() if type(data[key]) is dict}
+
+            dicts["delays"]["start_recv"] = start_recv
+            dicts["delays"]["end_recv"] = end_recv
+            data["total delay"] = end_recv - dicts["delays"]["start_meas"]
+
+            tables = [Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets) + f" {cyan('TO BE PROCESSED')}: {magenta(len(jobs))}" + f'{cyan(" BUFFER SPACE")}: {percentage(len(c.recv(bufferSize, socket.MSG_PEEK)), bufferSize)}{CLEAR}', spacing=25)]
+            for key, d in dicts.items():
+                tables.append(Table(d, cyan(key)+":"))
 
             if up:
-                print(UP*16)
+                print(UP*(1+(sum([len(table) for table in tables]))), end="")
             else: up = True
 
-            table1 = Table(data, cyan("TOTAL PACKETS")+": "+magenta(packets) + f" {cyan('TO BE PROCESSED')}: {magenta(len(jobs))}" + f'{cyan(" BUFFER SPACE")}: {percentage(len(c.recv(bufferSize, socket.MSG_PEEK)), bufferSize)}{CLEAR}')
-            print(f'{UP}{CLEAR}')
-            table1.print(spacing=30)
+            for table in tables:
+                table.print()
+
             
-            table2 = Table(delays, cyan("DELAYS"))
-            table2.print()
             print("Press enter to exit...\r")
 
 def server(s:socket.socket):

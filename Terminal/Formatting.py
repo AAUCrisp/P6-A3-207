@@ -40,31 +40,34 @@ v_lines = lambda cols, spacing: f"|{DOWN}{LEFT}|{UP}{LEFT}{RIGHT*(spacing)}"*(co
 
 class Table:
 
-    def __init__(self, data:dict[str, str], header:str) -> None:
+    def __init__(self, data:dict[str, str], header:str, spacing = None, cols = None) -> None:
         self.width = os.get_terminal_size().columns-1
         self.data = data
         self.header = header
-
-    def print(self, spacing = None, cols = None):
-        spacing = sorted([len(str(item)) for item in list(self.data.values()) + list(self.data.keys())])[-1]+3 if spacing is None else spacing
-        cols = (math.floor(self.width/spacing) if cols is None else cols) if len(self.data.keys())*spacing > self.width else len(self.data.keys())
+        self.spacing = sorted([len(str(item)) for item in list(self.data.values()) + list(self.data.keys())])[-1]+3 if spacing is None else spacing
+        self.cols = (math.floor(self.width/self.spacing) if cols is None else cols) if len(self.data.keys())*self.spacing > self.width else len(self.data.keys())
+        
+    def print(self):
         index = 0
         print(self.header)
-        print(h_line(cols, spacing))
+        print(h_line(self.cols, self.spacing))
         for key, value in self.data.items():
             print(f'  {cyan(bold(key))}:{CLEAR}')
-            print(f'{RIGHT*(index*spacing)}  {magenta(value)}{CLEAR}{UP}', end=f"\r{RIGHT*(index+1)*spacing}")
+            print(f'{RIGHT*(index*self.spacing)}  {magenta(value)}{CLEAR}{UP}', end=f"\r{RIGHT*(index+1)*self.spacing}")
             index+=1
-            if index == cols or key is list(self.data.keys())[-1]:
-                print("\r"+v_lines(cols, spacing))
-                print("\n"+h_line(cols, spacing))
+            if index == self.cols or key is list(self.data.keys())[-1]:
+                print("\r"+v_lines(self.cols, self.spacing))
+                print("\n"+h_line(self.cols, self.spacing))
                 index = 0
+    
+    def __len__(self):
+        return 2 + (math.ceil(len(self.data)/self.cols)*3)
 
 
 if "main" in __name__:
-    table = Table({f"test{i}":"test" for i in range(10)}, "test")
-    table.print(8, 5)
+    table = Table({f"testtest{i}":"test" for i in range(10)}, "test")
     table.print()
 
-    for i in range(11):
-        print(percentage(i, 10))
+    print(UP*(len(table))+1)
+    table2 = Table({f'xd{i}':"test" for i in range(10)}, "test")
+    table2.print()
