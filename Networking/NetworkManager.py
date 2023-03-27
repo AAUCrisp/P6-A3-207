@@ -22,7 +22,12 @@ class Device:
                 for line in nmcli[index].split(", "):
                     if "iface" in line:
                         return line.replace("iface ", "")
-                
+            case "bt":
+                nmcli = check_output(["nmcli"]).decode("utf-8").split("\n")
+                index = nmcli.index(f'{self.name}: connected to {self.connection.name}')+2
+                for line in nmcli[index].split(", "):
+                    if "iface" in line:
+                        return line.replace("iface ", "")
             case _:
                 return self.name
 

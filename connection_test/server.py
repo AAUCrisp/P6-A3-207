@@ -17,6 +17,7 @@ bufferSize = 0
 
 def receiver(c:socket.socket):
     bufferSize = TCP_INFO(c)["tcpi_rcv_space"]
+    m_delay = .0 if not "--delay" in sys.argv else float(sys.argv[sys.argv.index("--delay")+1])
     while True:
         start_recv = time.time()
 
@@ -29,6 +30,9 @@ def receiver(c:socket.socket):
         c.recv(len(SEPERATOR.encode())) #remove the seperator after transmission ended
 
         end_recv = time.time()
+
+        if m_delay > 0:
+            time.sleep(m_delay)
 
         jobLock.acquire()
         jobs.append((recv, c, start_recv, end_recv))

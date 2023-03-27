@@ -28,6 +28,7 @@ def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setblocking(True)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, device.getInterface().encode("utf-8"))
+    s.setsockopt(socket.IPPROTO_TCP, 13, "reno".encode())
     s.connect((address, 44261 if address == "skademaskinen.win" else 8123))
 
     for packetIndex in range(numPackets):

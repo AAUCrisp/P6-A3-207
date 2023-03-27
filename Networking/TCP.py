@@ -37,7 +37,7 @@ class TCP_INFO:
     }
 
     def __init__(self, s:socket.socket) -> None:
-        tcp_info = struct.unpack("B"*7+"I"*24, s.getsockopt(socket.IPPROTO_TCP, socket.TCP_INFO, struct.calcsize("B"*7+"I"*24)))
+        tcp_info = struct.unpack("B"*7+"I"*24, s.getsockopt(socket.SOL_TCP, socket.TCP_INFO, struct.calcsize("B"*7+"I"*24)))
         for key, value in zip(self.data.keys(), tcp_info):
             self.data[key] = value
     
