@@ -9,63 +9,80 @@ interface = "wlp7s0"
 REMOTESOCKADDR = ''
 REMOTESOCKPORT = 12345
 
+Message:str
+
+
 class Network():
-   
+    data = {}                   # A variable to store the thread/sensor id and the data received by each thread
+    lock = threading.Lock()     # A variable for locking data that can cause race conditions
+    threads = list()            # A list for maintaining the list of threads  
     # A constructor, whose job is to create a socket, which is connected to the given interface. 
+    receiveSock: socket
+    transmitSock: socket
+
+
     def __init__(self):
         pass
         
 
     
     def listener(self, addr, port):
-        self.receiveSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.receiveSock.bind((addr, port))
-        self.receiveSock.listen(2)
+        # This function is called at the headend, and backend. It main functions
+        # is to handle all incoming connections from the sensors.  
+        id = 0
+        self.receiveSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # socket for receiving all incoming connections
+        
+        self.receiveSock.bind((addr, port))     # Bind the socket
+        self.receiveSock.listen(3)              # Listens and wait for connections
         while True:
-            """Accepts a connection request and stores two parameters, conn which is a socket
-             object for the connected user, and addr which contains the IP address
-             if the client that just connected"""
-            self.conn, self.addr = self.receiveSock.accept()
+            
+            print("socket is now listening.")
 
+            self.conn, self.addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
+                                                                        # and an Address    
             print("connected to: ", self.addr)
-
-            """Need to start a thread for the connected client, that will recieve
-            all the information send by them."""
-
-            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(self.conn,))
+            
+            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(self.conn,id))   # Create a thread, handling each connections, by calling the receive method. 
+            self.threads.append(new_thread)
+            self.data[id] = []
             new_thread.start()
+            id = id + 1
+            
+        
+
+            
+       
 
 
-            #start_new_thread(self.receive,(self.conn))
-
-    def receive(self, conn):
-        while True:
-            sensorData = conn.recv(2048).decode()
+    def receive(self, conn, threadID):
+        #print("The thread for receiving data has been started ", threading.get_ident())
+        while True:    
+            sensorData = conn.recv(2048).decode()           # Receive incoming data. 
             if sensorData:
-                print("Sensor data received: ", sensorData)
+                self.lock.acquire(blocking=True)            # Lock the following code, such that only one thread can access it. 
+                self.data[threadID] = sensorData            # Write the received data from the thread to a variable shared by all the threads in this process. 
+                self.lock.release()                         # Release the lock once the task above is finished. 
+                print("The data dict: ", self.data)
+            
+                
                 
 
     # This method will establish the connection between client socket and server socket. 
     def connect(self, addr, port):
-        self.transmitSock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        self.port = port
-        self.addr = addr
-        self.transmitSock.connect((self.addr, self.port))
+        self.transmitSock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)    # creating the socket for transmitting data
+        self.port = port        # Set the port number given as a parameter
+        self.addr = addr        # Set the address given as a paramater
+        self.transmitSock.connect((self.addr, self.port))   # connect to the socket bounded on the given address and port. 
+        #self.message = message  # Set the message for transmission to the one given as a parameter. 
+        
 
-        message = "Give me data!"
-
-        self.transmit(self.transmitSock, message)
-
-      
-    
-   
+        #self.transmit(self.transmitSock, self.message)  # transmit the shit!
 
 
 
-    def transmit(self,sock, message):
-        self.sock = sock
-        self.message = message
-        self.sock.sendall(message.encode("utf8"))
+    def transmit(self, message):
+        
+        self.transmitSock.sendall(message.encode("utf8"))
         
 
     
