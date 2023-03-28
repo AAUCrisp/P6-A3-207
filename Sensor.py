@@ -8,28 +8,26 @@ from sys import argv
 
 interval = 10
 
-# command line arguments:
-headendAddr = input("Specify a headend address (format: <addr>:<port>): ") if not "--addr" in argv else argv[argv.index("--addr")+1]
-headendAddr = (str(headendAddr.split(":")[0]), int(headendAddr.split(":")[1]))
 
 class Sensor:
-    def __init__(self) -> None:
-        network = Network()
-        network.connect(headendAddr)
-        
-        try: pass
-        except KeyboardInterrupt:
+    def __init__(self, addr) -> None:
+        self.network = Network()
+        self.network.connect(addr[0], addr[1], "loopback")
+    
+    def run(self):
+        try: 
             while True:
-                network.transmit()
-                time.sleep(interval)
+                dataFrame = ProcessData("something")
+                self.network.transmit(dataFrame.buildFrame())
+                sleep(interval)
+        except KeyboardInterrupt: pass
 
 
+if "main" in __name__:
+    # command line arguments:
+    headendAddr = input(f"Specify a headend address (format: {hexcolor('<addr>', 'FF8800')}:{hexcolor('<port>', 'FF8800')}): ") if not "--addr" in argv else argv[argv.index("--addr")+1]
+    headendAddr = (str(headendAddr.split(":")[0]), int(headendAddr.split(":")[1]))
 
-#class SingletonException(Exception): pass
-#
-#class Network:
-#    singleton = None
-#    def __init__(self) -> None:
-#        if Network.singleton is None:
-#            Network.singleton = self
-#        else: raise SingletonException
+    sensor = Sensor(headendAddr)
+    sensor.run()
+    

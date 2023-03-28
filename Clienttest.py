@@ -6,5 +6,5 @@ port = 12345
 addr = ''
 message = "Random sensor data !!!!!!"
 
-c.connect(addr, port)
+c.connect(addr, port, "loopback")
 c.transmit(message)

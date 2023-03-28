@@ -5,6 +5,6 @@ ADDR = ""
 PORT= 12345
 
 s = n.Network()
-s.listener(ADDR, PORT)
+s.listener(ADDR, PORT, "loopback")
 print("socket is now listening.")
 

@@ -1,10 +1,11 @@
 import socket 
 import threading
-import netifaces as ni
+from include.NetTechnology import NetTechnology
 
-interface = "wlp7s0"
 # The class that will handle all the networking tasks, such that we dont have to 
 # repeat trivial connection commands multiple times throughout the report. 
+
+type = "wifi"
 
 REMOTESOCKADDR = ''
 REMOTESOCKPORT = 12345
@@ -17,8 +18,8 @@ class Network():
     lock = threading.Lock()     # A variable for locking data that can cause race conditions
     threads = list()            # A list for maintaining the list of threads  
     # A constructor, whose job is to create a socket, which is connected to the given interface. 
-    receiveSock: socket
-    transmitSock: socket
+    receiveSock: socket.socket
+    transmitSock: socket.socket
 
 
     def __init__(self):
@@ -26,11 +27,14 @@ class Network():
         
 
     
-    def listener(self, addr, port):
+    def listener(self, addr, port, tech="wifi"):
         # This function is called at the headend, and backend. It main functions
         # is to handle all incoming connections from the sensors.  
         id = 0
         self.receiveSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # socket for receiving all incoming connections
+
+        interface = NetTechnology(tech).getInterface() # call the NetTechnology class and get the interface name of the technology module
+        self.receiveSock.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, interface.encode()) # set the socket to use this interface
         
         self.receiveSock.bind((addr, port))     # Bind the socket
         self.receiveSock.listen(3)              # Listens and wait for connections
@@ -38,11 +42,11 @@ class Network():
             
             print("socket is now listening.")
 
-            self.conn, self.addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
+            conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
                                                                         # and an Address    
-            print("connected to: ", self.addr)
+            print("connected to: ", addr)
             
-            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(self.conn,id))   # Create a thread, handling each connections, by calling the receive method. 
+            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id))   # Create a thread, handling each connections, by calling the receive method. 
             self.threads.append(new_thread)
             self.data[id] = []
             new_thread.start()
@@ -54,13 +58,13 @@ class Network():
        
 
 
-    def receive(self, conn, threadID):
+    def receive(self, conn:socket.socket, threadID):
         #print("The thread for receiving data has been started ", threading.get_ident())
         while True:    
             sensorData = conn.recv(2048).decode()           # Receive incoming data. 
-            if sensorData:
+            if not sensorData == "":
                 self.lock.acquire(blocking=True)            # Lock the following code, such that only one thread can access it. 
-                self.data[threadID] = sensorData            # Write the received data from the thread to a variable shared by all the threads in this process. 
+                self.data[threadID].append(sensorData)      # Write the received data from the thread to a variable shared by all the threads in this process. 
                 self.lock.release()                         # Release the lock once the task above is finished. 
                 print("The data dict: ", self.data)
             
@@ -68,8 +72,12 @@ class Network():
                 
 
     # This method will establish the connection between client socket and server socket. 
-    def connect(self, addr, port):
+    def connect(self, addr, port, tech="wifi"):
         self.transmitSock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)    # creating the socket for transmitting data
+
+        interface = NetTechnology(tech).getInterface() # use the NetTechnology to get the network enterface of the technology
+        self.transmitSock.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, interface.encode()) # set the socket option such that the socket uses the specified technology
+
         self.port = port        # Set the port number given as a parameter
         self.addr = addr        # Set the address given as a paramater
         self.transmitSock.connect((self.addr, self.port))   # connect to the socket bounded on the given address and port. 
@@ -80,9 +88,9 @@ class Network():
 
 
 
-    def transmit(self, message):
+    def transmit(self, message:str):
         
-        self.transmitSock.sendall(message.encode("utf8"))
+        self.transmitSock.send(message.encode("utf8"))
         
 
     
