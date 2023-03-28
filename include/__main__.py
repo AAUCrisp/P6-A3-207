@@ -2,6 +2,7 @@
 
 import NetTechnology
 import ProcessData
+import Sync
 
 wifi = NetTechnology.NetTechnology()
 
@@ -34,3 +35,5 @@ for i in range(1, 11):
         print()
     except Exception as e:
         print(e.with_traceback())
+
+Sync.Sync(wifi.getInterface()).syncGT()
