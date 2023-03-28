@@ -17,6 +17,10 @@ class Network():
     lock = threading.Lock()     # A variable for locking data that can cause race conditions
     threads = list()            # A list for maintaining the list of threads  
     # A constructor, whose job is to create a socket, which is connected to the given interface. 
+    receiveSock: socket
+    transmitSock: socket
+
+
     def __init__(self):
         pass
         
@@ -64,21 +68,21 @@ class Network():
                 
 
     # This method will establish the connection between client socket and server socket. 
-    def connect(self, addr, port, message):
+    def connect(self, addr, port):
         self.transmitSock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)    # creating the socket for transmitting data
         self.port = port        # Set the port number given as a parameter
         self.addr = addr        # Set the address given as a paramater
         self.transmitSock.connect((self.addr, self.port))   # connect to the socket bounded on the given address and port. 
-        self.message = message  # Set the message for transmission to the one given as a parameter. 
+        #self.message = message  # Set the message for transmission to the one given as a parameter. 
         
 
-        self.transmit(self.transmitSock, self.message)  # transmit the shit!
+        #self.transmit(self.transmitSock, self.message)  # transmit the shit!
 
 
 
-    def transmit(self,sock, message):
-        self.sock = sock
-        self.sock.sendall(message.encode("utf8"))
+    def transmit(self, message):
+        
+        self.transmitSock.sendall(message.encode("utf8"))
         
 
     
