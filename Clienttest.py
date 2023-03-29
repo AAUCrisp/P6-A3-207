@@ -1,6 +1,6 @@
 import include.Network as n
 
-c = n.Network()
+c = n.Network("loopback")
 
 port = 12345
 addr = ''
