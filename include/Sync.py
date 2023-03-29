@@ -5,12 +5,34 @@ import os
 
 
 class Sync:
+    """```markdown
+    
+    This class is used to synchronize the testbed, it will have 2 attributes and 3 methods:
+    # Attributes:
+    *   address:    The address of the server to be synchronized with
+    *   interface:  The network interface to synchronize over
+    # Methods:
+    *   syncGT():   synchronizes the system with NTP
+    *   syncTime(): synchronizes the system with the local time of the other systems in the network
+    *   syncVclk(): synchronizes using a vector clock
+    ```"""
+
     def __init__(self, interface, address) -> None:
+        """```markdown
+        
+        This is the constructor of this class, it takes 2 parameters
+        # Parameters:
+        *   interface:  The network interface to synchronize over
+        *   address:    The address of the server to be synchronized with
+        """
         self.address = address
         self.interface = interface
 
     def syncGT(self):
+        """This method synchronizes the "Ground Truth", this is interpreted as NTP synchronization, here a method of ntplib has been modified as shown below to use a specific interface."""
+        # get the NTP timestamp
         NTP = requestNTP(self.address, interface=self.interface)
+        # set the NTP timestamp on the system, this will only be changed for the running process if NTP synchronization is automatic on the system its running on.
         os.system(f'date -s @{NTP}')
 
     
