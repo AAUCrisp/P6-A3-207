@@ -13,7 +13,7 @@ To configure Chronyd as an NTP server, a few changes need to be made to the /etc
 When all changes are made, restart chronyd either by rebooting, or running *systemctl restart chronyd*
 This should be all the changes needed to create a functional local NTP server. If a firewall is enabled, make sure to open port 123 on each desired interface.
 
-## NTP Client Configuration
+# NTP Client Configuration
 
 After the NTP server has been configured, a quick change to the /etc/chronyd.conf is required in order to set our testbed chrony server as the one and only time source.
 
