@@ -91,7 +91,7 @@ class Network():
 
     def transmit(self, message:str):
         
-        self.transmitSock.send(message.encode("utf8"))
+        self.transmitSock.sendall(message.encode("utf8"))
         
 
     

@@ -16,11 +16,14 @@ class Sensor:
     
     def run(self):
         try: 
+            hide()
             while True:
                 dataFrame = ProcessData("something")
                 self.network.transmit(dataFrame.buildFrame())
-                sleep(interval)
-        except KeyboardInterrupt: pass
+                for i in range(10):
+                    print(f'{interval - i}{CLEAR}', end="\r")
+                    sleep(1)
+        except KeyboardInterrupt: unhide()
 
 
 if "main" in __name__:
