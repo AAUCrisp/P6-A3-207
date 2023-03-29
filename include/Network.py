@@ -22,18 +22,19 @@ class Network():
     transmitSock: socket.socket
 
 
-    def __init__(self):
+    def __init__(self, tech="wifi"):
+        self.tech = tech
         pass
         
 
     
-    def listener(self, addr, port, tech="wifi"):
+    def listener(self, addr, port):
         # This function is called at the headend, and backend. It main functions
         # is to handle all incoming connections from the sensors.  
         id = 0
         self.receiveSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # socket for receiving all incoming connections
 
-        interface = NetTechnology(tech).getInterface() # call the NetTechnology class and get the interface name of the technology module
+        interface = NetTechnology(self.tech).getInterface() # call the NetTechnology class and get the interface name of the technology module
         self.receiveSock.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, interface.encode()) # set the socket to use this interface
         
         self.receiveSock.bind((addr, port))     # Bind the socket
@@ -72,10 +73,10 @@ class Network():
                 
 
     # This method will establish the connection between client socket and server socket. 
-    def connect(self, addr, port, tech="wifi"):
+    def connect(self, addr, port):
         self.transmitSock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)    # creating the socket for transmitting data
 
-        interface = NetTechnology(tech).getInterface() # use the NetTechnology to get the network enterface of the technology
+        interface = NetTechnology(self.tech).getInterface() # use the NetTechnology to get the network enterface of the technology
         self.transmitSock.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, interface.encode()) # set the socket option such that the socket uses the specified technology
 
         self.port = port        # Set the port number given as a parameter

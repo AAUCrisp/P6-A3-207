@@ -11,8 +11,8 @@ interval = 10
 
 class Sensor:
     def __init__(self, addr) -> None:
-        self.network = Network()
-        self.network.connect(addr[0], addr[1], "loopback")
+        self.network = Network("loopback")
+        self.network.connect(addr[0], addr[1])
     
     def run(self):
         try: 

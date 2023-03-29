@@ -1,10 +1,10 @@
 import include.Network as n
 
-c = n.Network()
+c = n.Network("loopback")
 
 port = 12345
 addr = ''
 message = "Random sensor data !!!!!!"
 
-c.connect(addr, port, "loopback")
+c.connect(addr, port)
 c.transmit(message)
