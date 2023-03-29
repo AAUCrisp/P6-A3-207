@@ -18,8 +18,8 @@ This should be all the changes needed to create a functional local NTP server. I
 After the NTP server has been configured, a quick change to the /etc/chronyd.conf is required in order to set our testbed chrony server as the one and only time source.
 
 - First line: comment out *pool 2.fedora.pool.ntp.org iburst* by prepending a hash
-  -replace with *server 192.168.1.107 iburst*
-  -Server indicates a time server entry, the IP is the IP of the server (port 123 is assumed by default), and the *iburst* flag allows the computer to sync immediately if a change in time is detected, rather than drifting the clock slowly towards the correct value
+  - replace with *server 192.168.1.107 iburst*
+  - Server indicates a time server entry, the IP is the IP of the server (port 123 is assumed by default), and the *iburst* flag allows the computer to sync immediately if a change in time is detected, rather than drifting the clock slowly towards the correct value
 - Second line: comment out *sourcedir /run/chrony-dhcp* to prevent the server from syncing with the local network router.
 
 Everything else can be left as is, unless changes to logging behavior is desired
