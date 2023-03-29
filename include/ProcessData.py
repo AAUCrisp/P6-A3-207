@@ -40,9 +40,9 @@ class ProcessData:
                 self.data = data.split(self.DATASEPERATOR)[1]
             else:
                 self.receivedId = data.split(self.SEPERATOR)[2].split(self.DATASEPERATOR)[0]
-                if data.find(self.DATASEPERATOR, 0, len(self.timestamp+self.pTime+self.receivedId)) != -1:
-                    self.piggy = data.split(self.DATASEPERATOR)[1].split(self.SEPERATOR)[0]
-                self.data = data.split(self.SEPERATOR, 4)[3]
+                if self.DATASEPERATOR in data.split(self.SEPERATOR)[2]:
+                    self.piggy = data.split(self.SEPERATOR)[2].split(self.DATASEPERATOR)[1]
+                self.data = data.split(self.SEPERATOR, 3)[3]
         else:
             # save all the data into the data attribute
             self.data = data
@@ -63,7 +63,7 @@ class ProcessData:
         data.append(str(self.data))
 
         # Return a data frame, a string of data seperated by SEPERATOR. <string>.join() will create a string from a list where list entries are seperated by <string>
-        return self.SEPERATOR.join(data[:-1])+self.DATASEPERATOR+data[-1]
+        return f'{str(time.time()) if self.timestamp is None else self.timestamp}{self.SEPERATOR}{str(time.time()-self.pTimeStart) if self.pTime is None else self.pTime}{self.SEPERATOR+self.receivedId if self.receivedId else ""}{self.DATASEPERATOR+self.piggy if self.piggy else ""}{self.SEPERATOR}{self.data}'
     
     def unpackFrame(data):
         """This method just returns the constructor with the packed data and the packed flag turned on"""

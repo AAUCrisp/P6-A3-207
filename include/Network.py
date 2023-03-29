@@ -1,7 +1,7 @@
 import socket 
 import threading
 from include.NetTechnology import NetTechnology, SEPERATOR
-from include.Formatting import Table, UP
+from include.Formatting import Table, blue, red, reset_pos, startScreen, stopScreen
 from include.ProcessData import ProcessData
 
 # The class that will handle all the networking tasks, such that we dont have to 
@@ -41,29 +41,23 @@ class Network():
         
         self.receiveSock.bind((addr, port))     # Bind the socket
         self.receiveSock.listen(3)              # Listens and wait for connections
+
+        startScreen()
         while True:
-            
-            print("socket is now listening.")
             try:
                 conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
                                                                         # and an Address    
             except KeyboardInterrupt:
                 self.receiveSock.close()
+                stopScreen()
                 return
-            print("connected to: ", addr)
             
-            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id))   # Create a thread, handling each connections, by calling the receive method. 
+            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id), daemon=True)   # Create a thread, handling each connections, by calling the receive method. 
             self.threads.append(new_thread)
             self.data[id] = []
             new_thread.start()
             id = id + 1
             
-        
-
-            
-       
-
-
     def receive(self, conn:socket.socket, threadID):
         #print("The thread for receiving data has been started ", threading.get_ident())
         while True:    
@@ -79,9 +73,9 @@ class Network():
                     "received id": data.receivedId,
                     "piggy":data.piggy,
                     "data":data.data
-                }, "Received Data")
+                }, sensorData.replace(ProcessData.SEPERATOR, blue("|")).replace(ProcessData.DATASEPERATOR, red("|")))
+                reset_pos()
                 table.print()
-                print(UP*len(table), end="")
             
                 
                 
