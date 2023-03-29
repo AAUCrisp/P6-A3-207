@@ -2,7 +2,7 @@ import include.Network as n
 
 
 ADDR = ""
-PORT= 12345
+PORT= 12346
 
 s = n.Network("loopback")
 s.listener(ADDR, PORT)

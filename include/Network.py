@@ -1,6 +1,8 @@
 import socket 
 import threading
-from include.NetTechnology import NetTechnology
+from include.NetTechnology import NetTechnology, SEPERATOR
+from include.Formatting import Table, UP
+from include.ProcessData import ProcessData
 
 # The class that will handle all the networking tasks, such that we dont have to 
 # repeat trivial connection commands multiple times throughout the report. 
@@ -42,9 +44,12 @@ class Network():
         while True:
             
             print("socket is now listening.")
-
-            conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
+            try:
+                conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
                                                                         # and an Address    
+            except KeyboardInterrupt:
+                self.receiveSock.close()
+                return
             print("connected to: ", addr)
             
             new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id))   # Create a thread, handling each connections, by calling the receive method. 
@@ -67,7 +72,16 @@ class Network():
                 self.lock.acquire(blocking=True)            # Lock the following code, such that only one thread can access it. 
                 self.data[threadID].append(sensorData)      # Write the received data from the thread to a variable shared by all the threads in this process. 
                 self.lock.release()                         # Release the lock once the task above is finished. 
-                print("The data dict: ", self.data)
+                data = ProcessData.unpackFrame(sensorData)
+                table = Table({
+                    "timestamp":data.timestamp,
+                    "processing time":data.pTime,
+                    "received id": data.receivedId,
+                    "piggy":data.piggy,
+                    "data":data.data
+                }, "Received Data")
+                table.print()
+                print(UP*len(table), end="")
             
                 
                 
