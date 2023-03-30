@@ -24,10 +24,11 @@ class ProcessData:
     pTime:float = None
     """Processing time, the time taken to process the data"""
     receivedId:str = None
-
+    """The received IP address, it can be null if its the source node"""
     piggy:str = None
-
+    """If the current node is adding its own sensor data to the node, it can be null"""
     receivedTimestamp:float = None
+    """The timestamp of when the packet has been received"""
 
 
     def __init__(self, data:str, packed=False) -> None:
@@ -36,15 +37,24 @@ class ProcessData:
         self.pTimeStart = time.time()
         # if the data is packed
         if packed:
+            # unpack the timestamp at the first index
             self.timestamp = data.split(self.SEPERATOR)[0]
+            # unpack the processing time at the second index
             self.pTime = data.split(self.SEPERATOR)[1]
             if data.count(self.SEPERATOR) == 1: # this is a sensor packet
-                self.data = data.split(self.DATASEPERATOR)[1]
-            else:
-                self.receivedId = data.split(self.SEPERATOR)[2].split(self.DATASEPERATOR)[0]
-                if self.DATASEPERATOR in data.split(self.SEPERATOR)[2]:
-                    self.piggy = data.split(self.SEPERATOR)[2].split(self.DATASEPERATOR)[1]
-                self.data = data.split(self.SEPERATOR, 3)[3]
+                # unpack the rest as data
+                self.data = data.split(self.DATASEPERATOR, 2)[1]
+            else: # if the packet is a headend
+                # unpack received timestamp
+                self.receivedTimestamp = data.split(self.SEPERATOR)[2]
+                # unpack the received id, this might be between a seperator and a data seperator
+                self.receivedId = data.split(self.SEPERATOR)[3].split(self.DATASEPERATOR)[0]
+                # if there is a data seperator in the 3rd index
+                if self.DATASEPERATOR in data.split(self.SEPERATOR)[3]:
+                    # unpack the piggy data
+                    self.piggy = data.split(self.SEPERATOR)[3].split(self.DATASEPERATOR)[1]
+                # unpack the rest of the data and save it in the data attribute
+                self.data = data.split(self.SEPERATOR, 4)[4]
         else:
             # save all the data into the data attribute
             self.data = data
@@ -52,20 +62,21 @@ class ProcessData:
     def buildFrame(self):
         """This method builds the dataframe from data saved, if its a frame that has been unpacked, it will just repack it with the same data"""
 
-        data = []
-        # measure the time if its a new packet, otherwise use the old timestamp
-        data.append(str(time.time()) if self.timestamp is None else self.timestamp)
-        # measure the processing time if its a new packet, otherwise use the old processing time
-        data.append(str(time.time()-self.pTimeStart) if self.pTime is None else self.pTime)
-        # add received id if there is any
-        if self.receivedId: data.append(self.receivedId)
-        # add piggyback data if there is any
-        if self.piggy: data.append(self.piggy)
-        # use the data saved in the constructor
-        data.append(str(self.data))
+        # add timestamp
+        data = f'{str(time.time()) if self.timestamp is None else self.timestamp}'
+        # add processing time
+        data += f'{self.SEPERATOR}{str(time.time()-self.pTimeStart) if self.pTime is None else self.pTime}'
+        # add received timestamp
+        data += f'{self.SEPERATOR+str(self.receivedTimestamp) if self.receivedTimestamp else ""}'
+        # add received IP
+        data += f'{self.SEPERATOR+self.receivedId if self.receivedId else ""}'
+        # add any piggybacked data
+        data += f'{self.DATASEPERATOR+self.piggy if self.piggy else ""}{self.SEPERATOR}'
+        # add the rest of the data
+        data += self.data
 
         # Return a data frame, a string of data seperated by SEPERATOR. <string>.join() will create a string from a list where list entries are seperated by <string>
-        return f'{str(time.time()) if self.timestamp is None else self.timestamp}{self.SEPERATOR}{str(time.time()-self.pTimeStart) if self.pTime is None else self.pTime}{self.SEPERATOR+self.receivedId if self.receivedId else ""}{self.DATASEPERATOR+self.piggy if self.piggy else ""}{self.SEPERATOR}{self.data}'
+        return data
     
     def unpackFrame(data):
         """This method just returns the constructor with the packed data and the packed flag turned on"""

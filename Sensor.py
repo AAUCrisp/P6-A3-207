@@ -3,7 +3,7 @@ from include.Formatting import *
 from include.Network import *
 from include.ProcessData import *
 
-from time import sleep
+from time import sleep, time
 from sys import argv
 
 # This module has been documented with DocString, it is a string format following a definition, it will show up in your VSCode documentation on hovering
@@ -35,6 +35,7 @@ class Sensor:
                 dataFrame = ProcessData(ProcessData("n3").buildFrame())
 
                 dataFrame.setReceivedId("localhost")
+                dataFrame.setReceivedTimestamp(time())
                 dataFrame.setPiggy("n2")
                 # transmit the dataframe, here buildFrame is called to convert the processed data to a string
                 self.network.transmit(dataFrame.buildFrame())

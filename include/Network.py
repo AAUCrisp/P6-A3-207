@@ -1,8 +1,7 @@
 import socket 
 import threading
-from include.NetTechnology import NetTechnology, SEPERATOR
-from include.Formatting import Table, blue, red, reset_pos, startScreen, stopScreen
-from include.ProcessData import ProcessData
+from include.NetTechnology import NetTechnology
+from time import time
 
 # The class that will handle all the networking tasks, such that we dont have to 
 # repeat trivial connection commands multiple times throughout the report. 
@@ -14,9 +13,9 @@ Message:str
 
 
 class Network():
-    data = {}                   # A variable to store the thread/sensor id and the data received by each thread
-    lock = threading.Lock()     # A variable for locking data that can cause race conditions
-    threads = list()            # A list for maintaining the list of threads  
+    data:dict[str, list[dict[str, float | str]]] = {}    # A variable to store the thread/sensor id and the data received by each thread
+    lock = threading.Lock()                         # A variable for locking data that can cause race conditions
+    threads = list()                                # A list for maintaining the list of threads  
     # A constructor, whose job is to create a socket, which is connected to the given interface. 
     receiveSock: socket.socket
     transmitSock: socket.socket
@@ -32,7 +31,6 @@ class Network():
         # This function is called at the headend, and backend. It main functions
         # is to handle all incoming connections from the sensors.
         addr = ""
-        id = 0
         self.receiveSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # socket for receiving all incoming connections
 
         interface = NetTechnology(self.tech).getInterface() # call the NetTechnology class and get the interface name of the technology module
@@ -43,28 +41,28 @@ class Network():
 
         while True:
             try:
-                conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
+                conn, id = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
                                                                         # and an Address    
-            except KeyboardInterrupt:
+            except KeyboardInterrupt: # catch keyboardinterrupts to shut down socket elegantly
                 self.receiveSock.close()
                 return
             
-            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id))   # Create a thread, handling each connections, by calling the receive method. 
+            new_thread = threading.Thread(name="receiving thread", target=self.receive, args=(conn,id[0]))   # Create a thread, handling each connections, by calling the receive method. 
             self.threads.append(new_thread)
-            self.data[id] = []
+            self.data[id[0]] = []
             new_thread.start()
-            id = id + 1
             
     def receive(self, conn:socket.socket, threadID):
         #print("The thread for receiving data has been started ", threading.get_ident())
         try:
             while True:    
                 sensorData = conn.recv(2048).decode()           # Receive incoming data. 
+                recvTime = time()
                 if not sensorData == "":
-                    self.lock.acquire(blocking=True)            # Lock the following code, such that only one thread can access it. 
-                    self.data[threadID].append(sensorData)      # Write the received data from the thread to a variable shared by all the threads in this process. 
-                    self.lock.release()                         # Release the lock once the task above is finished. 
-        except KeyboardInterrupt: conn.close()
+                    self.lock.acquire(blocking=True)                                            # Lock the following code, such that only one thread can access it. 
+                    self.data[threadID].append({"recvTime":recvTime, "data":sensorData})        # Write the received data from the thread to a variable shared by all the threads in this process. 
+                    self.lock.release()                                                         # Release the lock once the task above is finished. 
+        except KeyboardInterrupt: conn.close()                                                  # catch keyboardinterrupts to shut down socket elegantly
             
                 
                 
