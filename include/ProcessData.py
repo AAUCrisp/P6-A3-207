@@ -41,9 +41,9 @@ class ProcessData:
             self.timestamp = data.split(self.SEPERATOR)[0]
             # unpack the processing time at the second index
             self.pTime = data.split(self.SEPERATOR)[1]
-            if data.count(self.SEPERATOR) == 1: # this is a sensor packet
+            if data.count(self.SEPERATOR) == 2: # this is a sensor packet
                 # unpack the rest as data
-                self.data = data.split(self.DATASEPERATOR, 2)[1]
+                self.data = data.split(self.SEPERATOR, 2)[2]
             else: # if the packet is a headend
                 # unpack received timestamp
                 self.receivedTimestamp = data.split(self.SEPERATOR)[2]
@@ -85,10 +85,13 @@ class ProcessData:
     def setReceivedId(self, address:str):
         """This method sets the received id, this will be an IP address"""
         self.receivedId = address
+        return self
     
     def setPiggy(self, data:str):
         """Sets the piggybacked data"""
         self.piggy = data
+        return self
 
     def setReceivedTimestamp(self, timestamp):
         self.receivedTimestamp = timestamp
+        return self
