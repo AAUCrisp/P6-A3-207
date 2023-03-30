@@ -77,9 +77,10 @@ def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_
                 mode=3,
                 tx_timestamp=system_to_ntp_time(time.time())
             )
-
+            data = query_packet.to_data()
+            print("the fucked up NTP packet:", data)
             # send the request
-            sock.sendto(query_packet.to_data(), sockaddr)
+            sock.sendto(data, sockaddr)
 
             # wait for the response - check the source address
             src_addr = (None,)
