@@ -1,6 +1,10 @@
 # General setup for all nodes
 import argparse         # For parsing terminal arguments
 import sys
+from threading import Thread
+from time import sleep
+
+# Own includes
 from include.NetTechnology import *       # For finding netinterface IDs
 from include.Network import *       # 
 from include.ProcessData import *
@@ -44,7 +48,6 @@ ips = {
     }
 }
 
-
 # Argument Parsing Setup
 parser = argparse.ArgumentParser()
 parser.add_argument('-ip', type=str, required=False)
@@ -68,4 +71,4 @@ portTarget = ips[str(args.port)] if args.port else 8888
 # If 'loopback' argument is called
 if args.loop: 
     ipTarget = '127.0.0.1'
-
+    interfaceTarget = 'loopback'

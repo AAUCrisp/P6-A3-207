@@ -43,12 +43,14 @@ class Network():
 
         while True:
             try:
-                conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
-                                                                        # and an Address    
+                conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket and an Address   
+
             except KeyboardInterrupt:
                 self.receiveSock.close()
                 return
-            
+
+            print("Transmission Received")
+
             new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id))   # Create a thread, handling each connections, by calling the receive method. 
             self.threads.append(new_thread)
             self.data[id] = []

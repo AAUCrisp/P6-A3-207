@@ -4,8 +4,9 @@ from include.setup import *
 
 net = Network("loopback")
 
-addr = ''
+addr = '127.0.0.1'
 message = "Random sensor data !!!!!!"
 
 net.connect(addr, portTarget)
 net.transmit(message)
+print("Message Sent")
