@@ -1,13 +1,12 @@
 # General setup for all nodes
 import argparse         # For parsing terminal arguments
 import sys
-from threading import Thread
-from time import sleep
 
 # Own includes
 from include.NetTechnology import *       # For finding netinterface IDs
 from include.Network import *       # 
 from include.ProcessData import *
+from include.Sync import *
 
 ips = {
     'up0': {
