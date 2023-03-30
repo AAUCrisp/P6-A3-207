@@ -59,11 +59,11 @@ print(args)
 argsMsg = ' - Arguments Inserted' if len(sys.argv) > 1 else " - Program running without arguments"
 print(argsMsg)
 
-interfaceGT = str(args.gtInt) if args.gtInt else "ethernet"
-ipGT = up[str(args.gtIp)] if args.gtIp else ips['up2']
-interfaceTarget = str(up[args.int]) if args.int else 'wifi'
-ipTarget = up[str(args.ip)] if args.ip else ips['up2']
-portTarget = up[str(args.port)] if args.port else 8888
+interfaceGT = ips[str(args.gtInt)] if args.gtInt else "ethernet"
+ipGT = ips[str(args.gtIp)] if args.gtIp else ips['up2']
+interfaceTarget = ips[str(args.int)] if args.int else 'wifi'
+ipTarget = ips[str(args.ip)] if args.ip else ips['up2']
+portTarget = ips[str(args.port)] if args.port else 8888
 
 # If 'loopback' argument is called
 if args.loop: 
