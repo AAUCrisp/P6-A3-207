@@ -12,7 +12,7 @@ from include.ProcessData import *
 ips = {
     'up0': {
         'wifi': '192.168.1.105',
-        'gsm': '10.31.0.102',    # Not correct
+        'gsm': '10.31.0.102',   # Not correct
         'ethernet': '192.168.0.1',
     },
     'up1': {
@@ -27,7 +27,7 @@ ips = {
     },                              #############################
     'up3': {                        ##  FIND THE ETHERNET IPs  ##
         'wifi': '192.168.1.109',    #############################
-        'gsm': '10.31.0.102',    # Not correct
+        'gsm': '10.31.0.102',   # Not correct
         'ethernet': '192.168.0.1'
     },
     'cal': {

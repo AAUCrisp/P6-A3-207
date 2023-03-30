@@ -11,3 +11,10 @@ print(f"Target IP is: " + ipTarget)
 net = Network(interfaceTarget)
 Thread(target=net.listener, args=[SERVERPORT]).start()
 print("Server socket is now listening.")
+
+while True:
+    for key in net.data.keys():
+        if len(net.data[key]) > 0:
+            print(net.data[key].pop(0))
+        else:
+            sleep(1)
