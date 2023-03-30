@@ -1,6 +1,8 @@
 import socket 
 import threading
-from include.NetTechnology import NetTechnology
+from include.NetTechnology import NetTechnology, SEPERATOR
+from include.Formatting import Table, blue, red, reset_pos, startScreen, stopScreen
+from include.ProcessData import ProcessData
 
 # The class that will handle all the networking tasks, such that we dont have to 
 # repeat trivial connection commands multiple times throughout the report. 
@@ -38,13 +40,14 @@ class Network():
         
         self.receiveSock.bind((addr, port))     # Bind the socket
         self.receiveSock.listen(3)              # Listens and wait for connections
-        while True:
-            
-            print("socket is now listening.")
 
-            conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket and an Address    
-            
-            print("connected to: ", addr)
+        while True:
+            try:
+                conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
+                                                                        # and an Address    
+            except KeyboardInterrupt:
+                self.receiveSock.close()
+                return
             
             new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id))   # Create a thread, handling each connections, by calling the receive method. 
             self.threads.append(new_thread)
@@ -52,21 +55,16 @@ class Network():
             new_thread.start()
             id = id + 1
             
-        
-
-            
-       
-
-
     def receive(self, conn:socket.socket, threadID):
         #print("The thread for receiving data has been started ", threading.get_ident())
-        while True:    
-            sensorData = conn.recv(2048).decode()           # Receive incoming data. 
-            if not sensorData == "":
-                self.lock.acquire(blocking=True)            # Lock the following code, such that only one thread can access it. 
-                self.data[threadID].append(sensorData)      # Write the received data from the thread to a variable shared by all the threads in this process. 
-                self.lock.release()                         # Release the lock once the task above is finished. 
-                print("The data dict: ", self.data)
+        try:
+            while True:    
+                sensorData = conn.recv(2048).decode()           # Receive incoming data. 
+                if not sensorData == "":
+                    self.lock.acquire(blocking=True)            # Lock the following code, such that only one thread can access it. 
+                    self.data[threadID].append(sensorData)      # Write the received data from the thread to a variable shared by all the threads in this process. 
+                    self.lock.release()                         # Release the lock once the task above is finished. 
+        except KeyboardInterrupt: conn.close()
             
                 
                 

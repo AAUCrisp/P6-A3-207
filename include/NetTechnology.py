@@ -10,7 +10,8 @@ It is initially set to the unicode character \uFFFF as its an unused character a
 
 
 class NetTechnology:
-    """```markdown
+    """
+    ```markdown
 
     This is the main NetTechnology class, its purpose is to define the technology type that we are using in an execution of the testbed 
     # Attributes:

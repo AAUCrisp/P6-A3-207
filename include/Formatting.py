@@ -1,6 +1,8 @@
 import os
 import math
 
+esc = lambda arg: f'\033[{arg}'
+
 RESET = "\033[0m"
 black =         lambda s, bg=False: f"\033[{4 if bg else 3}0m"+str(s)+RESET
 red =           lambda s, bg=False: f"\033[{4 if bg else 3}1m"+str(s)+RESET
@@ -28,6 +30,9 @@ print_up =      lambda s: print(f'{UP}{s}\r',)
 DOWN = "\033[B"
 RIGHT = "\033[C"
 LEFT = "\033[D"
+reset_pos =     lambda: print("\033[H", end="")
+startScreen = lambda: print(esc("?1049h")+esc("H")+esc("?25l"), end="")
+stopScreen = lambda: print(esc("?1049l")+esc("?25h"), end="")
 
 HIDE = "\033[?25l"
 hide =          lambda: print(HIDE, end="")
@@ -35,8 +40,8 @@ UNHIDE = "\033[?25h"
 unhide =        lambda: print(UNHIDE, end="")
 CLEAR = "\033[0K"
 
-h_line =        lambda cols, spacing: (f'+{"-"*(spacing-1)}'*cols)+"+"
-v_lines =       lambda cols, spacing: f"|{DOWN}{LEFT}|{UP}{LEFT}{RIGHT*(spacing)}"*(cols+1)
+h_line =        lambda cols, spacing: (f'+{"-"*(spacing-1)}'*cols)+"+"+CLEAR
+v_lines =       lambda cols, spacing: f"|{DOWN}{LEFT}|{UP}{LEFT}{RIGHT*(spacing)}"*(cols+1)+CLEAR
 
 class Table:
 
@@ -49,7 +54,7 @@ class Table:
         
     def print(self):
         index = 0
-        print(self.header)
+        print(self.header+CLEAR)
         print(h_line(self.cols, self.spacing))
         for key, value in self.data.items():
             print(f'  {cyan(bold(key))}:{CLEAR}')
