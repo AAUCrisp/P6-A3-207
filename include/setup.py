@@ -8,6 +8,7 @@ from time import sleep
 from include.NetTechnology import *       # For finding netinterface IDs
 from include.Network import *       # 
 from include.ProcessData import *
+from include.Sync import *
 
 ips = {
     'up0': {
