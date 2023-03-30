@@ -7,8 +7,6 @@ from include.ProcessData import ProcessData
 # The class that will handle all the networking tasks, such that we dont have to 
 # repeat trivial connection commands multiple times throughout the report. 
 
-type = "wifi"
-
 REMOTESOCKADDR = ''
 REMOTESOCKPORT = 12345
 
@@ -30,9 +28,10 @@ class Network():
         
 
     
-    def listener(self, addr, port):
+    def listener(self, port):
         # This function is called at the headend, and backend. It main functions
-        # is to handle all incoming connections from the sensors.  
+        # is to handle all incoming connections from the sensors.
+        addr = ""
         id = 0
         self.receiveSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # socket for receiving all incoming connections
 

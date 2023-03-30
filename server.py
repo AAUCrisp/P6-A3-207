@@ -1,9 +1,12 @@
-import include.setup
+from include.setup import *
 
-ADDR = ""
-PORT= 12345
+# SERVERADDR = ""
+SERVERPORT= 8888
 
-s = n.Network()
-s.listener(ADDR, PORT)
+# adapt = NetTechnology()
+
+
+net = Network(interfaceTarget)
+net.listener(SERVERPORT)
 print("Server socket is now listening.")
 
