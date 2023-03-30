@@ -5,8 +5,6 @@ from include.NetTechnology import NetTechnology
 # The class that will handle all the networking tasks, such that we dont have to 
 # repeat trivial connection commands multiple times throughout the report. 
 
-type = "wifi"
-
 REMOTESOCKADDR = ''
 REMOTESOCKPORT = 12345
 
@@ -28,9 +26,10 @@ class Network():
         
 
     
-    def listener(self, addr, port):
+    def listener(self, port):
         # This function is called at the headend, and backend. It main functions
-        # is to handle all incoming connections from the sensors.  
+        # is to handle all incoming connections from the sensors.
+        addr = ""
         id = 0
         self.receiveSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # socket for receiving all incoming connections
 
@@ -43,8 +42,8 @@ class Network():
             
             print("socket is now listening.")
 
-            conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
-                                                                        # and an Address    
+            conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket and an Address    
+            
             print("connected to: ", addr)
             
             new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id))   # Create a thread, handling each connections, by calling the receive method. 

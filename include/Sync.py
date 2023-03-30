@@ -17,7 +17,7 @@ class Sync:
     *   syncVclk(): synchronizes using a vector clock
     ```"""
 
-    def __init__(self, interface, address) -> None:
+    def __init__(self, address, interface='wifi', addressGT = upIp['up2'], interfaceGT = 'ethernet') -> None:
         """```markdown
         
         This is the constructor of this class, it takes 2 parameters
@@ -27,15 +27,20 @@ class Sync:
         """
         self.address = address
         self.interface = interface
+        self.addressGT = addressGT
+        self.interfaceGT = interfaceGT
+
 
     def syncGT(self):
         """This method synchronizes the "Ground Truth", this is interpreted as NTP synchronization, here a method of ntplib has been modified as shown below to use a specific interface."""
         # get the NTP timestamp
-        NTP = requestNTP(self.address, interface=self.interface)
+        ethernet = NetTechnology(self.interfaceGT)
+
+        NTP = requestNTP(self.addressGT, interface=ethernet.getInterface())
         # set the NTP timestamp on the system, this will only be changed for the running process if NTP synchronization is automatic on the system its running on.
         os.system(f'date -s @{NTP}')
 
-    
+
 
 
 
