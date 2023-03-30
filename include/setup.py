@@ -1,6 +1,8 @@
 # General setup for all nodes
 import argparse         # For parsing terminal arguments
 import sys
+from threading import Thread
+from time import sleep
 
 # Own includes
 from include.NetTechnology import *       # For finding netinterface IDs
