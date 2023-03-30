@@ -104,5 +104,5 @@ def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_
 # The main of this program
 if "main" in __name__:
 
-    sync = Sync()
+    sync = Sync(addressGT='10.0.0.20')
     sync.syncGT()
