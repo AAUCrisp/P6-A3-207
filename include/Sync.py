@@ -78,7 +78,6 @@ def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_
                 tx_timestamp=system_to_ntp_time(time.time())
             )
             data = query_packet.to_data()
-            print("the fucked up NTP packet:", data)
             # send the request
             sock.sendto(data, sockaddr)
 
