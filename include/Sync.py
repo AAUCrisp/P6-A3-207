@@ -1,7 +1,7 @@
 from ntplib import NTPPacket, system_to_ntp_time, time, NTPException, NTPStats
 import socket
 import os
-from include.NetTechnology import *
+from NetTechnology import *
 
 
 
