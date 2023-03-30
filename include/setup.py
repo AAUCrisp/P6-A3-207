@@ -1,6 +1,10 @@
 # General setup for all nodes
 import argparse         # For parsing terminal arguments
 import sys
+from threading import Thread
+from time import sleep
+
+# Own includes
 from include.NetTechnology import *       # For finding netinterface IDs
 from include.Network import *       # 
 from include.ProcessData import *
@@ -8,7 +12,7 @@ from include.ProcessData import *
 ips = {
     'up0': {
         'wifi': '192.168.1.105',
-        'gsm': '10.31.0.102',    # Not correct
+        'gsm': '10.31.0.102',   # Not correct
         'ethernet': '192.168.0.1',
     },
     'up1': {
@@ -23,7 +27,7 @@ ips = {
     },                              #############################
     'up3': {                        ##  FIND THE ETHERNET IPs  ##
         'wifi': '192.168.1.109',    #############################
-        'gsm': '10.31.0.102',    # Not correct
+        'gsm': '10.31.0.102',   # Not correct
         'ethernet': '192.168.0.1'
     },
     'cal': {
@@ -44,7 +48,6 @@ ips = {
     }
 }
 
-
 # Argument Parsing Setup
 parser = argparse.ArgumentParser()
 parser.add_argument('-ip', type=str, required=False)
@@ -59,13 +62,13 @@ print(args)
 argsMsg = ' - Arguments Inserted' if len(sys.argv) > 1 else " - Program running without arguments"
 print(argsMsg)
 
-interfaceGT = str(args.gtInt) if args.gtInt else "ethernet"
-ipGT = up[str(args.gtIp)] if args.gtIp else ips['up2']
-interfaceTarget = str(up[args.int]) if args.int else 'wifi'
-ipTarget = up[str(args.ip)] if args.ip else ips['up2']
-portTarget = up[str(args.port)] if args.port else 8888
+interfaceGT = ips[str(args.gtInt)] if args.gtInt else "ethernet"
+ipGT = ips[str(args.gtIp)] if args.gtIp else ips['up2']
+interfaceTarget = ips[str(args.int)] if args.int else 'wifi'
+ipTarget = ips[str(args.ip)] if args.ip else ips['up2']
+portTarget = ips[str(args.port)] if args.port else 8888
 
 # If 'loopback' argument is called
 if args.loop: 
     ipTarget = '127.0.0.1'
-
+    interfaceTarget = 'loopback'

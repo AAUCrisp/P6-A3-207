@@ -1,6 +1,7 @@
 from ntplib import NTPPacket, system_to_ntp_time, time, NTPException, NTPStats
 import socket
 import os
+from NetTechnology import *
 
 
 
@@ -17,7 +18,7 @@ class Sync:
     *   syncVclk(): synchronizes using a vector clock
     ```"""
 
-    def __init__(self, address, interface='wifi', addressGT = upIp['up2'], interfaceGT = 'ethernet') -> None:
+    def __init__(self, address = '127.0.0.1', interface='wifi', addressGT = ips['up2']['wifi'], interfaceGT = 'ethernet') -> None:
         """```markdown
         
         This is the constructor of this class, it takes 2 parameters
@@ -98,3 +99,10 @@ def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_
         stats.dest_timestamp = dest_timestamp
 
         return stats.tx_time
+
+
+# The main of this program
+if "main" in __name__:
+
+    sync = Sync()
+    sync.syncGT()
