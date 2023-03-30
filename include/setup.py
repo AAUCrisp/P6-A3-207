@@ -2,34 +2,34 @@
 import argparse         # For parsing terminal arguments
 import sys
 from threading import Thread
-from time import sleep
+from time import time, sleep
 
 # Own includes
 from include.NetTechnology import *       # For finding netinterface IDs
-from include.Network import *       # 
+from include.Network import *
 from include.ProcessData import *
 from include.Sync import *
 
 ips = {
     'up0': {
         'wifi': '192.168.1.105',
-        'gsm': '10.31.0.102',   # Not correct
-        'ethernet': '192.168.0.1',
+        'gsm': '10.31.0.102',
+        'ethernet': '10.0.0.10',
     },
     'up1': {
         'wifi': '192.168.1.80',
         'gsm': '10.31.0.13',
-        'ethernet': '192.168.0.1'
+        'ethernet': '10.0.0.20',
     },
     'up2': {
         'wifi': '192.168.1.107',
         'gsm': '10.31.0.102',
-        'ethernet': '192.168.0.1'
+        'ethernet': '10.0.0.30',
     },                              #############################
     'up3': {                        ##  FIND THE ETHERNET IPs  ##
         'wifi': '192.168.1.109',    #############################
-        'gsm': '10.31.0.102',   # Not correct
-        'ethernet': '192.168.0.1'
+        'gsm': '10.31.0.102',
+        'ethernet': '10.0.0.40',
     },
     'cal': {
         'wifi': '192.168.1.109',    # Insert the right one here
