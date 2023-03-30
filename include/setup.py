@@ -50,25 +50,31 @@ ips = {
 
 # Argument Parsing Setup
 parser = argparse.ArgumentParser()
-parser.add_argument('-ip', type=str, required=False)
+parser.add_argument('-target', type=str, required=False)
 parser.add_argument('-int', type=str, required=False)
 parser.add_argument('-port', type=int, required=False)
-parser.add_argument('-gtIp', type=str, required=False)
+parser.add_argument('-gt', type=str, required=False)
 parser.add_argument('-gtInt', type=str, required=False)
 parser.add_argument('-loop', action=argparse.BooleanOptionalAction)
 args = parser.parse_args()    # The array containing our arguments
 
-print(args)
+# print(args)
 argsMsg = ' - Arguments Inserted' if len(sys.argv) > 1 else " - Program running without arguments"
 print(argsMsg)
 
-interfaceGT = ips[str(args.gtInt)] if args.gtInt else "ethernet"
-ipGT = ips[str(args.gtIp)] if args.gtIp else ips['up2']
-interfaceTarget = ips[str(args.int)] if args.int else 'wifi'
-ipTarget = ips[str(args.ip)] if args.ip else ips['up2']
-portTarget = ips[str(args.port)] if args.port else 8888
+interfaceGT = str(args.gtInt) if args.gtInt else "ethernet"
+ipGT = ips[str(args.gt)][interfaceGT] if args.gt else ips['up2'][interfaceGT]
+interfaceTarget = str(args.int) if args.int else 'wifi'
+ipTarget = ips[str(args.target)][interfaceTarget] if args.target else ips['up2'][interfaceTarget]
+portTarget = str(args.port) if args.port else 8888
 
 # If 'loopback' argument is called
 if args.loop: 
     ipTarget = '127.0.0.1'
     interfaceTarget = 'loopback'
+
+# print(interfaceGT)
+# print(ipGT)
+# print(interfaceTarget)
+# print(ipTarget)
+# print(portTarget)

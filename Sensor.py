@@ -22,7 +22,8 @@ class Sensor:
         self.network = Network(tech)
 
         # Connect to the address passed to the constructor
-        self.network.connect(addr[0], addr[1])
+        # self.network.connect(addr[0], addr[1])
+        self.network.connect(ipTarget, portTarget)
     
     def run(self):
         """This method runs the sensor program, it will send data using the network every <interval> seconds"""
