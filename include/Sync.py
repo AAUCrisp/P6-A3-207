@@ -73,8 +73,8 @@ def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_
 
             # create the request packet - mode 3 is client
             query_packet = NTPPacket(
-                mode=3,
                 version=version,
+                mode=3,
                 tx_timestamp=system_to_ntp_time(time.time())
             )
 
