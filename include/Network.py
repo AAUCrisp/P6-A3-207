@@ -42,17 +42,15 @@ class Network():
         self.receiveSock.bind((addr, port))     # Bind the socket
         self.receiveSock.listen(3)              # Listens and wait for connections
 
-        startScreen()
         while True:
             try:
                 conn, addr = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket
                                                                         # and an Address    
             except KeyboardInterrupt:
                 self.receiveSock.close()
-                stopScreen()
                 return
             
-            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id), daemon=True)   # Create a thread, handling each connections, by calling the receive method. 
+            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id))   # Create a thread, handling each connections, by calling the receive method. 
             self.threads.append(new_thread)
             self.data[id] = []
             new_thread.start()
@@ -60,22 +58,14 @@ class Network():
             
     def receive(self, conn:socket.socket, threadID):
         #print("The thread for receiving data has been started ", threading.get_ident())
-        while True:    
-            sensorData = conn.recv(2048).decode()           # Receive incoming data. 
-            if not sensorData == "":
-                self.lock.acquire(blocking=True)            # Lock the following code, such that only one thread can access it. 
-                self.data[threadID].append(sensorData)      # Write the received data from the thread to a variable shared by all the threads in this process. 
-                self.lock.release()                         # Release the lock once the task above is finished. 
-                data = ProcessData.unpackFrame(sensorData)
-                table = Table({
-                    "timestamp":data.timestamp,
-                    "processing time":data.pTime,
-                    "received id": data.receivedId,
-                    "piggy":data.piggy,
-                    "data":data.data
-                }, sensorData.replace(ProcessData.SEPERATOR, blue("|")).replace(ProcessData.DATASEPERATOR, red("|")))
-                reset_pos()
-                table.print()
+        try:
+            while True:    
+                sensorData = conn.recv(2048).decode()           # Receive incoming data. 
+                if not sensorData == "":
+                    self.lock.acquire(blocking=True)            # Lock the following code, such that only one thread can access it. 
+                    self.data[threadID].append(sensorData)      # Write the received data from the thread to a variable shared by all the threads in this process. 
+                    self.lock.release()                         # Release the lock once the task above is finished. 
+        except KeyboardInterrupt: conn.close()
             
                 
                 

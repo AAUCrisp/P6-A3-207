@@ -27,6 +27,8 @@ class ProcessData:
 
     piggy:str = None
 
+    receivedTimestamp:float = None
+
 
     def __init__(self, data:str, packed=False) -> None:
         """The constructor of this class, it unpacks the data if it is packed or just sets the data of the frame if it isn't already packed"""
@@ -76,3 +78,6 @@ class ProcessData:
     def setPiggy(self, data:str):
         """Sets the piggybacked data"""
         self.piggy = data
+
+    def setReceivedTimestamp(self, timestamp):
+        self.receivedTimestamp = timestamp
