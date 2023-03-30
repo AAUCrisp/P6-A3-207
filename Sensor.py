@@ -34,7 +34,7 @@ class Sensor:
             # run infinitely
             while True:
                 # create a dataframe with the data "something"
-                dataFrame = ProcessData(ProcessData("n3").buildFrame())
+                dataFrame = ProcessData(ProcessData("n3").buildFrame()) 
                 # transmit the dataframe, here buildFrame is called to convert the processed data to a string
                 self.network.transmit(dataFrame.buildFrame())
                 # for loop to show a timer in the terminal showing when the next data will be transmitted
