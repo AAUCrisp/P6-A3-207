@@ -2,9 +2,10 @@ from include.NetTechnology import *
 from include.Formatting import *
 from include.Network import *
 from include.ProcessData import *
+from include.setup import *
 
 from time import sleep, time
-from sys import argv
+
 
 # This module has been documented with DocString, it is a string format following a definition, it will show up in your VSCode documentation on hovering
 
@@ -15,10 +16,10 @@ interval = 10
 class Sensor:
     """This is the main class of the sensor. it will use the programs defined under `include/` to emulate the functionality of a sensor."""
 
-    def __init__(self, addr) -> None:
+    def __init__(self, addr, tech) -> None:
         """This is the constructor of the sensor class, it will initialize a network type and connect to a headend server."""
         # initialize the loopback network
-        self.network = Network("loopback")
+        self.network = Network(tech)
 
         # Connect to the address passed to the constructor
         self.network.connect(addr[0], addr[1])
@@ -50,14 +51,9 @@ class Sensor:
 
 # The main of this program
 if "main" in __name__:
-    # command line arguments:
-    # receive an address from the command line, it should have the format: <addr>:<port>.
-    headendAddr = input(f"Specify a headend address (format: {hexcolor('<addr>', 'FF8800')}:{hexcolor('<port>', 'FF8800')}): ") if not "--addr" in argv else argv[argv.index("--addr")+1]
-    # split address and port into a tuple, to be used with the socket object
-    headendAddr = (str(headendAddr.split(":")[0]), int(headendAddr.split(":")[1]))
 
     # create a sensor object with the headend address as an argument
-    sensor = Sensor(headendAddr)
+    sensor = Sensor((ipTarget, portTarget), interfaceTarget)
     # run the sensor
     sensor.run()
     
