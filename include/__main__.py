@@ -6,11 +6,12 @@ print(sys.path)
 print(sys.path.append(sys.path[0]+"/.."))
 
 from include.NetTechnology import NetTechnology
-from include.ProcessData import ProcessData
+from include.ProcessData import ProcessData, SEP, DSEP, EOP
 from include.Sync import Sync
+from include.Formatting import *
 
 
-wifi = NetTechnology()
+wifi = NetTechnology("wifi")
 
 print(f'wifi: {wifi.connection}')
 print(f'wifi: {wifi.deviceName}')
@@ -31,23 +32,16 @@ print(f'ethernet: {ethernet.deviceName}')
 print(f'ethernet: {ethernet.getInterface()}')
 print(f'ethernet: {ethernet.type}')
 
-for i in range(1, 11):
-    try:
-        dataframe = ProcessData("hello").buildFrame()
-        print(f'dataframe: {dataframe}')
-        unpacked = ProcessData.unpackFrame(dataframe)
-        print(f'timestamp: {unpacked.timestamp}, ptime: {unpacked.pTime}, data: {unpacked.data}')
-    except Exception as e:
-        print(e)
+#sync = Sync(interfaceGT = wifi.getInterface(), addressGT="dk.pool.ntp.org")
+#sync.syncGT()
 
-for i in range(1, 11):
-    try:
-        dataframe = ProcessData(ProcessData("hello").buildFrame()).setReceivedId("localhost").setReceivedTimestamp(time.time()).setPiggy("world!").buildFrame()
-        print(f'dataframe: {dataframe}')
-        unpacked = ProcessData.unpackFrame(dataframe)
-        print(f'timestamp: {unpacked.timestamp}, ptime: {unpacked.pTime}, received IP: {unpacked.receivedId}, received time: {unpacked.receivedTimestamp}, piggyData: {unpacked.piggy}, data: {unpacked.data}')
-    except Exception as e:
-        print(e)
+dataframe = ProcessData(dataTime=time.time(), txTime=time.time(), postTxTime=time.time(), payload="dataframe")
 
-sync = Sync(interfaceGT = wifi.getInterface(), addressGT="dk.pool.ntp.org")
-sync.syncGT()
+print(ProcessData.unpack(dataframe.buildSensorFrame()))
+
+headendDataframe = ProcessData(rxTime=time.time(), txTime=time.time(), postTxTime=time.time(), piggy="piggyData", payload=dataframe.buildSensorFrame(), receivedIP="localhost")
+
+print(ProcessData.unpack(headendDataframe.buildHeadendFrame()))
+
+print()
+print(headendDataframe.buildHeadendFrame().replace(SEP, green("|")).replace(DSEP, blue("|")).replace(EOP, magenta("|")))

@@ -1,97 +1,114 @@
-import time
-
 # This module has been documented with DocString, it is a string format following a definition, it will show up in your VSCode documentation on hovering
 
+SEP =   "\uFFFF"
+"""Regular field seperator"""
+DSEP =  "\uFFFE"
+"""Piggyback data field seperator"""
+EOP =   "\uFFFD"
+"""End Of Packet seperator"""
+
+
 class ProcessData:
-    """This class will handle processing of data, it will attach timestamps, build the data into a dataframe containing SEPERATOR between data points
-    
-    The dataframe structure:
+    """This class will define a data frame and build it, it can also recursively unpack a data frame"""
 
-    <timestamp>SEPERATOR<pTime>SEPERATOR<data>
-    """
+    # This is the received timestamp
+    rxTime:float = None
 
+    # This is the transmitted timestamp of the PREVIOUS frame
+    txTime:float = None
 
-    SEPERATOR = "\uFFFF"
-    DATASEPERATOR = "\uFFFE"
-    """ This seperator will be used to seperate data in the packet, this will be a constant and can be changed at any time.
+    # This is the timestamp taken after transmitting the PREVIOUS frame
+    postTxTime:float = None
 
-    It is initially set to the unicode character \uFFFF as its an unused character and is unlikely to be found in the dataframe """
+    # This is the payload of the packet
+    payload:str = None
 
-    timestamp:float = None
-    """The timestamp of when the dataframe was initially built"""
-    data:str = None
-    """The payload data to be sent in the dataframe"""
-    pTime:float = None
-    """Processing time, the time taken to process the data"""
-    receivedId:str = None
-    """The received IP address, it can be null if its the source node"""
+    # This is the piggybacked data, it can be null
     piggy:str = None
-    """If the current node is adding its own sensor data to the node, it can be null"""
-    receivedTimestamp:float = None
-    """The timestamp of when the packet has been received"""
 
+    # This is the IP address of the data received
+    receivedIP:str = None
 
-    def __init__(self, data:str, packed=False) -> None:
-        """The constructor of this class, it unpacks the data if it is packed or just sets the data of the frame if it isn't already packed"""
-        # Start the processing time timer
-        self.pTimeStart = time.time()
-        # if the data is packed
-        if packed:
-            # unpack the timestamp at the first index
-            self.timestamp = data.split(self.SEPERATOR)[0]
-            # unpack the processing time at the second index
-            self.pTime = data.split(self.SEPERATOR)[1]
-            if data.count(self.SEPERATOR) == 2: # this is a sensor packet
-                # unpack the rest as data
-                self.data = data.split(self.SEPERATOR, 2)[2]
-            else: # if the packet is a headend
-                # unpack received timestamp
-                self.receivedTimestamp = data.split(self.SEPERATOR)[2]
-                # unpack the received id, this might be between a seperator and a data seperator
-                self.receivedId = data.split(self.SEPERATOR)[3].split(self.DATASEPERATOR)[0]
-                # if there is a data seperator in the 3rd index
-                if self.DATASEPERATOR in data.split(self.SEPERATOR)[3]:
-                    # unpack the piggy data
-                    self.piggy = data.split(self.SEPERATOR)[3].split(self.DATASEPERATOR)[1]
-                # unpack the rest of the data and save it in the data attribute
-                self.data = data.split(self.SEPERATOR, 4)[4]
-        else:
-            # save all the data into the data attribute
-            self.data = data
+    # This is the constructor, it takes parameters and sets attributes based on the variables
+    def __init__(self, rxTime=None, dataTime=None, txTime=None, postTxTime=None, payload=None, piggy=None, receivedIP=None) -> None:
+        self.rxTime = rxTime if rxTime else dataTime
+        self.txTime = txTime
+        self.postTxTime = postTxTime
+        self.payload = payload
+        self.piggy = piggy
+        self.receivedIP = receivedIP
 
-    def buildFrame(self):
-        """This method builds the dataframe from data saved, if its a frame that has been unpacked, it will just repack it with the same data"""
+    def setRxTime(self, value:float):
+        """Setter for the rxTime attribute"""
+        self.rxTime = value
+        return self
+    
+    def setDataTime(self, value:float):
+        """Setter for the rxTime attribute to be used for sensor packets"""
+        self.rxTime = value
+        return self
 
-        # add timestamp
-        data = f'{str(time.time()) if self.timestamp is None else self.timestamp}'
-        # add processing time
-        data += f'{self.SEPERATOR}{str(time.time()-self.pTimeStart) if self.pTime is None else self.pTime}'
-        # add received timestamp
-        data += f'{self.SEPERATOR+str(self.receivedTimestamp) if self.receivedTimestamp else ""}'
-        # add received IP
-        data += f'{self.SEPERATOR+self.receivedId if self.receivedId else ""}'
-        # add any piggybacked data
-        data += f'{self.DATASEPERATOR+self.piggy if self.piggy else ""}{self.SEPERATOR}'
-        # add the rest of the data
-        data += self.data
+    
+    def setTxTime(self, value:float):
+        """Setter for the txTime attribute"""
+        self.txTime = value
+        return self
+    
+    def setPostTxTime(self, value:float):
+        """Setter for the postTxTime attribute"""
+        self.postTxTime = value
+        return self
+    
+    def setPayload(self, value:str):
+        """Setter for the payload attribute"""
+        self.payload = value
+        return self
+    
+    def setPiggy(self, value:str):
+        """Setter for the piggy attribute"""
+        self.piggy = value
+        return self
+    
+    def setReceivedIP(self, value:str):
+        """Setter for the receivedIP attribute"""
+        self.receivedIP = value
+        return self
+    
+    def buildSensorFrame(self):
+        """"""
+        data = SEP.join([str(self.rxTime), str(self.txTime), str(self.postTxTime), str(self.payload)])
+        data += EOP
 
-        # Return a data frame, a string of data seperated by SEPERATOR. <string>.join() will create a string from a list where list entries are seperated by <string>
         return data
     
-    def unpackFrame(data):
-        """This method just returns the constructor with the packed data and the packed flag turned on"""
-        return ProcessData(data, True)
-    
-    def setReceivedId(self, address:str):
-        """This method sets the received id, this will be an IP address"""
-        self.receivedId = address
-        return self
-    
-    def setPiggy(self, data:str):
-        """Sets the piggybacked data"""
-        self.piggy = data
-        return self
+    def buildHeadendFrame(self):
+        data = SEP.join([str(self.rxTime), str(self.txTime), str(self.postTxTime)])
+        data += f'{DSEP}{str(self.piggy)}{SEP}'
+        data += SEP.join([str(self.receivedIP), str(self.payload)])
+        data += EOP
 
-    def setReceivedTimestamp(self, timestamp):
-        self.receivedTimestamp = timestamp
-        return self
+        return data
+    
+    def unpack(dataframe:str) -> dict[str, str | dict[str, str]]:
+        isHeadend = False if dataframe.count(SEP) == 3 else True
+
+        seperated = dataframe.split(SEP)
+        if isHeadend:
+            return {
+                "rxTime":seperated[0],
+                "txTime":seperated[1],
+                "postTxTime":seperated[2].split(DSEP)[0],
+                "piggy":seperated[2].split(DSEP)[1] if len(seperated[2].split(DSEP)) > 1 else None,
+                "receivedIP":seperated[3],
+                "payload":ProcessData.unpack(dataframe.split(SEP, 4)[4])
+            }
+        else:
+            return {
+                "dataTime":seperated[0],
+                "txTime":seperated[1],
+                "postTxTime":seperated[2],
+                "payload":seperated[3].split(EOP)[0],
+                "numHeaders":dataframe.count(EOP)
+            }
+            
+
