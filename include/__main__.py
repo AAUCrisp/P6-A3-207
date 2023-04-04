@@ -1,39 +1,47 @@
 # Module file, this is used to test the include files functionality
 
-import NetTechnology
-import ProcessData
-import Sync
+import sys
+import time
+print(sys.path)
+print(sys.path.append(sys.path[0]+"/.."))
 
-wifi = NetTechnology.NetTechnology()
+from include.NetTechnology import NetTechnology
+from include.ProcessData import ProcessData, SEP, DSEP, EOP
+from include.Sync import Sync
+from include.Formatting import *
+
+
+wifi = NetTechnology("wifi")
 
 print(f'wifi: {wifi.connection}')
 print(f'wifi: {wifi.deviceName}')
 print(f'wifi: {wifi.getInterface()}')
 print(f'wifi: {wifi.type}')
 
-loopback = NetTechnology.NetTechnology("loopback")
+loopback = NetTechnology("loopback")
 
 print(f'loopback: {loopback.connection}')
 print(f'loopback: {loopback.deviceName}')
 print(f'loopback: {loopback.getInterface()}')
 print(f'loopback: {loopback.type}')
 
-ethernet = NetTechnology.NetTechnology("ethernet")
+ethernet = NetTechnology("ethernet")
 
 print(f'ethernet: {ethernet.connection}')
 print(f'ethernet: {ethernet.deviceName}')
 print(f'ethernet: {ethernet.getInterface()}')
 print(f'ethernet: {ethernet.type}')
 
-for i in range(1, 11):
-    try:
-        dataFrame = ProcessData.ProcessData(f'test{ProcessData.ProcessData.SEPERATOR}'*i)
-        print(f'{i}] Data: {dataFrame.data}, timestamp: {dataFrame.timestamp}, pTime: {dataFrame.pTime}')
-        builtFrame = dataFrame.buildFrame()
-        unpacked = ProcessData.ProcessData.unpackFrame(builtFrame)
-        print(f'{i}] Data: {unpacked.data}, timestamp: {unpacked.timestamp}, pTime: {unpacked.pTime}')
-        print()
-    except Exception as e:
-        print(e.with_traceback())
+#sync = Sync(interfaceGT = wifi.getInterface(), addressGT="dk.pool.ntp.org")
+#sync.syncGT()
 
-Sync.Sync(wifi.getInterface()).syncGT()
+dataframe = ProcessData(dataTime=time.time(), txTime=time.time(), postTxTime=time.time(), payload="dataframe")
+
+print(ProcessData.unpack(dataframe.buildSensorFrame()))
+
+headendDataframe = ProcessData(rxTime=time.time(), txTime=time.time(), postTxTime=time.time(), piggy="piggyData", payload=dataframe.buildSensorFrame(), receivedIP="localhost")
+
+print(ProcessData.unpack(headendDataframe.buildHeadendFrame()))
+
+print()
+print(headendDataframe.buildHeadendFrame().replace(SEP, green("|")).replace(DSEP, blue("|")).replace(EOP, magenta("|")))
