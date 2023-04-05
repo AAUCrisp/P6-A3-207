@@ -9,7 +9,7 @@ from time import sleep, time
 
 # This module has been documented with DocString, it is a string format following a definition, it will show up in your VSCode documentation on hovering
 
-interval = 10
+interval = 3
 """This is the interval the sensor will transmit data in"""
 
 
@@ -34,15 +34,15 @@ class Sensor:
             # run infinitely
             while True:
                 # create a dataframe with the data "something"
-                dataFrame = ProcessData(ProcessData("n3").buildFrame())
+                dataFrame = ProcessData(ProcessData("main-data").buildFrame())
 
                 dataFrame.setReceivedId("localhost")
                 dataFrame.setReceivedTimestamp(time())
-                dataFrame.setPiggy("n2")
+                dataFrame.setPiggy("piggy")
                 # transmit the dataframe, here buildFrame is called to convert the processed data to a string
                 self.network.transmit(dataFrame.buildFrame())
                 # for loop to show a timer in the terminal showing when the next data will be transmitted
-                for i in range(10):
+                for i in range(interval):
                     # print the time left
                     print(f'{interval - i}{CLEAR}', end="\r")
                     # sleep for 1 second

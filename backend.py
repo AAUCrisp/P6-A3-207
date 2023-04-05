@@ -15,6 +15,13 @@ print("Server socket is now listening.")
 while True:
     for key in net.data.keys():
         if len(net.data[key]) > 0:
-            print(net.data[key].pop(0))
+            packetData = net.data[key].pop(0)
+            print(packetData)
+            packet = ProcessData(packetData["data"], True)
+            transDelay = packetData['recvTime'] - float(packet.timestamp)
+            print("Sent Timestamp:       " + packet.timestamp)
+            print("Receive Timestamp:    " + str(packetData["recvTime"]))
+            print("Transmission Delay:   " + str(transDelay))
+
         else:
             sleep(1)

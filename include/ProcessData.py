@@ -37,6 +37,14 @@ class ProcessData:
         self.pTimeStart = time.time()
         # if the data is packed
         if packed:
+
+            print("\n")
+            splitted = data.split(self.SEPERATOR)
+            for i, key in enumerate(splitted):
+                print(splitted[i])
+
+            # print(data.split(self.SEPERATOR))
+
             # unpack the timestamp at the first index
             self.timestamp = data.split(self.SEPERATOR)[0]
             # unpack the processing time at the second index
