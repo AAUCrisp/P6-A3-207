@@ -7,7 +7,7 @@
 pip3 install -r requirements.txt
 
 # Run a sensor:
-python3.11 Sensor.py
+python3.11 sensor.py
 
 # Run a backend:
 python3.11 backend.py
