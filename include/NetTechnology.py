@@ -65,7 +65,7 @@ class NetTechnology:
         # get the connection name from the device name specified
         self.connection = [value["connection"] for key, value in nmcliDict.items() if key == self.deviceName][0]
 
-        self.interface = [line for line in check_output(f'nmcli -t c show {self.connection}'.split(" ")).decode().split("\n") if "IP-IFACE" in line][0].split(":")[1]
+        self.interface = [line for line in check_output(['nmcli', '-t', 'c', 'show', self.connection]).decode().split("\n") if "IP-IFACE" in line][0].split(":")[1]
 
     def getInterface(self):
         """This method is deprecated as its functionality has been moved to the constructor, call self.interface instead"""
