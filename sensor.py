@@ -32,18 +32,26 @@ class Sensor:
             # hide the cursor
             hide()
             # run infinitely
+            txTime = -1
+            postTxTime = -1
             while True:
-                # create a dataframe with the data "something"
-                dataFrame = ProcessData(ProcessData("n3").buildFrame()) 
-                # transmit the dataframe, here buildFrame is called to convert the processed data to a string
-                self.network.transmit(dataFrame.buildFrame())
-                # for loop to show a timer in the terminal showing when the next data will be transmitted
-                for i in range(10):
-                    # print the time left
-                    print(f'{interval - i}{CLEAR}', end="\r")
-                    # sleep for 1 second
+                sleepEnd = time()+interval
+                while sleepEnd > time():
+                    print(int(sleepEnd-time()), end="\r")
                     sleep(1)
-        # if a keyboardinterrupt happens, unhide the cursor
+                    if (sleepEnd - time()) < 5 and (sleepEnd - time()) > 4:
+                        dataTime = time()
+                dataframe = ProcessData()
+
+                dataframe.setDataTime(dataTime)
+                dataframe.setTxTime(txTime)
+                dataframe.setPostTxTime(postTxTime)
+                dataframe.setPayload("some payload")
+
+                txTime = time()
+                self.network.transmit(dataframe.buildSensorFrame())
+                postTxTime = time()
+
         except KeyboardInterrupt: unhide()
 
 # The main of this program
