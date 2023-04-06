@@ -25,6 +25,7 @@ class NetTechnology:
     deviceName:str
     type:str
     connection:str
+    interface:str
 
 
     def __init__(self, type="wifi") -> None:
@@ -64,27 +65,8 @@ class NetTechnology:
         # get the connection name from the device name specified
         self.connection = [value["connection"] for key, value in nmcliDict.items() if key == self.deviceName][0]
 
-    def getInterface(self):
-        """This method contains a state machine that determines the method to get the interface of a network technology
-        
-        It's only currently gsm(5g) that uses a different device name from the interface name, so upon calling this method with gsm selected it will handle getting the interface in a seperate state
-        """
+        self.interface = [line for line in check_output(f'nmcli -t c show {self.connection}'.split(" ")).decode().split("\n") if "IP-IFACE" in line][0].split(":")[1]
 
-        # start the state machine on the type of the network
-        match self.type:
-            # first state, if its a gsm module
-            case "gsm":
-                # get the output of nmcli and split it in newlines
-                nmcli = check_output(["nmcli"]).decode("utf-8").split("\n")
-                # get the index of the line containing device name and connection and increment it by 2 to get to the line number desired
-                index = nmcli.index(f'{self.deviceName}: connected to {self.connection}')+2
-                # split the data in the line by ", " and iterate over it
-                for line in nmcli[index].split(", "):
-                    # check whether this data key is iface, meaning interface
-                    if "iface" in line:
-                        # return if it is found and remove the key identifier, resulting in the interface name
-                        return line.replace("iface ", "")
-            
-            # for any unspecified technology, return the device name, as it will most likely be the same.
-            case _:
-                return self.deviceName
+    def getInterface(self):
+        """This method is deprecated as its functionality has been moved to the constructor, call self.interface instead"""
+        return self.interface
