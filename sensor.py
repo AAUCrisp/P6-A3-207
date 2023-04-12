@@ -12,6 +12,8 @@ from threading import Thread, Lock
 
 rxInterval = 3
 
+syncLock = Lock()
+
 class Sensor:
     """This is the main class of the sensor. it will use the programs defined under `include/` to emulate the functionality of a sensor."""
 
@@ -33,14 +35,15 @@ class Sensor:
             # run infinitely
             txTime = -1
             postTxTime = -1
+            syncLock.acquire()
             while True:
-                dataTime = time()
+                dataTime = SVTClock.get()
                 dataframe = ProcessData()
 
                 dataframe.setDataTime(dataTime)
                 dataframe.setTxTime(txTime)
                 dataframe.setPostTxTime(postTxTime)
-                dataframe.setPayload(payload)
+                dataframe.setPayload("some data")
 
                 txTime = SVTClock.get()
                 self.network.transmit(dataframe.buildSensorFrame())
@@ -48,15 +51,10 @@ class Sensor:
                 syncLock.release()
                 sleep(.1)
 
-                sleepEnd = time() + rxInterval
-                while sleepEnd > time():
-                    print(int(sleepEnd-time()+1), end="\r")
-                    sleep(1)
-
-
-                sleepEnd = time() + rxInterval
-                while sleepEnd > time():
-                    print(int(sleepEnd-time()+1), end="\r")
+                syncLock.acquire()
+                sleepEnd = SVTClock.get() + rxInterval
+                while sleepEnd > SVTClock.get():
+                    print(int(sleepEnd-SVTClock.get()+1), end="\r")
                     sleep(1)
 
 
@@ -65,14 +63,14 @@ class Sensor:
 def runSync():
     global SVTClock, GTClock, syncLock
     s = Sync(
-        addressGT=  ips["up2"]["ethernet"],
+        addressGT=  ips["up2"][interfaceGT],
         address=    ips["up2"]["wifi"],
-        interfaceGT="ethernet",
+        interfaceGT=interfaceGT,
         interface=  "wifi"
     )
     while True:
         syncLock.acquire()
-        GTClock.set(s.syncGT())
+        GTClock.set(s.syncGT())      # Throws Error... fix instead of comment out!
         SVTClock.set(s.sync())
         syncLock.release()
         sleep(30) # only sync every 30 seconds
