@@ -1,17 +1,17 @@
 import sqlite3
-import subprocess
+# import subprocess
 
 
 class Database():
 
-    fileName = "db.db3"
+    filePath = "/include/db.db3"
 
-    def __init__(self, fileName = None):
-        if (fileName != None):
-            self.fileName = fileName
-            
 
-        self.con = sqlite3.connect(self.fileName, detect_types=sqlite3.PARSE_COLNAMES | sqlite3.PARSE_DECLTYPES)    # Create connection to DB file
+    def __init__(self, filePath = None):
+        if (filePath != None):
+            self.filePath = filePath
+        
+        self.con = sqlite3.connect(self.filePath, detect_types=sqlite3.PARSE_COLNAMES | sqlite3.PARSE_DECLTYPES)    # Create connection to DB file
         self.con.row_factory = self.dict_factory    # Make dictionaries instead of lists
         self.cur = self.con.cursor()        # Create a cursor in the DB
 
@@ -36,7 +36,7 @@ class Database():
         # print("Inside DB Fetch")
 
 
-        self.con = sqlite3.connect(self.fileName, detect_types=sqlite3.PARSE_COLNAMES | sqlite3.PARSE_DECLTYPES)    # Create connection to DB file
+        self.con = sqlite3.connect(self.filePath, detect_types=sqlite3.PARSE_COLNAMES | sqlite3.PARSE_DECLTYPES)    # Create connection to DB file
         self.con.row_factory = self.dict_factory
         self.cur = self.con.cursor()
 
@@ -66,17 +66,29 @@ class Database():
 
 
         if config['where']:
+            
+            print(f"\nWhere parameters in DB is: {config['where']}\n")
+            print(f"Where OR key is: {config['where']['ip5g']}\n")
+
+            orState = False
+
             for i, key in enumerate(config['where']):
 
-                if i>0:     # If not first column
-                    sql += """ 
+                if i>0 and orState == False:     # If not first column
+                    if key != "OR":
+                        sql += """ 
             AND """
+                    else:
+                        sql += """ 
+            OR """
+                        orState = True
 
-                else:       # If first column
+                elif i == 0:       # If first column
                     sql += """
             WHERE """
-                
-                sql += f"""{key}={config['where'][key]}"""
+
+                if key != "OR":
+                    sql += f"""{key}='{config['where'][key]}'"""
 
 
         print(f"\nSQL Statement is:{sql}\n\n")
@@ -89,7 +101,6 @@ class Database():
 
     ####################################
     ###  --  Test Printing Area  -- 
-
         print(f"Fetched data is:")
         for row in rows:
             print(f"{row}")
@@ -121,7 +132,7 @@ class Database():
     def insert(self, table, params):
         # print("Inside DB Insert")
 
-        self.con = sqlite3.connect(self.fileName, detect_types=sqlite3.PARSE_COLNAMES | sqlite3.PARSE_DECLTYPES)    # Create connection to DB file
+        self.con = sqlite3.connect(self.filePath, detect_types=sqlite3.PARSE_COLNAMES | sqlite3.PARSE_DECLTYPES)    # Create connection to DB file
         self.con.row_factory = self.dict_factory
         self.cur = self.con.cursor()
 
@@ -171,7 +182,7 @@ class Database():
     ######################################
     #  --  General update function  --
     def update(self, table, params):
-        self.con = sqlite3.connect(self.fileName, detect_types=sqlite3.PARSE_COLNAMES | sqlite3.PARSE_DECLTYPES)    # Create connection to DB file
+        self.con = sqlite3.connect(self.filePath, detect_types=sqlite3.PARSE_COLNAMES | sqlite3.PARSE_DECLTYPES)    # Create connection to DB file
         self.con.row_factory = self.dict_factory
         self.cur = self.con.cursor()
 

@@ -100,7 +100,7 @@ class ProcessData:
         `E|` EOP seperator, indicating End Of Packet
         """
         data = SEP.join([str(self.rxTime), str(self.txTime), str(self.postTxTime), str(self.payload)])
-        data += EOP
+        # data += EOP
 
         return data
     

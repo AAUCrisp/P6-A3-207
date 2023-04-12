@@ -3,8 +3,13 @@ import argparse         # For parsing terminal arguments
 import sys
 from threading import Thread
 from time import time, sleep
+import os
+testPath = os.path.abspath("")
+testPath = os.getcwd()
+print(testPath)
 
 # Own includes
+from include.Formatting import *
 from include.NetTechnology import *       # For finding netinterface IDs
 from include.Network import *
 from include.ProcessData import *
@@ -57,6 +62,10 @@ parser.add_argument('-port', type=int, required=False)
 parser.add_argument('-gt', type=str, required=False)
 parser.add_argument('-gtInt', type=str, required=False)
 parser.add_argument('-loop', action=argparse.BooleanOptionalAction)
+parser.add_argument('-dev', action=argparse.BooleanOptionalAction)
+parser.add_argument('-v', action=argparse.BooleanOptionalAction)
+parser.add_argument('-delay', type=int, required=False)
+parser.add_argument('-cwd', type=str, required=False)
 args = parser.parse_args()    # The array containing our arguments
 
 # print(args)
@@ -69,13 +78,38 @@ interfaceTarget = str(args.int) if args.int else 'wifi'
 ipTarget = ips[str(args.target)][interfaceTarget] if args.target else ips['up2'][interfaceTarget]
 portTarget = str(args.port) if args.port else 8888
 
+# Set working directory
+global path
+path = args.cwd if args.cwd else ""
+os.chdir(path)
+
+
+"""This is the interval the sensor will transmit data in"""
+rxInterval = int(args.delay) if args.delay else 3
+global verbose
+verbose = True if args.v else False
+
+# If 'dev' argument is called
+if args.dev: 
+    ipTarget = '127.0.0.1'
+    interfaceTarget = 'loopback'
+    interfaceGT = 'wifi'
+    ipGT = ips['up2'][interfaceGT]
+
 # If 'loopback' argument is called
 if args.loop: 
     ipTarget = '127.0.0.1'
     interfaceTarget = 'loopback'
 
-# print(interfaceGT)
-# print(ipGT)
-# print(interfaceTarget)
-# print(ipTarget)
-# print(portTarget)
+if verbose:
+    print(f"Set GT Interface is:  {interfaceGT}")
+    print(f"Set GT IP is:         {ipGT}")
+    print(f"Set Forward-Node is:  {interfaceTarget}")
+    print(f"Set Forward IP is:    {ipTarget}")
+    print(f"Set Forward Port is:  {portTarget}")
+    print(f"Absolute Path is:     {path}")
+    # dbPath = path + "/include/Database.py"
+    # print(f"Absolute Path is:     {dbPath}")
+
+    def frPrint(payload):
+        print(payload.replace(SEP, red(" | ")).replace(DSEP, blue(" | ")).replace(EOP, magenta(" | ")))

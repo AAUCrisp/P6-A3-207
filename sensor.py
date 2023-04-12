@@ -1,7 +1,7 @@
-from include.NetTechnology import *
+# from include.NetTechnology import *
 from include.Formatting import *
-from include.Network import *
-from include.ProcessData import *
+# from include.Network import *
+# from include.ProcessData import *
 from include.setup import *
 
 from time import sleep
@@ -10,10 +10,7 @@ from threading import Thread, Lock
 
 # This module has been documented with DocString, it is a string format following a definition, it will show up in your VSCode documentation on hovering
 
-interval = 5
-"""This is the interval the sensor will transmit data in"""
-
-syncLock = Lock()
+rxInterval = 3
 
 class Sensor:
     """This is the main class of the sensor. it will use the programs defined under `include/` to emulate the functionality of a sensor."""
@@ -28,8 +25,7 @@ class Sensor:
         self.network.connect(ipTarget, portTarget)
     
     def run(self):
-        """This method runs the sensor program, it will send data using the network every <interval> seconds"""
-        global SVTClock, GTClock, syncLock
+        """This method runs the sensor program, it will send data using the network every <rxInterval> seconds"""
         # try/catch clause to restore terminal state after a keyboardinterrupt
         try: 
             # hide the cursor
@@ -38,14 +34,7 @@ class Sensor:
             txTime = -1
             postTxTime = -1
             while True:
-                syncLock.acquire()
-                sleepEnd = SVTClock.get()+interval
-                while sleepEnd > SVTClock.get():
-                    print(int(sleepEnd-SVTClock.get()), end="\r")
-                    sleep(1)
-                    if (sleepEnd - SVTClock.get()) < int(interval/2) and (sleepEnd - SVTClock.get()) > int(interval/2)-1:
-                        dataTime = SVTClock.get()
-                        payload = "some payload"
+                dataTime = time()
                 dataframe = ProcessData()
 
                 dataframe.setDataTime(dataTime)
@@ -58,6 +47,12 @@ class Sensor:
                 postTxTime = SVTClock.get()
                 syncLock.release()
                 sleep(.1)
+
+                sleepEnd = time() + rxInterval
+                while sleepEnd > time():
+                    print(int(sleepEnd-time()+1), end="\r")
+                    sleep(1)
+
 
         except KeyboardInterrupt: unhide()
 
