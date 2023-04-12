@@ -21,7 +21,7 @@ ips = {
         'gsm': '10.31.0.13',
         'ethernet': '10.0.0.10',
     },
-    'up2': { # has the NTP server
+    'up2': {                        # has the NTP server
         'wifi': '192.168.1.107', 
         'gsm': '10.31.0.102',
         'ethernet': '10.0.0.20',
