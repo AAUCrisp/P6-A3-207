@@ -42,7 +42,7 @@ class Sync:
         #os.system(f'date -s @{NTP}') <- deprecated functionality
 
     def sync(self):
-        """This method synchronizes the "Ground Truth", this is interpreted as NTP synchronization, here a method of ntplib has been modified as shown below to use a specific interface."""
+        """This method synchronizes the "System Virtual Time", this is interpreted as NTP synchronization, here a method of ntplib has been modified as shown below to use a specific interface."""
         # get the NTP timestamp
         medium = NetTechnology(self.interface)
 

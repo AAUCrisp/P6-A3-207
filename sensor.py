@@ -10,7 +10,7 @@ from threading import Thread, Lock
 
 # This module has been documented with DocString, it is a string format following a definition, it will show up in your VSCode documentation on hovering
 
-interval = 10
+interval = 5
 """This is the interval the sensor will transmit data in"""
 
 syncLock = Lock()
@@ -28,8 +28,8 @@ class Sensor:
         self.network.connect(ipTarget, portTarget)
     
     def run(self):
-        global SVTClock, GTClock, syncLock
         """This method runs the sensor program, it will send data using the network every <interval> seconds"""
+        global SVTClock, GTClock, syncLock
         # try/catch clause to restore terminal state after a keyboardinterrupt
         try: 
             # hide the cursor
@@ -43,10 +43,9 @@ class Sensor:
                 while sleepEnd > SVTClock.get():
                     print(int(sleepEnd-SVTClock.get()), end="\r")
                     sleep(1)
-                    if (sleepEnd - SVTClock.get()) < 5 and (sleepEnd - SVTClock.get()) > 4:
+                    if (sleepEnd - SVTClock.get()) < int(interval/2) and (sleepEnd - SVTClock.get()) > int(interval/2)-1:
                         dataTime = SVTClock.get()
                         payload = "some payload"
-                syncLock.release()
                 dataframe = ProcessData()
 
                 dataframe.setDataTime(dataTime)
@@ -57,6 +56,8 @@ class Sensor:
                 txTime = SVTClock.get()
                 self.network.transmit(dataframe.buildSensorFrame())
                 postTxTime = SVTClock.get()
+                syncLock.release()
+                sleep(.1)
 
         except KeyboardInterrupt: unhide()
 
@@ -70,8 +71,8 @@ def runSync():
     )
     while True:
         syncLock.acquire()
-        GTClock.set(s.syncGT())
-        SVTClock.set(s.sync())
+        #GTClock.set(s.syncGT())
+        SVTClock.set(1)
         syncLock.release()
         sleep(30) # only sync every 30 seconds
 
