@@ -37,15 +37,27 @@ class Sync:
         # get the NTP timestamp
         ethernet = NetTechnology(self.interfaceGT)
 
-        NTP = requestNTP(self.addressGT, interface=ethernet.getInterface())
+        return requestNTP(self.addressGT, interface=ethernet.getInterface())
         # set the NTP timestamp on the system, this will only be changed for the running process if NTP synchronization is automatic on the system its running on.
-        os.system(f'date -s @{NTP}')
+        #os.system(f'date -s @{NTP}') <- deprecated functionality
 
+    def sync(self):
+        """This method synchronizes the "Ground Truth", this is interpreted as NTP synchronization, here a method of ntplib has been modified as shown below to use a specific interface."""
+        # get the NTP timestamp
+        medium = NetTechnology(self.interface)
 
+        return requestNTP(self.address, interface=medium.getInterface())
+        # set the NTP timestamp on the system, this will only be changed for the running process if NTP synchronization is automatic on the system its running on.
+        #os.system(f'date -s @{NTP}') <- deprecated functionality
 
+class Clock:
+    offset = 0
 
+    def get(self) -> float:
+        return time.time() + self.offset
 
-
+    def set(self, value):
+        self.offset = value - time.time()
 
 # This function is a modified version of the one found at: https://github.com/cf-natali/ntplib/blob/08d0f7ef766715a52f472901de5e382c8f773855/ntplib.py#L286
 def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_UNSPEC, interface:str = "lo"):  # pylint: disable=no-self-use,too-many-arguments
@@ -99,6 +111,11 @@ def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_
         stats.dest_timestamp = dest_timestamp
 
         return stats.tx_time
+
+GTClock = Clock()
+SVTClock = Clock()
+
+
 
 
 # The main of this program
