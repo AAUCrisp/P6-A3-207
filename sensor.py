@@ -54,6 +54,12 @@ class Sensor:
                     sleep(1)
 
 
+                sleepEnd = time() + rxInterval
+                while sleepEnd > time():
+                    print(int(sleepEnd-time()+1), end="\r")
+                    sleep(1)
+
+
         except KeyboardInterrupt: unhide()
 
 def runSync():
