@@ -71,8 +71,8 @@ def runSync():
     )
     while True:
         syncLock.acquire()
-        #GTClock.set(s.syncGT())
-        SVTClock.set(1)
+        GTClock.set(s.syncGT())
+        SVTClock.set(s.sync())
         syncLock.release()
         sleep(30) # only sync every 30 seconds
 
