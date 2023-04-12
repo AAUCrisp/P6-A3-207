@@ -81,7 +81,8 @@ portTarget = str(args.port) if args.port else 8888
 # Set working directory
 global path
 path = args.cwd if args.cwd else ""
-os.chdir(path)
+if path != "":
+    os.chdir(path)
 
 
 """This is the interval the sensor will transmit data in"""
