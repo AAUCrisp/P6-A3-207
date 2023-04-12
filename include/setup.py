@@ -1,7 +1,7 @@
 # General setup for all nodes
 import argparse         # For parsing terminal arguments
 import sys
-from threading import Thread
+from threading import Thread, Lock
 from time import time, sleep
 import os
 testPath = os.path.abspath("")
@@ -79,7 +79,7 @@ ipTarget = ips[str(args.target)][interfaceTarget] if args.target else ips['up2']
 portTarget = str(args.port) if args.port else 8888
 
 # Set working directory
-global path
+# global path
 path = args.cwd if args.cwd else ""
 if path != "":
     os.chdir(path)
@@ -87,7 +87,7 @@ if path != "":
 
 """This is the interval the sensor will transmit data in"""
 rxInterval = int(args.delay) if args.delay else 3
-global verbose
+# global verbose
 verbose = True if args.v else False
 
 # If 'dev' argument is called

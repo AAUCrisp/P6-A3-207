@@ -1,16 +1,16 @@
 # from include.NetTechnology import *
-from include.Formatting import *
+# from include.Formatting import *
 # from include.Network import *
 # from include.ProcessData import *
 from include.setup import *
 
-from time import sleep
-from threading import Thread, Lock
+# from time import sleep
+# from threading import Thread, Lock
 
 
 # This module has been documented with DocString, it is a string format following a definition, it will show up in your VSCode documentation on hovering
 
-rxInterval = 3
+# rxInterval = 3
 
 syncLock = Lock()
 
@@ -70,7 +70,7 @@ def runSync():
     )
     while True:
         syncLock.acquire()
-        GTClock.set(s.syncGT())      # Throws Error... fix instead of comment out!
+        GTClock.set(s.syncGT())
         SVTClock.set(s.sync())
         syncLock.release()
         sleep(30) # only sync every 30 seconds
