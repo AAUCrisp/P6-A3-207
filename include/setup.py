@@ -15,6 +15,11 @@ from include.Network import *
 from include.ProcessData import *
 from include.Sync import *
 
+
+#######################################
+#  --  Preset Connection Setup  --
+#               Start
+
 ips = {
     'up0': {
         'wifi': '192.168.1.105',
@@ -54,7 +59,12 @@ ips = {
     }
 }
 
-# Argument Parsing Setup
+#                End
+#  --  Preset Connection Info  --
+#######################################
+#  --  Argument Parsing Setup  --
+#               Start
+
 parser = argparse.ArgumentParser()
 parser.add_argument('-target', type=str, required=False)
 parser.add_argument('-tech', type=str, required=False)
@@ -84,8 +94,6 @@ txInterval = int(args.delay) if args.delay else 3
 interfaceGT = str(args.gtTech) if args.gtTech else "ethernet"
 ipGT = ips[str(args.gt)][interfaceGT] if args.gt else ips['up2'][interfaceGT]
 
-
-
 # SVT Variables
 interfaceSVT = interfaceTarget
 ipSVT = ips['up2'][interfaceSVT]
@@ -95,26 +103,25 @@ ipSVT = ips['up2'][interfaceSVT]
 if args.cwd:
     os.chdir(args.cwd)
 
-
-
-
-
-
 verbose = True if args.v else False
 
-# If 'dev' argument is called
-if args.dev: 
-    # ipOut = '127.0.0.1'
-    # interfaceTarget = 'loopback'
+if args.dev:
     interfaceGT = 'wifi'
     ipGT = ips['up2'][interfaceGT]
 
-# If 'loopback' argument is called
 if args.loop or args.dev: 
     ipOut = '127.0.0.1'
     interfaceTarget = 'loopback'
     interfaceSVT = 'wifi'
     ipSVT = ips['up2'][interfaceSVT]
+
+#                End
+#  --  Argument Parsing Setup  --
+#######################################
+#######################################
+#  --   General Thingy Stuff   --
+#               Start
+
 
 if verbose:
     print(f"Set GT Interface is:  {interfaceGT}")
