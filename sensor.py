@@ -97,6 +97,10 @@ class Sensor:
             unhide()
             self.network.close()
 
+        # Catch keyboardinterrupts to exit the program
+        except KeyboardInterrupt: 
+            # show the cursor again
+            unhide()
 
 
 # The main of this program
