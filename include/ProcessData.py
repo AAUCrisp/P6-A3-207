@@ -62,6 +62,10 @@ class ProcessData:
         self.rxTime = value
         return self
     
+    def setGTRxTime(self, value:float):
+        """Setter for the GTRxTime attribute"""
+        self.GTRxTime = value
+    
     def setDataTime(self, value:float):
         """Setter for the rxTime attribute to be used for sensor packets"""
         self.rxTime = value
@@ -70,6 +74,11 @@ class ProcessData:
     def setTxTime(self, value:float):
         """Setter for the txTime attribute"""
         self.txTime = value
+        return self
+    
+    def setGTTxTime(self, value:float):
+        """Setter for the GTTxTime attribute"""
+        self.GTTxTime = value
         return self
     
     def setPostTxTime(self, value:float):
@@ -182,6 +191,7 @@ class ProcessData:
         layer = dataframe.split(EON)[0].split(SEP)
         nextLayer = dataframe.split(EON)[1]
         if isHeadend:
+            nextLayer = dataframe.split(EON)[1]
             return {
                 "txTime":       float(layer[0]),
                 "rxTime":       float(layer[1]),

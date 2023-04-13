@@ -36,6 +36,7 @@ class Sensor:
 
             # set default values for some post processing data
             txTime = -1
+            GTTxTime = -1
             postTxTime = -1
             sent = 0
             RTOdifference = None
