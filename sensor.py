@@ -83,6 +83,8 @@ class Sensor:
                     countdown = int(sleepEnd-SVTClock.get()+1)
                     # Print a formatted string with the aforementioned count of sent data, and a countdown to the next transmission
                     print(f"{UP}Transfers: {sent}   Next transfer in: {countdown}")
+
+                    if self.network.isClosed: return
                     # Sleep to preserve system resources
                     sleep(1)
                 # Release the syncronization lock
