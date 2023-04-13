@@ -139,17 +139,19 @@ class ProcessData:
 
         `E|` EOP seperator, indicating End Of Packet
         """
-        data = SEP.join([
-            str(self.rxTime), 
-            str(self.GTRxTime),
-            str(self.txTime), 
-            str(self.GTTxTime),
-            str(self.postTxTime),
-            str(self.GTPostTxTime)])
-        if self.piggy:
+        data = SEP.join([str(self.rxTime), str(self.txTime), str(self.postTxTime)])
+
+        print(f"Piggy Variable Holds: {self.piggy}")
+        if self.piggy != None:
+            print("Entered Piggy Thing:")
             data += f'{PB}{str(self.piggy)}'
+            self.piggy:str = None
+            
         data += f'{SEP}{str(self.receivedIP)}'
-        data+= f'{EON}{str(self.payload)}'
+        data += f'{EON}{str(self.payload)}'
+        # data += SEP.join([str(self.receivedIP), str(self.payload)])
+        # data += EOP.join([str(self.receivedIP), str(self.payload)])
+        # data += EOP
 
         return data
     
