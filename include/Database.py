@@ -2,6 +2,124 @@ import sqlite3
 # import subprocess
 
 
+##########################################
+#  Remove after figuring shit out!!!
+
+from ProcessData import *
+from Formatting import *
+
+SEP =   "\uFFFF"
+"""Regular field seperator"""
+DSEP =  "\uFFFE"
+"""Piggyback data field seperator"""
+EOP =   "\uFFFD"
+"""End Of Packet seperator"""
+interfaceTarget = "wifi"
+
+
+def unpack(packet, recvIP, recvTime):
+
+    layers = packet.count(EOP) + 1  # Check the number of headend jumps
+    nodes = packet.split(EOP)       # Split the frames from each headend
+
+    nodeData = [{key: value for key, value in []} for i in range(layers)]
+
+    lastIP = recvIP
+
+    print(f"Frame Layers: {layers}\n")
+
+    if layers > 0:
+        # for i, key in enumerate(nodes):
+        # for i in range(layers-1):
+        for i in range(layers-1):
+            frameData = nodes[i].split(SEP)
+
+            print(f"\nHeadend Frame Number:       {i+1}\n")
+            # print(f" -  Current Frama Data:         {key}")
+            print(f" -  Current rxTime:             {frameData[0]}")
+            print(f" -  Current txTime:             {frameData[1]}")
+            nodeData[i]['rxTime'] = frameData[0]
+            nodeData[i]['txTime'] = frameData[1]
+
+            # pigLen = frameData[2].count(DSEP)
+            # print(f"Piggy Frame: {pigLen}")
+
+            if frameData[2].count(DSEP) > 0:
+                pigFrame = frameData[2].split(DSEP)
+                print(f" -  Current prevTxTime:         {pigFrame[0]}")
+                print(f" -  Current Piggy:              {pigFrame[1]}")
+                nodeData[i]['prevTxTime'] = pigFrame[0]
+                nodeData[i]['piggy'] = pigFrame[1]
+
+                ###  OH SHIT!!! Need to add Piggy-data as a Combined !!
+
+            else:
+                print(f" -  Current prevTxTime:         {frameData[2]}")
+                nodeData[i]['prevTxTime'] = frameData[2]
+                
+            print(f" -  Current Receive IP:         {lastIP}")
+            nodeData[i]['recvIP'] = frameData[3]
+            # print(f" -  Current Payload:            {frameData[4]}")
+            lastIP = frameData[3]
+
+
+
+    frameData = nodes[layers-1].split(SEP)
+
+    print(f"\nSensor Frame Number:        {layers}")
+    print(f" -  Sensor genTime:             {frameData[0]}")
+    print(f" -  Sensor txTime:              {frameData[1]}")
+    print(f" -  Sensor prevTxTime:          {frameData[2]}")
+    print(f" -  Sensor Payload:             {frameData[3]}")
+    nodeData[layers-1]['rxTime'] = frameData[0]
+    nodeData[layers-1]['txTime'] = frameData[1]
+    nodeData[layers-1]['prevTxTime'] = frameData[2]
+    nodeData[layers-1]['recvIP'] = lastIP
+    nodeData[layers-1]['payload'] = frameData[3]
+
+    comDelay = float(recvTime) - float(frameData[0])
+
+    sensorParams = { 
+        'where': {
+            'ip5g': lastIP,
+            'OR': None,
+            'ipWifi': lastIP
+            }, 
+        }
+
+
+    print(f"\nNodeData Dict Contains:")
+    db.insertData(nodeData)
+
+    # for i in range(layers):
+    #     print(nodeData[i])
+
+    print(f"\nSensor fetch parameters in Backend is: {sensorParams['where']}\n")
+
+    sensorData = db.fetch('Node', sensorParams)
+
+    print(f"Fetched Node Data is: {sensorData}")
+
+    # Needs updates for the GT data...
+    comTrans = { 
+        'sensorId': sensorData[0]['id'],
+        'combinedDelay': comDelay,
+        'combinedDelayGT': comDelay,
+        'dataTime': frameData[0],
+        'dataTimeGT': frameData[0],
+        'deliveryTime': recvTime,
+        'deliveryTimeGT': recvTime,
+        'technology': interfaceTarget
+        }
+
+    db.insert('CombinedTransfer', comTrans)
+
+
+#  Remove after figuring shit out!!!
+###########################################
+
+
+
 class Database():
 
     filePath = "/include/db.db3"
@@ -148,18 +266,48 @@ class Database():
 
 
         # print(f"\nSQL Statement is:{sql}\n\n")
-        self.cur.execute(sql)
-        self.con.commit()
+        # self.cur.execute(sql)
+        # self.con.commit()
 
         # print(f"Inserted at row in {table} table: {self.cur.lastrowid}")
 
         return self.cur.lastrowid
 
 
-    # Method to log messages to database
-    def insert_msg(self, text, user_id, group_id):
-        params = {'text': text, 'user_id': user_id, 'group_id': group_id}
-        return self.insert('message', params)
+    # Method to run through the frames from each node and insert it into the database
+    def insertData(self, nodeData):
+        
+        # print(nodeData)
+
+        piggyFrames = []
+
+        for i in range(len(nodeData)):
+            print(nodeData[i])
+
+            # Update Last Transmissions tx and prevTx data
+            # - Fetch newest CompleteTransfer from this SensorIP
+            # -- Then fetch the HeadendTransfer IDs attached to it
+            # --- Update (insert) tx and prevTx values in "old data"
+            # ---- Can likely do it in a single SQL Sentence
+
+
+            if 'payload' in nodeData[i]:
+                # THIS IS SENSOR DATA!!!
+
+                # Insert in CombinedTransfer Table
+                print("Sensor Frame State, around line 300 in DB")
+
+            elif 'piggy' in nodeData[i]:
+                print("Sensor Frame State, around line 300 in DB")
+                piggyFrames.append(i)
+
+            else:
+                # Insert in HeadendTransfer Table
+                print("Headend Frame State, around line 300 in DB")
+
+        print(piggyFrames)
+
+        return 1
 
 
 
@@ -216,16 +364,54 @@ class Database():
 
 
 if __name__ == "__main__":
-    db = Database()
-
-    # Fetch Testing
-    db.fetch('Node')
-
-    # db.fetch_group_members(1)
+    
+    db = Database("db.db3")
 
 
-    # Insert Testing
-    # db.insert('message', {'text': 'ting er grimme', 'user_id': 2, 'group_id': 1})
+    ################################
+    ##  --  Frame Building  --
+
+    ############################
+    ##  Sensor Frame (IP0)
+    frame = "12.34" + SEP + "23.45" + SEP + "34.56" + SEP + "Random Sensor Data"
+    # - This from UP0
+    ############################
+
+    dataframe = ProcessData()
+
+    ##  First Headend Frame (UP1)
+    dataframe.setDataTime("45.67")
+    dataframe.setTxTime("56.78")
+    dataframe.setPostTxTime("67.89")
+    dataframe.setPayload(frame)
+    dataframe.setReceivedIP("10.31.0.102")  # UP0 IP
+    dataframe.setPiggy("Piglet?")
+    # - This from UP1
+
+    packet = dataframe.buildHeadendFrame()
+
+    print(f"Simulated Headend Packet is: ")
+    print(packet.replace(SEP, green(" | ")).replace(DSEP, blue(" | ")).replace(EOP, magenta(" | ")))
 
 
-    # db.insert('group', {'name': 'Nissefisk'})
+    ##  Second Headend Frame
+    dataframe.setDataTime("78.90")
+    dataframe.setTxTime("89.01")
+    dataframe.setPostTxTime("90.12")
+    dataframe.setPayload(packet)
+    dataframe.setReceivedIP("10.31.0.13")
+    # dataframe.setPiggy("Ms.Piggy?")
+
+    doubet = dataframe.buildHeadendFrame()
+
+    print(f"Simulated Headend Packet is: ")
+    print(doubet.replace(SEP, green(" | ")).replace(DSEP, blue(" | ")).replace(EOP, magenta(" | ")))
+
+    recvIP = "127.0.0.1"
+    recvTime = "78.90"
+
+
+    # unpack(packet, recvIP, recvTime)
+    unpack(doubet, recvIP, recvTime)
+
+
