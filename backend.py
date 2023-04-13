@@ -6,8 +6,8 @@ SERVERPORT = portIn
 
 def unpack(packet, recvIP, recvTime):
 
-    layers = packet.count(EOP) + 1  # Check the number of headend jumps
-    nodes = packet.split(EOP)       # Split the frames from each headend
+    layers = packet.count(EON) +1   # Check the number of headend jumps
+    nodes = packet.split(EON)       # Split the frames from each headend
 
     nodeData = [{key: value for key, value in []} for i in range(layers)]
 
@@ -25,6 +25,14 @@ def unpack(packet, recvIP, recvTime):
                 print(f" -  Current Receive IP:         {lastIP}")
                 print(f" -  Current rxTime:             {frameData[0]}")
                 print(f" -  Current txTime:             {frameData[1]}")
+            if len(frameData.count(PB)) > 0:
+                pigFrame = frameData[2].split(PB)
+                if verbose:
+                    print(f" -  Current prevTxTime:         {pigFrame[0]}")
+                    print(f" -  Current Piggy:              {pigFrame[1]}")
+            else:
+                if verbose:
+                    print(f" -  Current prevTxTime:         {frameData[2]}")
                 
             nodeData[i]['nodeIP'] = lastIP
             nodeData[i]['rxTime'] = frameData[0]
@@ -35,8 +43,8 @@ def unpack(packet, recvIP, recvTime):
             lastIP = frameData[3]
 
 
-            if frameData[2].count(DSEP) > 0:
-                pigFrame = frameData[2].split(DSEP)
+            if frameData[2].count(PB) > 0:
+                pigFrame = frameData[2].split(PB)
 
                 if verbose:
                     print(f" -  Current postTxTime:         {pigFrame[0]}")
@@ -95,27 +103,32 @@ def unpack(packet, recvIP, recvTime):
 # adapt = NetTechnology()
 
 net = Network(interfaceTarget)
-Thread(target=net.listener, args=[SERVERPORT]).start()
+Thread(target=net.listener, args=[SERVERPORT], daemon=True).start()
 print("Server socket is now listening.")
 
 
 dbPath = str(os.getcwd()) + "/include/db.db3"
 db = Database(dbPath)     # Prepare the database
+try:
+    while True:
+        for key in net.data.keys():
+            if len(net.data[key]) > 0:
+                print(f"\nData Received from Node\n___________")
 
-while True:
-    for key in net.data.keys():
-        if len(net.data[key]) > 0:
-            data = net.data[key].pop(0)
+                # Thomas' formating thing...
+                data = net.data[key].pop(0)
+                if verbose:
+                    frPrint(data['data'])
+                    print(f"\nDataframe using Key is: {net.data[key]}")
+                    # print(f"Dataframe is using Key: {net.data[key][0]['data']}")
+                    # print(proc.unpack(net.data[key]['data']))
+                unpack(data['data'], key, data['recvTime'])
+                # net.data[key].pop(0)
+                print(f"______________________________________\n")
 
-            print(f"\n___________\nData Received from Node")
-            frPrint(data['data'])   # Thomas' Formatting Thing
+            else:
+                sleep(1)
+except KeyboardInterrupt:
+    print("\rClosing network, please don't keyboardinterrupt again...")
 
-            if verbose:
-                print(f"\nDataframe using Key is: {net.data[key]}")
-
-            unpack(data['data'], key, data['recvTime'])
-            print(f"______________________________________\n")
-
-        else:
-            sleep(1)
-
+net.close()
