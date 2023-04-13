@@ -4,7 +4,7 @@ HEADENDADDR = ""        #Set constants for node address and port
 HEADENDPORT = 8888
 
 print(f"Target Interface is: " + interfaceTarget) # from include.setup, print target interface and IP
-print(f"Target IP is: " + ipTarget)
+print(f"Target IP is: " + ipOut)
 
 net = Network(interfaceTarget)
 Thread(target=net.listener, args=[HEADENDPORT]).start()

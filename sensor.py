@@ -10,7 +10,7 @@ from include.setup import *
 
 # This module has been documented with DocString, it is a string format following a definition, it will show up in your VSCode documentation on hovering
 
-# rxInterval = 3
+# txInterval = 3
 
 syncLock = Lock()
 
@@ -24,10 +24,10 @@ class Sensor:
 
         # Connect to the address passed to the constructor
         # self.network.connect(addr[0], addr[1])
-        self.network.connect(ipTarget, portTarget)
+        self.network.connect(ipOut, portOut)
     
     def run(self):
-        """This method runs the sensor program, it will send data using the network every <rxInterval> seconds"""
+        """This method runs the sensor program, it will send data using the network every <txInterval> seconds"""
         # try/catch clause to restore terminal state after a keyboardinterrupt
         try: 
             # hide the cursor
@@ -36,6 +36,8 @@ class Sensor:
             txTime = -1
             postTxTime = -1
             syncLock.acquire()
+            sent = 0
+
             while True:
                 dataTime = SVTClock.get()
                 dataframe = ProcessData()
@@ -46,15 +48,20 @@ class Sensor:
                 dataframe.setPayload("some data")
 
                 txTime = SVTClock.get()
-                self.network.transmit(dataframe.buildSensorFrame())
+                packet = dataframe.buildSensorFrame()
+                self.network.transmit(packet)
                 postTxTime = SVTClock.get()
                 syncLock.release()
+
+                sent = sent+1
+
                 sleep(.1)
 
                 syncLock.acquire()
-                sleepEnd = SVTClock.get() + rxInterval
+                sleepEnd = SVTClock.get() + txInterval
                 while sleepEnd > SVTClock.get():
-                    print(int(sleepEnd-SVTClock.get()+1), end="\r")
+                    countdown = int(sleepEnd-SVTClock.get()+1)
+                    print(f"Transfers: {sent}   Next transfer in: {countdown}", end="\r")
                     sleep(1)
 
 
@@ -63,10 +70,10 @@ class Sensor:
 def runSync():
     global SVTClock, GTClock, syncLock
     s = Sync(
-        addressGT=  ips["up2"][interfaceGT],
-        address=    ips["up2"]["wifi"],
+        addressGT=  ipGT,
+        address=    ipSVT,
         interfaceGT=interfaceGT,
-        interface=  "wifi"
+        interface=  interfaceSVT
     )
     while True:
         syncLock.acquire()
@@ -82,7 +89,7 @@ if "main" in __name__:
     syncThread.start()
 
     # create a sensor object with the headend address as an argument
-    sensor = Sensor((ipTarget, portTarget), interfaceTarget)
+    sensor = Sensor((ipOut, portOut), interfaceTarget)
     # run the sensor
     sensor.run()
     

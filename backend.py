@@ -2,7 +2,7 @@ from include.setup import *
 from include.Database import *
 
 SERVERADDR = ""
-SERVERPORT= portTarget
+SERVERPORT= portIn
 
 def unpack(packet, recvIP, recvTime):
 

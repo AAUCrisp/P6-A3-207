@@ -67,8 +67,8 @@ class Database():
 
         if config['where']:
             
-            print(f"\nWhere parameters in DB is: {config['where']}\n")
-            print(f"Where OR key is: {config['where']['ip5g']}\n")
+            # print(f"\nWhere parameters in DB is: {config['where']}\n")
+            # print(f"Where OR key is: {config['where']['ip5g']}\n")
 
             orState = False
 
@@ -91,7 +91,7 @@ class Database():
                     sql += f"""{key}='{config['where'][key]}'"""
 
 
-        print(f"\nSQL Statement is:{sql}\n\n")
+        # print(f"\nSQL Statement is:{sql}\n\n")
         self.cur.execute(sql)
         # print("Efter Execute")
         rows = self.cur.fetchall()
@@ -101,22 +101,11 @@ class Database():
 
     ####################################
     ###  --  Test Printing Area  -- 
-        print(f"Fetched data is:")
-        for row in rows:
-            print(f"{row}")
+        # print(f"Fetched data is:")
+        # for row in rows:
+        #     print(f"{row}")
 
         return rows
-
-
-    # Function to fetch group members
-    def fetch_group_members(self, group_id):
-        # print("Group fetching")
-        db_config = {'where': {'group_member.group_id': group_id},
-            'select': 'group_member.user_id, group_member.admin, user.alias, user.ip',
-            'join':{'user': 'group_member.user_id=user.id'}
-            }
-        
-        return self.fetch('group_member', db_config)
 
 
 
@@ -158,7 +147,7 @@ class Database():
             VALUES ({sql_end})"""
 
 
-        print(f"\nSQL Statement is:{sql}\n\n")
+        # print(f"\nSQL Statement is:{sql}\n\n")
         self.cur.execute(sql)
         self.con.commit()
 
@@ -217,7 +206,7 @@ class Database():
 
 
 
-        print(f"\nSQL Statement is:{sql}\n\n")
+        # print(f"\nSQL Statement is:{sql}\n\n")
         self.cur.execute(sql)
         self.con.commit()
 

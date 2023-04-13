@@ -57,10 +57,11 @@ ips = {
 # Argument Parsing Setup
 parser = argparse.ArgumentParser()
 parser.add_argument('-target', type=str, required=False)
-parser.add_argument('-int', type=str, required=False)
-parser.add_argument('-port', type=int, required=False)
+parser.add_argument('-tech', type=str, required=False)
+parser.add_argument('-portOut', type=int, required=False)
+parser.add_argument('-portIn', type=int, required=False)
 parser.add_argument('-gt', type=str, required=False)
-parser.add_argument('-gtInt', type=str, required=False)
+parser.add_argument('-gtTech', type=str, required=False)
 parser.add_argument('-loop', action=argparse.BooleanOptionalAction)
 parser.add_argument('-dev', action=argparse.BooleanOptionalAction)
 parser.add_argument('-v', action=argparse.BooleanOptionalAction)
@@ -72,45 +73,57 @@ args = parser.parse_args()    # The array containing our arguments
 argsMsg = ' - Arguments Inserted' if len(sys.argv) > 1 else " - Program running without arguments"
 print(argsMsg)
 
-interfaceGT = str(args.gtInt) if args.gtInt else "ethernet"
+# General System Arguments
+interfaceTarget = str(args.tech) if args.tech else 'wifi'
+ipOut = ips[str(args.target)][interfaceTarget] if args.target else ips['up2'][interfaceTarget]
+portOut = str(args.port) if args.portOut else 8888
+portIn = str(args.port) if args.portIn else 8888
+txInterval = int(args.delay) if args.delay else 3
+
+# GT Arguments
+interfaceGT = str(args.gtTech) if args.gtTech else "ethernet"
 ipGT = ips[str(args.gt)][interfaceGT] if args.gt else ips['up2'][interfaceGT]
-interfaceTarget = str(args.int) if args.int else 'wifi'
-ipTarget = ips[str(args.target)][interfaceTarget] if args.target else ips['up2'][interfaceTarget]
-portTarget = str(args.port) if args.port else 8888
-
-# Set working directory
-# global path
-path = args.cwd if args.cwd else ""
-if path != "":
-    os.chdir(path)
 
 
-"""This is the interval the sensor will transmit data in"""
-rxInterval = int(args.delay) if args.delay else 3
-# global verbose
+
+# SVT Variables
+interfaceSVT = interfaceTarget
+ipSVT = ips['up2'][interfaceSVT]
+
+
+# Development Arguments
+if args.cwd:
+    os.chdir(args.cwd)
+
+
+
+
+
+
 verbose = True if args.v else False
 
 # If 'dev' argument is called
 if args.dev: 
-    ipTarget = '127.0.0.1'
-    interfaceTarget = 'loopback'
+    # ipOut = '127.0.0.1'
+    # interfaceTarget = 'loopback'
     interfaceGT = 'wifi'
     ipGT = ips['up2'][interfaceGT]
 
 # If 'loopback' argument is called
-if args.loop: 
-    ipTarget = '127.0.0.1'
+if args.loop or args.dev: 
+    ipOut = '127.0.0.1'
     interfaceTarget = 'loopback'
+    interfaceSVT = 'wifi'
+    ipSVT = ips['up2'][interfaceSVT]
 
 if verbose:
     print(f"Set GT Interface is:  {interfaceGT}")
     print(f"Set GT IP is:         {ipGT}")
     print(f"Set Forward-Node is:  {interfaceTarget}")
-    print(f"Set Forward IP is:    {ipTarget}")
-    print(f"Set Forward Port is:  {portTarget}")
-    print(f"Absolute Path is:     {path}")
-    # dbPath = path + "/include/Database.py"
-    # print(f"Absolute Path is:     {dbPath}")
+    print(f"Set Forward IP is:    {ipOut}")
+    print(f"Set Forward Port is:  {portIn}")
+    print(f"Absolute Path is:     {os.getcwd()}\n")
 
-    def frPrint(payload):
-        print(payload.replace(SEP, red(" | ")).replace(DSEP, blue(" | ")).replace(EOP, magenta(" | ")))
+
+def frPrint(payload):
+    print(payload.replace(SEP, green(" | ")).replace(DSEP, blue(" | ")).replace(EOP, magenta(" | ")))
