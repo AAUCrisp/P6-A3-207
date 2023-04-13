@@ -1,85 +1,87 @@
-from include.NetTechnology import *
-from include.Formatting import *
-from include.Network import *
-from include.ProcessData import *
-from include.setup import *
+from twisted.internet import protocol, reactor
+import netifaces as ni
 
-from time import sleep
-from threading import Thread, Lock
 
-interval = 10
-"""This is the interval the sensor will transmit data in"""
-
-syncLock = Lock()
-
-class Sensor:
-    """This is the main class of the sensor. it will use the programs defined under `include/` to emulate the functionality of a sensor."""
-
-    def __init__(self, addr, tech) -> None:
-        """This is the constructor of the sensor class, it will initialize a network type and connect to a headend server."""
-        # initialize the loopback network
-        self.network = Network(tech)
-
-        # Connect to the address passed to the constructor
-        # self.network.connect(addr[0], addr[1])
-        self.network.connect(ipTarget, portTarget)
+class TCPForward(protocol.Protocol):
+    def __init__(self):
+        self.buffer = None
+        self.sensorToHeadendProtocol = None
     
-    def run(self):
-        global SVTClock, GTClock, syncLock
-        """This method runs the sensor program, it will send data using the network every <interval> seconds"""
-        # try/catch clause to restore terminal state after a keyboardinterrupt
-        try: 
-            # hide the cursor
-            hide()
-            # run infinitely
-            txTime = -1
-            postTxTime = -1
-            while True:
-                syncLock.acquire()
-                sleepEnd = SVTClock.get()+interval
-                while sleepEnd > SVTClock.get():
-                    print(int(sleepEnd-SVTClock.get()), end="\r")
-                    sleep(1)
-                    if (sleepEnd - SVTClock.get()) < 5 and (sleepEnd - SVTClock.get()) > 4:
-                        dataTime = SVTClock.get()
-                        payload = "some payload"
-                syncLock.release()
-                dataframe = ProcessData()
+    def connectionMade(self):
+        print("Connection made from SENSOR -> HEADEND")
+        sensorToHeadendFactory = protocol.ClientFactory()
+        sensorToHeadendFactory.protocol = sensorToHeadendProtocol
+        sensorToHeadendFactory.server = self
 
-                dataframe.setDataTime(dataTime)
-                dataframe.setTxTime(txTime)
-                dataframe.setPostTxTime(postTxTime)
-                dataframe.setPayload(payload)
+        reactor.connectTCP(DIST_IP, DST_PORT, sensorToHeadendFactory)
 
-                txTime = SVTClock.get()
-                self.network.transmit(dataframe.buildSensorFrame())
-                postTxTime = SVTClock.get()
+    def dataRecieved(self, data):
+        print("")
+        print("Sensor -> Headend")
+        print(FORMAT_FN(data))
+        print("")
 
-        except KeyboardInterrupt: unhide()
+        if self.sensorToHeadendProtocol: 
+            self.sensorToHeadendProtocol.write(data)
 
-def runSync():
-    global SVTClock, GTClock, syncLock
-    s = Sync(
-        addressGT=  ips["up2"]["ethernet"],
-        address=    ips["up2"]["wifi"],
-        interfaceGT="ethernet",
-        interface=  "wifi"
-    )
-    while True:
-        syncLock.acquire()
-    #    GTClock.set(s.syncGT())
-        SVTClock.set(s.sync())
-        syncLock.release()
-        sleep(30) # only sync every 30 seconds
+        else: 
+            self.buffer = data
+
+class headEndToBackEndProtocol(protocol.Protocol):
+    def connectionMade(self):
+        print("Connection made form headend -> server")
+        self.factory.server.headEndtoBackEndProtocol = self
+        self.write(self.factory.server.buffer)
+        self.factory.server.buffer = ''
+
+    def dataRecieved(self, data):
+        print("")
+        print("Headend -> Backend")
+        print(FORMAT_FN(data))
+        print("")
+        self.factory.server.write(data)
+
+    def write(self, data):
+        if data:
+            self.transport.write(data)
+
+def _noop(data):
+    return data
+
+def get_local_ip(iface):
+    ni.ifaddresses(iface)
+    return ni.ifaddresses(iface)[ni.AF_INET][0]['addr']
+
+FORMAT_FN = _noop
+
+LISTEN_PORT = 8888
+DST_PORT = 8888
+DST_HOST = "backend"
+DST_IP = "192.168.1.107"
+
+local_ip = get_local_ip("wlp3s0")
 
 
-if "main" in __name__:
-    # start a synchronizing thread
-    syncThread =  Thread(target=runSync, daemon=True)
-    syncThread.start()
+print("""
+#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+-#-#-#-#-#-RUNNING  TCP PROXY-#-#-#-#-#-
+#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+Dst IP:\t%s
+Dst port:\t%d
+Dst hostname:\t%s
+Listen port:\t%d
+Local IP:\t%s
+""" % (DST_IP, DST_PORT, DST_HOST, LISTEN_PORT, local_ip))
 
-    # create a sensor object with the headend address as an argument
-    forwarder = Sensor((ipTarget, portTarget), interfaceTarget)
-    # run the sensor
-    forwarder.run()
+#print(""" Listening for requests on %s:%d...
+#""" % (local_ip, DST_HOST, local_ip, LISTEN_PORT)) 
+
+factory = protocol.ServerFactory()
+factory.protocol = TCPForward
+reactor.listenTCP(LISTEN_PORT, factory)
+reactor.run()
+
+
+
+
 
