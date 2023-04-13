@@ -5,6 +5,10 @@ import netifaces as ni
  
 # Adapted from http://stackoverflow.com/a/15645169/221061
 
+HEADENDIP = "192.168.1.189"
+BACKENDIP = "192.168.1.107"
+
+
 class TCPProxyProtocol(protocol.Protocol):
     """
     TCPProxyProtocol listens for TCP connections from a
@@ -98,22 +102,11 @@ FORMAT_FN = _noop
 
 LISTEN_PORT = 8888
 DST_PORT = 8888
-DST_HOST = "nonhttps.com"
-local_ip = get_local_ip('wlp3s0')
-
-"""# Look up the IP address of the target
-print("Querying DNS records for %s..." % DST_HOST)
-a_records = dns.resolver.query(DST_HOST, 'A')
-print("Found %d A records:" % len(a_records))
-for r in a_records:
-    print("* %s" % r.address)
-print("")
-assert(len(a_records) > 0) """
-
-# THe target may have multiple IP addresses - we
-# simply choose the first one.
-DST_IP = "192.168.1.107"
-print("Choosing to proxy to %s" % DST_IP)
+DST_HOST = "backendq"
+local_ip = HEADENDIP
+DST_IP = BACKENDIP
+print("Headend IP: %s" % local_ip)
+print("Backend IP: %s" % DST_IP)
 
 print("""
 #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
@@ -127,19 +120,8 @@ Local IP:\t%s
 """ % (DST_IP, DST_PORT, DST_HOST, LISTEN_PORT, local_ip))
  
 print("""
-Next steps:
-1. Make sure you are spoofing DNS requests from the
-device you are trying to proxy request from so that they
-return your local IP (%s).
-2. Make sure you have set the destination and listen ports
-correctly (they should generally be the same).
-3. Use the device you are proxying requests from to make
-requests to %s and check that they are logged in this
-terminal.
-4. Look at the requests, write more code to replay them,
-fiddle with them, etc.
 Listening for requests on %s:%d...
-""" % (local_ip, DST_HOST, local_ip, LISTEN_PORT))
+""" % (local_ip, LISTEN_PORT))
 
 factory = protocol.ServerFactory()
 factory.protocol = TCPProxyProtocol
