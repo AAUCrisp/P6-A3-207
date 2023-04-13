@@ -6,8 +6,8 @@ SERVERPORT= portIn
 
 def unpack(packet, recvIP, recvTime):
 
-    layers = packet.count(EOP)      # Check the number of headend jumps
-    nodes = packet.split(EOP)       # Split the frames from each headend
+    layers = packet.count(EON)      # Check the number of headend jumps
+    nodes = packet.split(EON)       # Split the frames from each headend
 
     lastIP = recvIP
 
@@ -21,8 +21,8 @@ def unpack(packet, recvIP, recvTime):
                 # print(f" -  Current Frama Data:         {key}")
                 print(f" -  Current rxTime:             {frameData[0]}")
                 print(f" -  Current txTime:             {frameData[1]}")
-            if len(frameData.count(DSEP)) > 0:
-                pigFrame = frameData[2].split(DSEP)
+            if len(frameData.count(PB)) > 0:
+                pigFrame = frameData[2].split(PB)
                 if verbose:
                     print(f" -  Current prevTxTime:         {pigFrame[0]}")
                     print(f" -  Current Piggy:              {pigFrame[1]}")
