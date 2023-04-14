@@ -1,8 +1,5 @@
 from twisted.internet import protocol, reactor
-#from twisted.internet import ssl as twisted_ssl
-#import dns.resolver
-import netifaces as ni
- 
+#CMT - Adapted from https://robertheaton.com/2018/08/31/how-to-build-a-tcp-proxy-3/
 # Adapted from http://stackoverflow.com/a/15645169/221061
 
 HEADENDIP = "192.168.1.189"
@@ -95,8 +92,9 @@ def _noop(data):
     return data
 
 def get_local_ip(iface):
-    ni.ifaddresses(iface)
-    return ni.ifaddresses(iface)[ni.AF_INET][0]['addr']
+   # ni.ifaddresses(iface)
+   # return ni.ifaddresses(iface)[ni.AF_INET][0]['addr']
+   return HEADENDIP
 
 FORMAT_FN = _noop
 
