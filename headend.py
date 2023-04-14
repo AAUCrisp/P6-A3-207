@@ -33,6 +33,23 @@ class TCPProxyProtocol(protocol.Protocol):
         reactor.connectTCP(DST_IP, DST_PORT,
                            proxy_to_server_factory)
  
+    def processData(self, data):
+        txTime = -1
+        postTxTime = -1
+        dataTime = SVTClock.get()
+        
+        dataframe = ProcessData()
+        dataframe.setDataTime(dataTime)
+        dataframe.setTxTime(txTime)
+        dataframe.setPostTxTime(postTxTime)
+        dataframe.setPayload("some data")
+
+        txTime = SVTClock.get()
+        packet = dataframe.buildHeadendFrame()
+        
+        return packet
+        
+
     def dataReceived(self, data):
         """
         Called by twisted when the proxy receives data from
@@ -43,28 +60,16 @@ class TCPProxyProtocol(protocol.Protocol):
         print("CLIENT => SERVER")
         print(FORMAT_FN(data))
         print("")
+       
+        toForward = ProcessData(data)
+
         if self.proxy_to_server_protocol:
-            self.proxy_to_server_protocol.write(data)
+            self.proxy_to_server_protocol.write(toForward)
         else:
-            self.buffer = data
+            self.buffer = toForward
  
     def write(self, data):
-        txTime = -1
-        postTxTime = -1
-
-        dataTime = SVTClock.get()
-        dataframe = ProcessData()
-        
-        dataframe.setDataTime(dataTime)
-        dataframe.setTxTime(txTime)
-        dataframe.setPostTxTime(postTxTime)
-        dataframe.setPayload(data)
-        txTime = SVTClock.get()
-        packet = dataframe.buildHeadendFrame()
-
-        self.transport.write(packet)
-    
-        postTxTime = SVTClock.get()
+        self.transport.write(data)
  
  
 class ProxyToServerProtocol(protocol.Protocol):
@@ -97,27 +102,12 @@ class ProxyToServerProtocol(protocol.Protocol):
         print("SERVER => CLIENT")
         print(FORMAT_FN(data))
         print("")
-
-        self.factory.server.write(data)
         
+        self.factory.server.write(data)
  
     def write(self, data):
         if data:
-            txTime = -1
-        postTxTime = -1
-
-        dataTime = SVTClock.get()
-        dataframe = ProcessData()
-        
-        dataframe.setDataTime(dataTime)
-        dataframe.setTxTime(txTime)
-        dataframe.setPostTxTime(postTxTime)
-        dataframe.setPayload(data)
-        txTime = SVTClock.get()
-        packet = dataframe.buildHeadendFrame()
-        self.transport.write(packet)    
-        postTxTime = SVTClock.get()
-        
+            self.transport.write(data)
 
 
 def _noop(data):
