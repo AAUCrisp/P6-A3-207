@@ -63,7 +63,8 @@ class TCPProxyProtocol(protocol.Protocol):
        
         #toForward = ProcessData(data)
         toForward = "I am a string"
-        toForward.encode("utf-8")
+        bytes(toForward, 'utf-8')
+        #toForward.encode("utf-8")
 
         if self.proxy_to_server_protocol:
             self.proxy_to_server_protocol.write(toForward)
