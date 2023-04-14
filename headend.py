@@ -46,7 +46,7 @@ class TCPProxyProtocol(protocol.Protocol):
 
         txTime = SVTClock.get()
         packet = dataframe.buildHeadendFrame()
-        
+        packet = packet.encode("utf8")
         return packet
         
 
