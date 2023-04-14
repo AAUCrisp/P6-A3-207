@@ -103,7 +103,21 @@ class ProxyToServerProtocol(protocol.Protocol):
  
     def write(self, data):
         if data:
-            self.transport.write(data)
+            txTime = -1
+        postTxTime = -1
+
+        dataTime = SVTClock.get()
+        dataframe = ProcessData()
+        
+        dataframe.setDataTime(dataTime)
+        dataframe.setTxTime(txTime)
+        dataframe.setPostTxTime(postTxTime)
+        dataframe.setPayload(data)
+        txTime = SVTClock.get()
+        packet = dataframe.buildHeadendFrame()
+        self.transport.write(packet)    
+        postTxTime = SVTClock.get()
+        
 
 
 def _noop(data):
