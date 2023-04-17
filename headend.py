@@ -61,8 +61,10 @@ class TCPProxyProtocol(protocol.Protocol):
         print(FORMAT_FN(data))
         print("")
        
-        #toForward = ProcessData(data)
-        toForward = data
+        toForward = self.processData(data)
+        print("Forwarding: ")
+        print(FORMAT_FN(toForward))
+#        toForward = data
       #  toForward = "I am a string"
        # bytes(toForward, 'utf-8')
         #toForward.encode("utf-8")
@@ -111,6 +113,7 @@ class ProxyToServerProtocol(protocol.Protocol):
  
     def write(self, data):
         if data:
+            print(type(data))
             self.transport.write(data)
 
 
