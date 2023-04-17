@@ -65,6 +65,9 @@ class Network():
                     self.lock.acquire()                                            # Lock the following code, such that only one thread can access it. 
                     self.data[threadID].append({"recvTime":recvTime, "data":sensorData})        # Write the received data from the thread to a variable shared by all the threads in this process. 
                     self.lock.release()                                                         # Release the lock once the task above is finished. 
+                else:
+                    self.threads.remove((threading.current_thread(), conn))
+                    return
         except KeyboardInterrupt: conn.close()                                                  # catch keyboardinterrupts to shut down socket elegantly
             
                 
@@ -95,7 +98,8 @@ class Network():
     def close(self):
         if self.receiveSock is not None: 
             for _, socket in self.threads:
-                socket.close()
+                socket.recv(1024)
+                socket.send("end".encode())
             self.receiveSock.close()
 
     def closedListener(self):
