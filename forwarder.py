@@ -1,5 +1,4 @@
 from twisted.internet import protocol, reactor
-from include.setup import *
 #CMT - Adapted from https://robertheaton.com/2018/08/31/how-to-build-a-tcp-proxy-3/
 # Adapted from http://stackoverflow.com/a/15645169/221061
 
@@ -33,23 +32,6 @@ class TCPProxyProtocol(protocol.Protocol):
         reactor.connectTCP(DST_IP, DST_PORT,
                            proxy_to_server_factory)
  
-    def processData(self, data):
-        txTime = -1
-        postTxTime = -1
-        dataTime = SVTClock.get()
-        
-        dataframe = ProcessData()
-        dataframe.setDataTime(dataTime)
-        dataframe.setTxTime(txTime)
-        dataframe.setPostTxTime(postTxTime)
-        dataframe.setPayload("some data")
-
-        txTime = SVTClock.get()
-        packet = dataframe.buildHeadendFrame()
-        packet = packet.encode("utf-8")
-        return packet
-        
-
     def dataReceived(self, data):
         """
         Called by twisted when the proxy receives data from
@@ -60,19 +42,10 @@ class TCPProxyProtocol(protocol.Protocol):
         print("CLIENT => SERVER")
         print(FORMAT_FN(data))
         print("")
-       
-        toForward = self.processData(data)
-        print("Forwarding: ")
-        print(FORMAT_FN(toForward))
-#        toForward = data
-      #  toForward = "I am a string"
-       # bytes(toForward, 'utf-8')
-        #toForward.encode("utf-8")
-
         if self.proxy_to_server_protocol:
-            self.proxy_to_server_protocol.write(toForward)
+            self.proxy_to_server_protocol.write(data)
         else:
-            self.buffer = toForward
+            self.buffer = data
  
     def write(self, data):
         self.transport.write(data)
@@ -108,12 +81,10 @@ class ProxyToServerProtocol(protocol.Protocol):
         print("SERVER => CLIENT")
         print(FORMAT_FN(data))
         print("")
-        
         self.factory.server.write(data)
  
     def write(self, data):
         if data:
-            print(type(data))
             self.transport.write(data)
 
 
@@ -154,3 +125,103 @@ factory = protocol.ServerFactory()
 factory.protocol = TCPProxyProtocol
 reactor.listenTCP(LISTEN_PORT, factory)
 reactor.run()
+
+
+
+
+
+
+
+
+
+
+
+
+"""from twisted.internet import protocol, reactor
+import netifaces as ni
+
+
+class TCPForward(protocol.Protocol):
+    def __init__(self):
+        self.buffer = None
+        self.sensorToHeadendProtocol = None
+    
+    def connectionMade(self):
+        print("Connection made from SENSOR -> HEADEND")
+        sensorToHeadendFactory = protocol.ClientFactory()
+        sensorToHeadendFactory.protocol = headEndToBackEndProtocol
+        sensorToHeadendFactory.server = self
+
+        reactor.connectTCP(DIST_IP, DST_PORT, sensorToHeadendFactory)
+
+    def dataRecieved(self, data):
+        print("")
+        print("Sensor -> Headend")
+        print(FORMAT_FN(data))
+        print("")
+
+        if self.sensorToHeadendProtocol: 
+            self.sensorToHeadendProtocol.write(data)
+
+        else: 
+            self.buffer = data
+
+class headEndToBackEndProtocol(protocol.Protocol):
+    def connectionMade(self):
+        print("Connection made form headend -> server")
+        self.factory.server.headEndtoBackEndProtocol = self
+        self.write(self.factory.server.buffer)
+        self.factory.server.buffer = ''
+
+    def dataRecieved(self, data):
+        print("")
+        print("Headend -> Backend")
+        print(FORMAT_FN(data))
+        print("")
+        self.factory.server.write(data)
+
+    def write(self, data):
+        if data:
+            self.transport.write(data)
+
+def _noop(data):
+    return data
+
+def get_local_ip(iface):
+    ni.ifaddresses(iface)
+    return ni.ifaddresses(iface)[ni.AF_INET][0]['addr']
+
+FORMAT_FN = _noop
+
+LISTEN_PORT = 8888
+DST_PORT = 8888
+DST_HOST = "backend"
+DST_IP = "192.168.1.107"
+
+local_ip = get_local_ip("wlp3s0")
+
+
+print("""
+#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+#-#-#-#-#-#-RUNNING  TCP PROXY-#-#-#-#-#-
+#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+"""Dst IP:\t%s
+Dst port:\t%d
+Dst hostname:\t%s
+Listen port:\t%d
+Local IP:\t%s """
+""" % (DST_IP, DST_PORT, DST_HOST, LISTEN_PORT, local_ip))
+
+"""#print(""" Listening for requests on %s:%d...
+#""" % (local_ip, DST_HOST, local_ip, LISTEN_PORT)) 
+
+"""factory = protocol.ServerFactory()
+factory.protocol = TCPForward
+reactor.listenTCP(LISTEN_PORT, factory)
+reactor.run() """
+
+
+
+
+
+
