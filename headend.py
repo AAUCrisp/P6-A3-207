@@ -35,6 +35,39 @@ class TCPProxyProtocol(protocol.Protocol):
  
     def processData(self, data):
         txTime = -1
+        GTTxTime = -1
+        postTxTime = -1
+        GTPostTxTime = -1
+        # initialize the dataframe object
+        dataframe = ProcessData()
+
+        # Capture the time the data has been generated
+        dataTime = SVTClock.get()
+        GTDataTime = GTClock.get()
+
+        # attach the data time to the dataframe
+        dataframe.setDataTime(dataTime)
+        dataframe.setGTDataTime(GTDataTime)  
+
+        # attach the previous transmit time to the dataframe
+        dataframe.setTxTime(txTime)
+        dataframe.setGTTxTime(GTTxTime) 
+
+        # attach the post transmission time to the dataframe
+        dataframe.setPostTxTime(postTxTime)
+        dataframe.setGTPostTxTime(GTPostTxTime)
+        # attach the payload to the dataframe
+        dataframe.setPayload("some data")
+
+        #build dataframe into string form
+        packet = dataframe.buildHeadendFrame()
+        #encode into binary packet
+        packet.encode('utf-8')
+        # Capture the time the data has begun transmission
+        txTime = SVTClock.get()
+        GTTxTime = GTClock.get()
+        return packet
+        '''txTime = -1
         postTxTime = -1
         dataTime = SVTClock.get()
         
@@ -46,8 +79,8 @@ class TCPProxyProtocol(protocol.Protocol):
 
         txTime = SVTClock.get()
         packet = dataframe.buildHeadendFrame()
-        packet = packet.encode("utf-8")
-        return packet
+        packet = packet.encode("utf-8") '''
+        
         
 
     def dataReceived(self, data):
@@ -61,14 +94,12 @@ class TCPProxyProtocol(protocol.Protocol):
         print(FORMAT_FN(data))
         print("")
        
+       #annotate packet with monitoring data, then print
         toForward = self.processData(data)
         print("Forwarding: ")
         print(FORMAT_FN(toForward))
-#        toForward = data
-      #  toForward = "I am a string"
-       # bytes(toForward, 'utf-8')
-        #toForward.encode("utf-8")
 
+        #if connectiction is open, write annotated packet. Else write to buffer
         if self.proxy_to_server_protocol:
             self.proxy_to_server_protocol.write(toForward)
         else:
@@ -132,6 +163,7 @@ DST_PORT = 8888
 DST_HOST = "backendq"
 local_ip = HEADENDIP
 DST_IP = BACKENDIP
+print("")
 print("Headend IP: %s" % local_ip)
 print("Backend IP: %s" % DST_IP)
 
