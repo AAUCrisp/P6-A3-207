@@ -62,10 +62,10 @@ class TCPProxyProtocol(protocol.Protocol):
         #build dataframe into string form
         packet = dataframe.buildHeadendFrame()
         #encode into binary packet
-        packet.encode('utf-8')
+        packet.encode("utf-8")
         # Capture the time the data has begun transmission
-        txTime = SVTClock.get()
-        GTTxTime = GTClock.get()
+        #txTime = SVTClock.get()
+        #GTTxTime = GTClock.get()
         return packet
         '''txTime = -1
         postTxTime = -1
@@ -97,6 +97,7 @@ class TCPProxyProtocol(protocol.Protocol):
        #annotate packet with monitoring data, then print
         toForward = self.processData(data)
         print("Forwarding: ")
+        print(type(toForward))
         print(FORMAT_FN(toForward))
 
         #if connectiction is open, write annotated packet. Else write to buffer
