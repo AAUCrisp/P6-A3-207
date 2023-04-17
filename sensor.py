@@ -98,7 +98,10 @@ class Sensor:
             unhide()
 
 # This method defines synchronization of the SVTClock and GTClock every 30 seconds
-def runSync():
+def runSync(started = False):
+    # run in a thread
+    if not started: return threading.Thread(target=runSync, args=[True], daemon=True).start()
+
     # define global variables to be used in other functions
     global SVTClock, GTClock, syncLock
     # Define a local synchronization object
@@ -123,8 +126,7 @@ def runSync():
 # The main of this program
 if "main" in __name__:
     # start a synchronizing thread
-    syncThread =  Thread(target=runSync, daemon=True)
-    syncThread.start()
+    runSync()
 
     # create a sensor object with the headend address as an argument
     sensor = Sensor((ipOut, portOut), interfaceTarget)
