@@ -86,8 +86,8 @@ print(argsMsg)
 # General System Arguments
 interfaceTarget = str(args.tech) if args.tech else 'wifi'
 ipOut = ips[str(args.target)][interfaceTarget] if args.target else ips['up2'][interfaceTarget]
-portOut = str(args.port) if args.portOut else 8888
-portIn = str(args.port) if args.portIn else 8888
+portOut = str(args.portOut) if args.portOut else 8888
+portIn = str(args.portIn) if args.portIn else 8888
 txInterval = int(args.delay) if args.delay else 3
 
 # GT Arguments
