@@ -15,4 +15,5 @@ try:
                 sleep(1)
 except KeyboardInterrupt:
     print("\rClosing network, please don't keyboardinterrupt again...")
-    s.close()
+
+s.close()
