@@ -97,6 +97,7 @@ class Sensor:
         except KeyboardInterrupt: 
             # show the cursor again
             unhide()
+            self.network.close()
 
 # This method defines synchronization of the SVTClock and GTClock every 30 seconds
 def runSync(started = False):

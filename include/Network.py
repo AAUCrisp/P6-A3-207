@@ -80,27 +80,22 @@ class Network():
         self.transmitSock.connect((self.addr, self.port))   # connect to the socket bounded on the given address and port. 
         #self.message = message  # Set the message for transmission to the one given as a parameter. 
 
-        # start a thread listening for whether the socket is closed
-        threading.Thread(target=self.closedListener, daemon=True).start()
         #self.transmit(self.transmitSock, self.message)  # transmit the shit!
 
 
 
     def transmit(self, message:str):
-        if self.running:
+        try:
             self.transmitSock.sendall(message.encode("utf8"))
+        except:
+            self.close()
         
     def close(self):
         self.running = False
         if self.receiveSock is not None: 
-            for _, socket in self.threads:
-                socket.send("end".encode())
             self.receiveSock.close()
-
-    def closedListener(self):
-        self.transmitSock.recv(1024)
-        self.running = False
-        self.transmitSock.close()
+        if self.transmitSock is not None:
+            self.transmitSock.close()
     
 
 
