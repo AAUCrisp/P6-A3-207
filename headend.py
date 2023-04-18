@@ -1,3 +1,4 @@
+#!/usr/bin/python3.11
 from twisted.internet import protocol, reactor
 from include.setup import *
 #CMT - Adapted from https://robertheaton.com/2018/08/31/how-to-build-a-tcp-proxy-3/
@@ -18,6 +19,12 @@ class TCPProxyProtocol(protocol.Protocol):
     def __init__(self):
         self.buffer = None
         self.proxy_to_server_protocol = None
+        self.sensorIP = '0.0.0.0'   
+        self.sensorPort = 0
+        self.txTime = -1
+        self.GTTxTime = -1
+        self.postTxTime = -1
+        self.GTPostTxTime = -1
  
     def connectionMade(self):
         """
@@ -25,20 +32,21 @@ class TCPProxyProtocol(protocol.Protocol):
         proxy. Makes an connection from the headend to the
         backend to complete the chain.
         """
-        print("Connection made from CLIENT => Headend")
+        
+        self.sensorIP = self.transport.client[0]
+        self.sensorPort = self.transport.client[1]
+        print(type(self.sensorPort))
+        #print(self.sensorIP)
+        print("Connection made from Client %s:%d => Headend" % (self.sensorIP, self.sensorPort))
         proxy_to_server_factory = protocol.ClientFactory()
         proxy_to_server_factory.protocol = ProxyToServerProtocol
         proxy_to_server_factory.server = self
+
  
         reactor.connectTCP(DST_IP, DST_PORT,
                            proxy_to_server_factory)
  
-    def processData(self, data):
-        #declare vars; set placeholders
-        txTime = -1
-        GTTxTime = -1
-        postTxTime = -1
-        GTPostTxTime = -1
+    def processData(self, data):       
         # initialize the dataframe object
         dataframe = ProcessData()
 
@@ -51,20 +59,25 @@ class TCPProxyProtocol(protocol.Protocol):
         dataframe.setGTDataTime(GTDataTime)  
 
         # attach the previous transmit time to the dataframe
-        dataframe.setTxTime(txTime)
-        dataframe.setGTTxTime(GTTxTime) 
+        dataframe.setTxTime(self.txTime)
+        dataframe.setGTTxTime(self.GTTxTime) 
 
         # attach the post transmission time to the dataframe
-        dataframe.setPostTxTime(postTxTime)
-        dataframe.setGTPostTxTime(GTPostTxTime)
+        dataframe.setPostTxTime(self.postTxTime)
+        dataframe.setGTPostTxTime(self.GTPostTxTime)
+
+        #attach sender data to dataframe
+        print(type(self.sensorIP))
+        print(self.sensorIP)
+        dataframe.setReceivedIP(self.sensorIP)
         # attach the payload to the dataframe
         dataframe.setPayload(data)
 
         #build dataframe into string form
         packet = dataframe.buildHeadendFrame()
         # Capture the time the data has begun transmission
-        txTime = SVTClock.get()
-        GTTxTime = GTClock.get()
+        self.txTime = SVTClock.get()
+        self.GTTxTime = GTClock.get()
 
         #encode packet into binary and return
         return packet.encode("utf-8")
@@ -92,8 +105,14 @@ class TCPProxyProtocol(protocol.Protocol):
         else:
             self.buffer = toForward
  
+    def clientConnectionLost(self, transport, reason):
+        reactor.stop()
+
     def write(self, data):
         self.transport.write(data)
+      #  self.transport.loseConnection()
+        self.postTxTime = SVTClock.get()
+
  
  
 class ProxyToServerProtocol(protocol.Protocol):
@@ -115,7 +134,7 @@ class ProxyToServerProtocol(protocol.Protocol):
         self.factory.server.proxy_to_server_protocol = self
         self.write(self.factory.server.buffer)
         self.factory.server.buffer = ''
- 
+
     def dataReceived(self, data):
         """
         Called by twisted when the proxy receives data
@@ -129,10 +148,14 @@ class ProxyToServerProtocol(protocol.Protocol):
         
         self.factory.server.write(data)
  
+    def clientConnectionLost(self, transport, reason):
+        reactor.stop()
+
     def write(self, data):
         if data:
-            print(type(data))
+            #print(type(data))
             self.transport.write(data)
+            #self.transport.loseConnection()
 
 
 def _noop(data):
@@ -145,8 +168,8 @@ def get_local_ip(iface):
 
 FORMAT_FN = _noop
 
-LISTEN_PORT = 8888
-DST_PORT = 8888
+LISTEN_PORT = int(portIn)
+DST_PORT = int(portOut)
 DST_HOST = "backend" #string only needed if identifying backend by domain name
 local_ip = HEADENDIP
 DST_IP = BACKENDIP
@@ -173,3 +196,5 @@ factory = protocol.ServerFactory()
 factory.protocol = TCPProxyProtocol
 reactor.listenTCP(LISTEN_PORT, factory)
 reactor.run()
+
+print("end of program")
