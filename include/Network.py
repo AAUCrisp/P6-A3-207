@@ -87,20 +87,19 @@ class Network():
 
 
     def transmit(self, message:str):
-        
-        self.transmitSock.sendall(message.encode("utf8"))
+        if self.running:
+            self.transmitSock.sendall(message.encode("utf8"))
         
     def close(self):
         self.running = False
         if self.receiveSock is not None: 
             for _, socket in self.threads:
-                socket.recv(1024)
                 socket.send("end".encode())
             self.receiveSock.close()
 
     def closedListener(self):
         self.transmitSock.recv(1024)
-        self.isClosed = True
+        self.running = False
         self.transmitSock.close()
     
 
