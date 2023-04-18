@@ -1,17 +1,16 @@
 from twisted.internet import protocol, reactor
-from include.setup import *
 #CMT - Adapted from https://robertheaton.com/2018/08/31/how-to-build-a-tcp-proxy-3/
 # Adapted from http://stackoverflow.com/a/15645169/221061
 
-HEADENDIP = "192.168.1.189" #IP Address of the device running this script
-BACKENDIP = "192.168.1.107" #IP Address of target Backend sever
+HEADENDIP = "192.168.1.189"
+BACKENDIP = "192.168.1.107"
 
 
 class TCPProxyProtocol(protocol.Protocol):
     """
     TCPProxyProtocol listens for TCP connections from a
-    client (eg. a sensor node) and forwards them on to a
-    specified destination (eg. the backend or another headend) over
+    client (eg. a phone) and forwards them on to a
+    specified destination (eg. an app's API server) over
     a second TCP connection, using a ProxyToServerProtocol.
     It assumes that neither leg of this trip is encrypted.
     """
@@ -22,10 +21,10 @@ class TCPProxyProtocol(protocol.Protocol):
     def connectionMade(self):
         """
         Called by twisted when a client connects to the
-        proxy. Makes an connection from the headend to the
-        backend to complete the chain.
+        proxy. Makes an connection from the proxy to the
+        server to complete the chain.
         """
-        print("Connection made from CLIENT => Headend")
+        print("Connection made from CLIENT => PROXY")
         proxy_to_server_factory = protocol.ClientFactory()
         proxy_to_server_factory.protocol = ProxyToServerProtocol
         proxy_to_server_factory.server = self
@@ -33,64 +32,20 @@ class TCPProxyProtocol(protocol.Protocol):
         reactor.connectTCP(DST_IP, DST_PORT,
                            proxy_to_server_factory)
  
-    def processData(self, data):
-        #declare vars; set placeholders
-        txTime = -1
-        GTTxTime = -1
-        postTxTime = -1
-        GTPostTxTime = -1
-        # initialize the dataframe object
-        dataframe = ProcessData()
-
-        # Capture the time the data has been generated
-        dataTime = SVTClock.get()
-        GTDataTime = GTClock.get()
-
-        # attach the data time to the dataframe
-        dataframe.setDataTime(dataTime)
-        dataframe.setGTDataTime(GTDataTime)  
-
-        # attach the previous transmit time to the dataframe
-        dataframe.setTxTime(txTime)
-        dataframe.setGTTxTime(GTTxTime) 
-
-        # attach the post transmission time to the dataframe
-        dataframe.setPostTxTime(postTxTime)
-        dataframe.setGTPostTxTime(GTPostTxTime)
-        # attach the payload to the dataframe
-        dataframe.setPayload(data)
-
-        #build dataframe into string form
-        packet = dataframe.buildHeadendFrame()
-        # Capture the time the data has begun transmission
-        txTime = SVTClock.get()
-        GTTxTime = GTClock.get()
-
-        #encode packet into binary and return
-        return packet.encode("utf-8")
-
     def dataReceived(self, data):
         """
-        Called by twisted when the headend receives data from
+        Called by twisted when the proxy receives data from
         the client. Sends the data on to the server.
-        CLIENT ===> HEADEND ===> DST
+        CLIENT ===> PROXY ===> DST
         """
         print("")
         print("CLIENT => SERVER")
         print(FORMAT_FN(data))
         print("")
-       
-       #annotate packet with monitoring data, then print
-        toForward = self.processData(data)
-        print("Forwarding: ")
-        print(type(toForward))
-        print(FORMAT_FN(toForward))
-
-        #if connectiction is open, write annotated packet. Else write to buffer
         if self.proxy_to_server_protocol:
-            self.proxy_to_server_protocol.write(toForward)
+            self.proxy_to_server_protocol.write(data)
         else:
-            self.buffer = toForward
+            self.buffer = data
  
     def write(self, data):
         self.transport.write(data)
@@ -126,12 +81,10 @@ class ProxyToServerProtocol(protocol.Protocol):
         print("SERVER => CLIENT")
         print(FORMAT_FN(data))
         print("")
-        
         self.factory.server.write(data)
  
     def write(self, data):
         if data:
-            print(type(data))
             self.transport.write(data)
 
 
@@ -139,18 +92,17 @@ def _noop(data):
     return data
 
 def get_local_ip(iface):
-   # ni.ifaddresses(iface)                               #should enable autodetection of network interfaces, but was unstable on the up boards
-   # return ni.ifaddresses(iface)[ni.AF_INET][0]['addr'] #can be uncommented if desired, the "iface" string should match the network manager device name
+   # ni.ifaddresses(iface)
+   # return ni.ifaddresses(iface)[ni.AF_INET][0]['addr']
    return HEADENDIP
 
 FORMAT_FN = _noop
 
 LISTEN_PORT = 8888
 DST_PORT = 8888
-DST_HOST = "backend" #string only needed if identifying backend by domain name
+DST_HOST = "backendq"
 local_ip = HEADENDIP
 DST_IP = BACKENDIP
-print("")
 print("Headend IP: %s" % local_ip)
 print("Backend IP: %s" % DST_IP)
 
@@ -173,3 +125,103 @@ factory = protocol.ServerFactory()
 factory.protocol = TCPProxyProtocol
 reactor.listenTCP(LISTEN_PORT, factory)
 reactor.run()
+
+
+
+
+
+
+
+
+
+
+
+
+"""from twisted.internet import protocol, reactor
+import netifaces as ni
+
+
+class TCPForward(protocol.Protocol):
+    def __init__(self):
+        self.buffer = None
+        self.sensorToHeadendProtocol = None
+    
+    def connectionMade(self):
+        print("Connection made from SENSOR -> HEADEND")
+        sensorToHeadendFactory = protocol.ClientFactory()
+        sensorToHeadendFactory.protocol = headEndToBackEndProtocol
+        sensorToHeadendFactory.server = self
+
+        reactor.connectTCP(DIST_IP, DST_PORT, sensorToHeadendFactory)
+
+    def dataRecieved(self, data):
+        print("")
+        print("Sensor -> Headend")
+        print(FORMAT_FN(data))
+        print("")
+
+        if self.sensorToHeadendProtocol: 
+            self.sensorToHeadendProtocol.write(data)
+
+        else: 
+            self.buffer = data
+
+class headEndToBackEndProtocol(protocol.Protocol):
+    def connectionMade(self):
+        print("Connection made form headend -> server")
+        self.factory.server.headEndtoBackEndProtocol = self
+        self.write(self.factory.server.buffer)
+        self.factory.server.buffer = ''
+
+    def dataRecieved(self, data):
+        print("")
+        print("Headend -> Backend")
+        print(FORMAT_FN(data))
+        print("")
+        self.factory.server.write(data)
+
+    def write(self, data):
+        if data:
+            self.transport.write(data)
+
+def _noop(data):
+    return data
+
+def get_local_ip(iface):
+    ni.ifaddresses(iface)
+    return ni.ifaddresses(iface)[ni.AF_INET][0]['addr']
+
+FORMAT_FN = _noop
+
+LISTEN_PORT = 8888
+DST_PORT = 8888
+DST_HOST = "backend"
+DST_IP = "192.168.1.107"
+
+local_ip = get_local_ip("wlp3s0")
+
+
+print("""
+#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+#-#-#-#-#-#-RUNNING  TCP PROXY-#-#-#-#-#-
+#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+"""Dst IP:\t%s
+Dst port:\t%d
+Dst hostname:\t%s
+Listen port:\t%d
+Local IP:\t%s """
+""" % (DST_IP, DST_PORT, DST_HOST, LISTEN_PORT, local_ip))
+
+"""#print(""" Listening for requests on %s:%d...
+#""" % (local_ip, DST_HOST, local_ip, LISTEN_PORT)) 
+
+"""factory = protocol.ServerFactory()
+factory.protocol = TCPForward
+reactor.listenTCP(LISTEN_PORT, factory)
+reactor.run() """
+
+
+
+
+
+
