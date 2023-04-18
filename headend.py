@@ -3,15 +3,15 @@ from include.setup import *
 #CMT - Adapted from https://robertheaton.com/2018/08/31/how-to-build-a-tcp-proxy-3/
 # Adapted from http://stackoverflow.com/a/15645169/221061
 
-HEADENDIP = "192.168.1.189"
-BACKENDIP = "192.168.1.107"
+HEADENDIP = "192.168.1.189" #IP Address of the device running this script
+BACKENDIP = "192.168.1.107" #IP Address of target Backend sever
 
 
 class TCPProxyProtocol(protocol.Protocol):
     """
     TCPProxyProtocol listens for TCP connections from a
-    client (eg. a phone) and forwards them on to a
-    specified destination (eg. an app's API server) over
+    client (eg. a sensor node) and forwards them on to a
+    specified destination (eg. the backend or another headend) over
     a second TCP connection, using a ProxyToServerProtocol.
     It assumes that neither leg of this trip is encrypted.
     """
@@ -22,10 +22,10 @@ class TCPProxyProtocol(protocol.Protocol):
     def connectionMade(self):
         """
         Called by twisted when a client connects to the
-        proxy. Makes an connection from the proxy to the
-        server to complete the chain.
+        proxy. Makes an connection from the headend to the
+        backend to complete the chain.
         """
-        print("Connection made from CLIENT => PROXY")
+        print("Connection made from CLIENT => Headend")
         proxy_to_server_factory = protocol.ClientFactory()
         proxy_to_server_factory.protocol = ProxyToServerProtocol
         proxy_to_server_factory.server = self
@@ -34,6 +34,7 @@ class TCPProxyProtocol(protocol.Protocol):
                            proxy_to_server_factory)
  
     def processData(self, data):
+        #declare vars; set placeholders
         txTime = -1
         GTTxTime = -1
         postTxTime = -1
@@ -57,37 +58,22 @@ class TCPProxyProtocol(protocol.Protocol):
         dataframe.setPostTxTime(postTxTime)
         dataframe.setGTPostTxTime(GTPostTxTime)
         # attach the payload to the dataframe
-        dataframe.setPayload("some data")
+        dataframe.setPayload(data)
 
         #build dataframe into string form
         packet = dataframe.buildHeadendFrame()
-        #encode into binary packet
-        packet.encode("utf-8")
         # Capture the time the data has begun transmission
-        #txTime = SVTClock.get()
-        #GTTxTime = GTClock.get()
-        return packet
-        '''txTime = -1
-        postTxTime = -1
-        dataTime = SVTClock.get()
-        
-        dataframe = ProcessData()
-        dataframe.setDataTime(dataTime)
-        dataframe.setTxTime(txTime)
-        dataframe.setPostTxTime(postTxTime)
-        dataframe.setPayload("some data")
-
         txTime = SVTClock.get()
-        packet = dataframe.buildHeadendFrame()
-        packet = packet.encode("utf-8") '''
-        
-        
+        GTTxTime = GTClock.get()
+
+        #encode packet into binary and return
+        return packet.encode("utf-8")
 
     def dataReceived(self, data):
         """
-        Called by twisted when the proxy receives data from
+        Called by twisted when the headend receives data from
         the client. Sends the data on to the server.
-        CLIENT ===> PROXY ===> DST
+        CLIENT ===> HEADEND ===> DST
         """
         print("")
         print("CLIENT => SERVER")
@@ -153,15 +139,15 @@ def _noop(data):
     return data
 
 def get_local_ip(iface):
-   # ni.ifaddresses(iface)
-   # return ni.ifaddresses(iface)[ni.AF_INET][0]['addr']
+   # ni.ifaddresses(iface)                               #should enable autodetection of network interfaces, but was unstable on the up boards
+   # return ni.ifaddresses(iface)[ni.AF_INET][0]['addr'] #can be uncommented if desired, the "iface" string should match the network manager device name
    return HEADENDIP
 
 FORMAT_FN = _noop
 
 LISTEN_PORT = 8888
 DST_PORT = 8888
-DST_HOST = "backendq"
+DST_HOST = "backend" #string only needed if identifying backend by domain name
 local_ip = HEADENDIP
 DST_IP = BACKENDIP
 print("")
