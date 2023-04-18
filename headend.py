@@ -5,7 +5,7 @@ from include.setup import *
 # Adapted from http://stackoverflow.com/a/15645169/221061
 
 HEADENDIP = "192.168.1.189" #IP Address of the device running this script
-BACKENDIP = "192.168.1.107" #IP Address of target Backend sever
+BACKENDIP = ipOut           #IP Address of target Backend sever
 
 
 class TCPProxyProtocol(protocol.Protocol):
