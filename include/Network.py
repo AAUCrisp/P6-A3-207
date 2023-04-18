@@ -20,6 +20,7 @@ class Network():
     receiveSock: socket.socket = None
     transmitSock: socket.socket = None
     isClosed = False
+    running:bool = True
 
 
     def __init__(self, tech="wifi"):
@@ -41,12 +42,8 @@ class Network():
         self.receiveSock.listen()               # Listens and wait for connections
 
         while True:
-            try:
-                conn, id = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket and an Address   
+            conn, id = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket and an Address   
 
-            except KeyboardInterrupt:
-                self.receiveSock.close()
-                return
 
             #print("Transmission Received")
 
@@ -57,18 +54,16 @@ class Network():
             
     def receive(self, conn:socket.socket, threadID):
         #print("The thread for receiving data has been started ", threading.get_ident())
-        try:
-            while True:    
-                sensorData = conn.recv(2048).decode()           # Receive incoming data. 
-                recvTime = time()
-                if not sensorData == "":
-                    self.lock.acquire()                                            # Lock the following code, such that only one thread can access it. 
-                    self.data[threadID].append({"recvTime":recvTime, "data":sensorData})        # Write the received data from the thread to a variable shared by all the threads in this process. 
-                    self.lock.release()                                                         # Release the lock once the task above is finished. 
-                else:
-                    self.threads.remove((threading.current_thread(), conn))
-                    return
-        except KeyboardInterrupt: conn.close()                                                  # catch keyboardinterrupts to shut down socket elegantly
+        while self.running:    
+            sensorData = conn.recv(2048).decode()           # Receive incoming data. 
+            recvTime = time()
+            if not sensorData == "":
+                self.lock.acquire()                                            # Lock the following code, such that only one thread can access it. 
+                self.data[threadID].append({"recvTime":recvTime, "data":sensorData})        # Write the received data from the thread to a variable shared by all the threads in this process. 
+                self.lock.release()                                                         # Release the lock once the task above is finished. 
+            else:
+                self.threads.remove((threading.current_thread(), conn))
+                return                                            # catch keyboardinterrupts to shut down socket elegantly
             
                 
                 
@@ -96,6 +91,7 @@ class Network():
         self.transmitSock.sendall(message.encode("utf8"))
         
     def close(self):
+        self.running = False
         if self.receiveSock is not None: 
             for _, socket in self.threads:
                 socket.recv(1024)
