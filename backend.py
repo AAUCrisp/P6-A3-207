@@ -80,29 +80,31 @@ def unpack(packet, recvIP, recvTime):
 # adapt = NetTechnology()
 
 net = Network(interfaceTarget)
-Thread(target=net.listener, args=[SERVERPORT]).start()
+Thread(target=net.listener, args=[SERVERPORT], daemon=True).start()
 print("Server socket is now listening.")
 
 
 dbPath = str(os.getcwd()) + "/include/db.db3"
 db = Database(dbPath)     # Prepare the database
+try:
+    while True:
+        for key in net.data.keys():
+            if len(net.data[key]) > 0:
+                print(f"\nData Received from Node\n___________")
 
-while True:
-    for key in net.data.keys():
-        if len(net.data[key]) > 0:
-            print(f"\nData Received from Node\n___________")
+                # Thomas' formating thing...
+                data = net.data[key].pop(0)
+                if verbose:
+                    frPrint(data['data'])
+                    print(f"\nDataframe using Key is: {net.data[key]}")
+                    # print(f"Dataframe is using Key: {net.data[key][0]['data']}")
+                    # print(proc.unpack(net.data[key]['data']))
+                unpack(data['data'], key, data['recvTime'])
+                # net.data[key].pop(0)
+                print(f"______________________________________\n")
 
-            # Thomas' formating thing...
-            data = net.data[key].pop(0)
-            if verbose:
-                frPrint(data['data'])
-                print(f"\nDataframe using Key is: {net.data[key]}")
-                # print(f"Dataframe is using Key: {net.data[key][0]['data']}")
-                # print(proc.unpack(net.data[key]['data']))
-            unpack(data['data'], key, data['recvTime'])
-            # net.data[key].pop(0)
-            print(f"______________________________________\n")
-
-        else:
-            sleep(1)
-
+            else:
+                sleep(1)
+except KeyboardInterrupt:
+    print("\rClosing network, please don't keyboardinterrupt again...")
+    net.close()
