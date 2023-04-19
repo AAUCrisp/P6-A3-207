@@ -131,7 +131,7 @@ if "main" in __name__:
     runSync()
 
     # create a sensor object with the headend address as an argument
-    sensor = Sensor((ipOut, portOut), interfaceTarget)
+    sensor = Sensor((int(ipOut), int(portOut)), interfaceTarget)
     # run the sensor
     sensor.run()
     
