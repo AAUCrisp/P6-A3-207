@@ -1,16 +1,15 @@
 #!/bin/bash
 
 
-
 function setDatarate() {
-    printf "Setting datarate of the specified interface to: %s\n\trun now? (y/N): " "$value"
+    printf "Setting datarate of the specified interface to: %s\n\trun now? (y/N): " "$datarate"
     cat > scripts/TrafficToll.yaml << EOF
 #Begin scripts/TrafficToll.yaml
 
-download:           ${value}
-upload:             ${value}
-download-minimum:   ${value}
-upload-minimum:     ${value}
+download:           ${datarate}
+upload:             ${datarate}
+download-minimum:   ${datarate}
+upload-minimum:     ${datarate}
 
 download-priority: 0
 upload-priority: 0
@@ -34,12 +33,18 @@ if [ $EUID != 0 ]; then
     echo "ERROR: This script needs root access"
     exit 1
 fi
+# Extract arguments
+for arg in "$@"; do
+    if [ "$arg" == "--datarate*" ]; then
+        echo test
+        datarate=${arg#*"="}
+    fi
+done
 
-cmd=$1
 
-if [ "$cmd" == "limit" ]; then
+if [ "$1" == "limit" ]; then
     setDatarate
 else
-    printf "No such command: \033[38;2;255;100;100m%s\033[0m\n" "$cmd"
+    printf "No such command: \033[38;2;255;100;100m%s\033[0m\n" "$1"
     exit 1
 fi
