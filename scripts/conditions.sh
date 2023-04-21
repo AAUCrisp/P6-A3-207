@@ -35,7 +35,7 @@ if [ $EUID != 0 ]; then
 fi
 # Extract arguments
 for arg in "$@"; do
-    if [ "$arg" == "--datarate*" ]; then
+    if [[ "$arg" == --datarate* ]]; then
         echo test
         datarate=${arg#*"="}
     fi
