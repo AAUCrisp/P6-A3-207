@@ -181,28 +181,26 @@ class ProcessData:
         """
         isHeadend = not dataframe.count(EON) == 1
         layer = dataframe.split(EON)[0].split(SEP)
+        nextLayer = dataframe.split(EON)[1]
         if isHeadend:
-            nextLayer = dataframe.split(EON)[1]
             return {
                 "txTime":       float(layer[0]),
-                "GTtxTime":     float(layer[1]),
-                "rxTime":       float(layer[2]),
-                "GTrxTime":     float(layer[3]),
-                "postTxTime":   float(layer[4]),
-                "GTpostTxTime": float(layer[5].split(PB)[0]),
-                "piggy":        layer[5].split(PB)[1] if layer[5].count(PB) == 1 else None,
-                "receivedIP":   layer[6],
+                "rxTime":       float(layer[1]),
+                "postTxTime":   float(layer[2].split(OFF)[0]),
+                "RTO":          float(layer[2].split(OFF)[1]) if dataframe.count(OFF) > 0 else None,
+                "GT":           float(layer[2].split(OFF)[2]) if dataframe.count(OFF) > 1 else None,
+                "piggy":        layer[2].split(PB)[1] if layer[2].count(PB) == 1 else None,
+                "receivedIP":   layer[3],
                 "payload":      ProcessData.unpack(nextLayer)
             }
         else:
             return {
                 "dataTime":     float(layer[0]),
-                "GTdataTime":   float(layer[1]),
-                "txTime":       float(layer[2]),
-                "GTtxTime":     float(layer[3]),
-                "postTxTime":   float(layer[4]),
-                "GTpostTxTime": float(layer[5]),
-                "payload":      layer[6]
+                "txTime":       float(layer[1]),
+                "postTxTime":   float(layer[2].split(OFF)[0]),
+                "RTO":          float(layer[2].split(OFF)[1]) if dataframe.count(OFF) > 0 else None,
+                "GT":           float(layer[2].split(OFF)[2]) if dataframe.count(OFF) > 1 else None,
+                "payload":      nextLayer
             }
 
 
