@@ -6,6 +6,7 @@ PB =  "\uFFFE"
 """Piggyback data field seperator"""
 EON =   "\uFFFD"
 """End Of Packet seperator"""
+OFF = "\uFFFC"
 
 
 class ProcessData:
@@ -29,6 +30,10 @@ class ProcessData:
     # This is the IP address of the data received
     receivedIP:str = None
 
+    RTO:float = None
+
+    GT:float = None
+
     # This is the constructor, it takes parameters and sets attributes based on the variables
     def __init__(self, rxTime=None, dataTime=None, txTime=None, postTxTime=None, payload=None, piggy=None, receivedIP=None) -> None:
         """This is the constructor, it takes the following optional parameters: 
@@ -45,11 +50,11 @@ class ProcessData:
         
         """
 
-        self.rxTime = rxTime if rxTime else dataTime
-        self.txTime = txTime
+        self.rxTime     = rxTime if rxTime else dataTime
+        self.txTime     = txTime
         self.postTxTime = postTxTime
-        self.payload = payload
-        self.piggy = piggy
+        self.payload    = payload
+        self.piggy      = piggy
         self.receivedIP = receivedIP
 
     def setRxTime(self, value:float):
@@ -57,18 +62,9 @@ class ProcessData:
         self.rxTime = value
         return self
     
-    def setGTRxTime(self, value:float):
-        """Setter for the GTRxTime attribute"""
-        self.GTRxTime = value
-    
     def setDataTime(self, value:float):
         """Setter for the rxTime attribute to be used for sensor packets"""
         self.rxTime = value
-        return self
-    
-    def setGTDataTime(self, value:float):
-        """Setter for the GTDataTime attribute"""
-        self.GTRxTime = value
         return self
     
     def setTxTime(self, value:float):
@@ -76,20 +72,20 @@ class ProcessData:
         self.txTime = value
         return self
     
-    def setGTTxTime(self, value:float):
-        """Setter for the GTTxTime attribute"""
-        self.GTTxTime = value
-        return self
-    
     def setPostTxTime(self, value:float):
         """Setter for the postTxTime attribute"""
         self.postTxTime = value
         return self
     
-    def setGTPostTxTime(self, value:float):
-        """Setter for the GTPostTxTime attribute"""
-        self.GTPostTxTime = value
-        return value
+    def setRTO(self, value:float):
+        """Setter for the Reference Time Offset"""
+        self.RTO = value
+        return self
+    
+    def setGT(self, value:float):
+        """Setter for the Ground Truth"""
+        self.GT = value
+        return self
     
     def setPayload(self, value:str):
         """Setter for the payload attribute"""
@@ -116,13 +112,15 @@ class ProcessData:
         `R|` is a regular seperator
         """
         data = SEP.join([
-            str(self.rxTime), 
-            str(self.GTRxTime),
-            str(self.txTime), 
-            str(self.GTTxTime),
-            str(self.postTxTime), 
-            str(self.GTPostTxTime),
-            str(self.payload)])
+            str(self.rxTime),
+            str(self.txTime),
+            str(self.postTxTime)
+        ])
+        if self.RTO:
+            data += f'{OFF}{str(self.RTO)}'
+        if self.GT:
+            data += f'{OFF}{str(self.GT)}'
+        data += f'{EON}{str(self.payload)}'
 
         return data
     
@@ -141,11 +139,13 @@ class ProcessData:
         """
         data = SEP.join([
             str(self.rxTime), 
-            str(self.GTRxTime),
-            str(self.txTime), 
-            str(self.GTTxTime),
-            str(self.postTxTime),
-            str(self.GTPostTxTime)])
+            str(self.txTime),
+            str(self.postTxTime)])
+        if self.RTO:
+            data += f'{OFF}{str(self.RTO)}'
+        if self.GT:
+            data += f'{OFF}{str(self.GT)}'
+        data += f'{EON}{str(self.payload)}'
         if self.piggy:
             data += f'{PB}{str(self.piggy)}'
         data += f'{SEP}{str(self.receivedIP)}'
@@ -176,28 +176,26 @@ class ProcessData:
         """
         isHeadend = not dataframe.count(EON) == 1
         layer = dataframe.split(EON)[0].split(SEP)
+        nextLayer = dataframe.split(EON)[1]
         if isHeadend:
-            nextLayer = dataframe.split(EON)[1]
             return {
                 "txTime":       float(layer[0]),
-                "GTtxTime":     float(layer[1]),
-                "rxTime":       float(layer[2]),
-                "GTrxTime":     float(layer[3]),
-                "postTxTime":   float(layer[4]),
-                "GTpostTxTime": float(layer[5].split(PB)[0]),
-                "piggy":        layer[5].split(PB)[1] if layer[5].count(PB) == 1 else None,
-                "receivedIP":   layer[6],
+                "rxTime":       float(layer[1]),
+                "postTxTime":   float(layer[2].split(OFF)[0]),
+                "RTO":          float(layer[2].split(OFF)[1]) if dataframe.count(OFF) > 0 else None,
+                "GT":           float(layer[2].split(OFF)[2]) if dataframe.count(OFF) > 1 else None,
+                "piggy":        layer[2].split(PB)[1] if layer[2].count(PB) == 1 else None,
+                "receivedIP":   layer[3],
                 "payload":      ProcessData.unpack(nextLayer)
             }
         else:
             return {
                 "dataTime":     float(layer[0]),
-                "GTdataTime":   float(layer[1]),
-                "txTime":       float(layer[2]),
-                "GTtxTime":     float(layer[3]),
-                "postTxTime":   float(layer[4]),
-                "GTpostTxTime": float(layer[5]),
-                "payload":      layer[6]
+                "txTime":       float(layer[1]),
+                "postTxTime":   float(layer[2].split(OFF)[0]),
+                "RTO":          float(layer[2].split(OFF)[1]) if dataframe.count(OFF) > 0 else None,
+                "GT":           float(layer[2].split(OFF)[2]) if dataframe.count(OFF) > 1 else None,
+                "payload":      nextLayer
             }
 
 
