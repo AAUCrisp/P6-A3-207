@@ -145,7 +145,6 @@ class ProcessData:
             data += f'{OFF}{str(self.RTO)}'
         if self.GT:
             data += f'{OFF}{str(self.GT)}'
-        data += f'{EON}{str(self.payload)}'
         if self.piggy:
             data += f'{PB}{str(self.piggy)}'
         data += f'{SEP}{str(self.receivedIP)}'
