@@ -3,6 +3,7 @@ from include.Database import *
 
 SERVERADDR = ""
 SERVERPORT = portIn
+SERVERPORT = portIn
 
 def unpack(packet, recvIP, recvTime):
 
