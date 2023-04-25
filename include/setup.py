@@ -142,7 +142,8 @@ if verbose:
 
 
 def frPrint(payload):
-    print(payload.replace(SEP, green(" | ")).replace(DSEP, blue(" | ")).replace(EOP, magenta(" | ")))
+     print(payload.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")))
+
 
 
 
