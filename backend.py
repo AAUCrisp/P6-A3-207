@@ -26,14 +26,31 @@ def unpack(packet, recvIP, recvTime):
                 print(f" -  Current Receive IP:         {lastIP}")
                 print(f" -  Current rxTime:             {frameData[0]}")
                 print(f" -  Current txTime:             {frameData[1]}")
-            if len(frameData.count(PB)) > 0:
-                pigFrame = frameData[2].split(PB)
+                
+            nodeData[i]['nodeIP'] = lastIP
+            nodeData[i]['rxTime'] = frameData[0]
+            nodeData[i]['rxTimeGT'] = frameData[0]
+            nodeData[i]['txTime'] = frameData[1]
+            nodeData[i]['txTimeGT'] = frameData[1]
+            # print(f" -  Current Payload:            {frameData[4]}")
+            lastIP = frameData[3]
+
+
+            if frameData[2].count(DSEP) > 0:
+                pigFrame = frameData[2].split(DSEP)
+
                 if verbose:
-                    print(f" -  Current prevTxTime:         {pigFrame[0]}")
+                    print(f" -  Current postTxTime:         {pigFrame[0]}")
                     print(f" -  Current Piggy:              {pigFrame[1]}")
+                nodeData[i]['postTxTime'] = pigFrame[0]
+                nodeData[i]['postTxTimeGT'] = pigFrame[0]
+                nodeData[i]['payload'] = pigFrame[1]
+
             else:
                 if verbose:
-                    print(f" -  Current prevTxTime:         {frameData[2]}")
+                    print(f" -  Current postTxTime:         {frameData[2]}")
+                nodeData[i]['postTxTime'] = frameData[2]
+                nodeData[i]['postTxTimeGT'] = frameData[2]
                 
             nodeData[i]['nodeIP'] = lastIP
             nodeData[i]['rxTime'] = frameData[0]
