@@ -1,3 +1,5 @@
+# from setup import *
+from include.setup import *
 import sqlite3
 # import subprocess
 
@@ -5,142 +7,142 @@ import sqlite3
 ##########################################
 #  Remove after figuring shit out!!!
 
-from ProcessData import *
-from Formatting import *
+# from ProcessData import *
+# from Formatting import *
 
-SEP =   "\uFFFF"
-"""Regular field seperator"""
-DSEP =  "\uFFFE"
-"""Piggyback data field seperator"""
-EOP =   "\uFFFD"
-"""End Of Packet seperator"""
-interfaceTarget = "wifi"
+# SEP =   "\uFFFF"
+# """Regular field seperator"""
+# DSEP =  "\uFFFE"
+# """Piggyback data field seperator"""
+# EOP =   "\uFFFD"
+# """End Of Packet seperator"""
+# interfaceTarget = "wifi"
 
 
-def unpack(packet, recvIP, recvTime):
+# def unpack(packet, recvIP, recvTime):
 
-    layers = packet.count(EOP) + 1  # Check the number of headend jumps
-    nodes = packet.split(EOP)       # Split the frames from each headend
+#     layers = packet.count(EOP) + 1  # Check the number of headend jumps
+#     nodes = packet.split(EOP)       # Split the frames from each headend
 
-    nodeData = [{key: value for key, value in []} for i in range(layers)]
+#     nodeData = [{key: value for key, value in []} for i in range(layers)]
 
-    lastIP = recvIP
+#     lastIP = recvIP
 
-    print(f"Frame Layers: {layers}\n")
+#     print(f"Frame Layers: {layers}\n")
 
-    if layers > 0:
-        # for i, key in enumerate(nodes):
-        # for i in range(layers-1):
-        for i in range(layers-1):
-            frameData = nodes[i].split(SEP)
+#     if layers > 0:
+#         # for i, key in enumerate(nodes):
+#         # for i in range(layers-1):
+#         for i in range(layers-1):
+#             frameData = nodes[i].split(SEP)
 
-            print(f"\nHeadend Frame Number:       {i+1}\n")
-            # print(f" -  Current Frama Data:         {key}")
-            print(f" -  Current Receive IP:         {lastIP}")
-            print(f" -  Current rxTime:             {frameData[0]}")
-            print(f" -  Current txTime:             {frameData[1]}")
-            nodeData[i]['nodeIP'] = lastIP
-            nodeData[i]['rxTime'] = frameData[0]
-            nodeData[i]['rxTimeGT'] = frameData[0]
-            nodeData[i]['txTime'] = frameData[1]
-            nodeData[i]['txTimeGT'] = frameData[1]
-            # print(f" -  Current Payload:            {frameData[4]}")
-            lastIP = frameData[3]
+#             print(f"\nHeadend Frame Number:       {i+1}\n")
+#             # print(f" -  Current Frama Data:         {key}")
+#             print(f" -  Current Receive IP:         {lastIP}")
+#             print(f" -  Current rxTime:             {frameData[0]}")
+#             print(f" -  Current txTime:             {frameData[1]}")
+#             nodeData[i]['nodeIP'] = lastIP
+#             nodeData[i]['rxTime'] = frameData[0]
+#             nodeData[i]['rxTimeGT'] = frameData[0]
+#             nodeData[i]['txTime'] = frameData[1]
+#             nodeData[i]['txTimeGT'] = frameData[1]
+#             # print(f" -  Current Payload:            {frameData[4]}")
+#             lastIP = frameData[3]
 
-            # pigLen = frameData[2].count(DSEP)
-            # print(f"Piggy Frame: {pigLen}")
+#             # pigLen = frameData[2].count(DSEP)
+#             # print(f"Piggy Frame: {pigLen}")
 
-            if frameData[2].count(DSEP) > 0:
-                pigFrame = frameData[2].split(DSEP)
-                print(f" -  Current postTxTime:         {pigFrame[0]}")
-                print(f" -  Current Piggy:              {pigFrame[1]}")
-                nodeData[i]['postTxTime'] = pigFrame[0]
-                nodeData[i]['postTxTimeGT'] = pigFrame[0]
-                nodeData[i]['payload'] = pigFrame[1]
-                # nodeData[i]['piggy'] = pigFrame[1]
+#             if frameData[2].count(DSEP) > 0:
+#                 pigFrame = frameData[2].split(DSEP)
+#                 print(f" -  Current postTxTime:         {pigFrame[0]}")
+#                 print(f" -  Current Piggy:              {pigFrame[1]}")
+#                 nodeData[i]['postTxTime'] = pigFrame[0]
+#                 nodeData[i]['postTxTimeGT'] = pigFrame[0]
+#                 nodeData[i]['payload'] = pigFrame[1]
+#                 # nodeData[i]['piggy'] = pigFrame[1]
 
-                ###  OH SHIT!!! Need to add Piggy-data as a Payload !!
+#                 ###  OH SHIT!!! Need to add Piggy-data as a Payload !!
 
-            else:
-                print(f" -  Current postTxTime:         {frameData[2]}")
-                nodeData[i]['postTxTime'] = frameData[2]
-                nodeData[i]['postTxTimeGT'] = frameData[2]
+#             else:
+#                 print(f" -  Current postTxTime:         {frameData[2]}")
+#                 nodeData[i]['postTxTime'] = frameData[2]
+#                 nodeData[i]['postTxTimeGT'] = frameData[2]
                 
 
 
 
-    frameData = nodes[layers-1].split(SEP)
+#     frameData = nodes[layers-1].split(SEP)
 
-    print(f"\nSensor Frame Number:        {layers}")
-    print(f" -  Current Receive IP:         {lastIP}")
-    print(f" -  Sensor genTime:             {frameData[0]}")
-    print(f" -  Sensor txTime:              {frameData[1]}")
-    print(f" -  Sensor postTxTime:          {frameData[2]}")
-    print(f" -  Sensor Payload:             {frameData[3]}")
-    nodeData[layers-1]['nodeIP'] = lastIP
-    nodeData[layers-1]['rxTime'] = frameData[0]
-    nodeData[layers-1]['rxTimeGT'] = frameData[0]
-    nodeData[layers-1]['txTime'] = frameData[1]
-    nodeData[layers-1]['txTimeGT'] = frameData[1]
-    nodeData[layers-1]['postTxTime'] = frameData[2]
-    nodeData[layers-1]['postTxTimeGT'] = frameData[2]
-    nodeData[layers-1]['payload'] = frameData[3]
+#     print(f"\nSensor Frame Number:        {layers}")
+#     print(f" -  Current Receive IP:         {lastIP}")
+#     print(f" -  Sensor genTime:             {frameData[0]}")
+#     print(f" -  Sensor txTime:              {frameData[1]}")
+#     print(f" -  Sensor postTxTime:          {frameData[2]}")
+#     print(f" -  Sensor Payload:             {frameData[3]}")
+#     nodeData[layers-1]['nodeIP'] = lastIP
+#     nodeData[layers-1]['rxTime'] = frameData[0]
+#     nodeData[layers-1]['rxTimeGT'] = frameData[0]
+#     nodeData[layers-1]['txTime'] = frameData[1]
+#     nodeData[layers-1]['txTimeGT'] = frameData[1]
+#     nodeData[layers-1]['postTxTime'] = frameData[2]
+#     nodeData[layers-1]['postTxTimeGT'] = frameData[2]
+#     nodeData[layers-1]['payload'] = frameData[3]
 
-    # comDelay = float(recvTime) - float(frameData[0])
-
-
-    print(f"\nNodeData Dict Contains:")
-    for i in range(len(nodeData)):
-        print(nodeData[i])
+#     # comDelay = float(recvTime) - float(frameData[0])
 
 
-    db.insertData(nodeData, 101.23)
+#     print(f"\nNodeData Dict Contains:")
+#     for i in range(len(nodeData)):
+#         print(nodeData[i])
+
+
+#     db.insertData(nodeData, 101.23)
 
 
 
 
-def transpose(matrix):
+# def transposeArray(matrix):
     
-    # print(f"Array in Transpose is: {matrix}")
+#     # print(f"Array in Transpose is: {matrix}")
 
-    length = len(matrix)
+#     length = len(matrix)
 
-    for i, key in enumerate(matrix):
+#     for i, key in enumerate(matrix):
         
-        depth = len(matrix[key])
-        global result
+#         depth = len(matrix[key])
+#         global result
 
-        if i == 0:
-            result = [[None for j in range(length)] for i in range(depth)]
-            # print(f"Empty array has structure {result}")
+#         if i == 0:
+#             result = [[None for j in range(length)] for i in range(depth)]
+#             # print(f"Empty array has structure {result}")
 
-        for j, value in enumerate(matrix[key]):
+#         for j, value in enumerate(matrix[key]):
 
-            result[j][i] = value
+#             result[j][i] = value
 
-            # print(f"""
-            # In Transpose:
-            #     i is: {i}
-            #     key is: {key}
-            #     j is: {j}
-            #     value is: {value}
-            #     array is now: {array}""")
+#             # print(f"""
+#             # In Transpose:
+#             #     i is: {i}
+#             #     key is: {key}
+#             #     j is: {j}
+#             #     value is: {value}
+#             #     array is now: {array}""")
     
     
-    return result
+#     return result
 
 
-def dict_depth(dic, level = 1):
+# def dict_depth(dic, level = 1):
 
-    str_dic = str(dic)
-    counter = 0
-    for i in str_dic:
-        if i == "{" or i == "[":
-            counter += 1
-        elif i == "}" or i == "]":
-            break
+#     str_dic = str(dic)
+#     counter = 0
+#     for i in str_dic:
+#         if i == "{" or i == "[":
+#             counter += 1
+#         elif i == "}" or i == "]":
+#             break
 
-    return(counter)
+#     return(counter)
 
 #  Remove after figuring shit out!!!
 ###########################################
@@ -322,7 +324,7 @@ class Database():
         """    
 
         sensorParams = { 
-            'select': "PayloadTransfer.sensorId, PayloadTransfer.id AS lastTxId",
+            'select': "PayloadTransfer.sensorId, PayloadTransfer.technology, PayloadTransfer.id AS lastTxId",
             'where': {
                 'ip5g': nodeIP,
                 'OR': None,
@@ -412,7 +414,7 @@ class Database():
 
         if depth > 1:
             # print(f"Several Inserts Entered")
-            values = transpose(params)
+            values = transposeArray(params)
             # print(f"Transposed Values Array is: {values}")
             
             str_values = self.array_to_string(values)
@@ -508,6 +510,10 @@ class Database():
 
                 oldTransfers.append(sensorFetch['lastTxId'])
 
+                print(f"Fetched Node-info is:\n    {sensorFetch}")
+
+                # global interfaceTarget
+
                 combinedParams = {
                     'sensorId': sensorFetch['sensorId'],
                     'combinedDelay': comDelay,
@@ -516,6 +522,7 @@ class Database():
                     'dataTimeGT': frame['rxTime'],
                     'deliveryTime': deliveryTime,
                     'deliveryTimeGT': deliveryTime,
+                    # 'technology': sensorFetch['technology'],
                     'technology': interfaceTarget,
                     'payload': frame['payload']
                 }

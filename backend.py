@@ -6,76 +6,91 @@ SERVERPORT = portIn
 
 def unpack(packet, recvIP, recvTime):
 
-    layers = packet.count(EOP)      # Check the number of headend jumps
+    layers = packet.count(EOP) + 1  # Check the number of headend jumps
     nodes = packet.split(EOP)       # Split the frames from each headend
+
+    nodeData = [{key: value for key, value in []} for i in range(layers)]
 
     lastIP = recvIP
 
+    print(f"Frame Layers: {layers}\n")
+
     if layers > 0:
-        # for i, key in enumerate(nodes):
         for i in range(layers-1):
             frameData = nodes[i].split(SEP)
+
             if verbose:
-                print(f"\nCurrent Frame Number:       {i}")
+                print(f"\nHeadend Frame Number:       {i+1}\n")
                 # print(f" -  Current Frama Data:         {key}")
+                print(f" -  Current Receive IP:         {lastIP}")
                 print(f" -  Current rxTime:             {frameData[0]}")
                 print(f" -  Current txTime:             {frameData[1]}")
-            if len(frameData.count(DSEP)) > 0:
-                pigFrame = frameData[2].split(DSEP)
-                if verbose:
-                    print(f" -  Current prevTxTime:         {pigFrame[0]}")
-                    print(f" -  Current Piggy:              {pigFrame[1]}")
-            else:
-                if verbose:
-                    print(f" -  Current prevTxTime:         {frameData[2]}")
                 
-            if verbose:
-                print(f" -  Current Receive IP:         {frameData[3]}")
-                print(f" -  Current Payload:            {frameData[4]}")
+            nodeData[i]['nodeIP'] = lastIP
+            nodeData[i]['rxTime'] = frameData[0]
+            nodeData[i]['rxTimeGT'] = frameData[0]
+            nodeData[i]['txTime'] = frameData[1]
+            nodeData[i]['txTimeGT'] = frameData[1]
+            # print(f" -  Current Payload:            {frameData[4]}")
             lastIP = frameData[3]
 
 
+            if frameData[2].count(DSEP) > 0:
+                pigFrame = frameData[2].split(DSEP)
 
-    frameData = nodes[layers].split(SEP)
-    if verbose:
-        print(f"\nSensor Frame:")
-        print(f" -  Sensor genTime:            {frameData[0]}")
-        print(f" -  Sensor txTime:             {frameData[1]}")
-        print(f" -  Sensor prevTxTime:         {frameData[2]}")
-        print(f" -  Sensor Payload:            {frameData[3]}")
+                if verbose:
+                    print(f" -  Current postTxTime:         {pigFrame[0]}")
+                    print(f" -  Current Piggy:              {pigFrame[1]}")
+                nodeData[i]['postTxTime'] = pigFrame[0]
+                nodeData[i]['postTxTimeGT'] = pigFrame[0]
+                nodeData[i]['payload'] = pigFrame[1]
 
-    comDelay = float(recvTime) - float(frameData[0])
+            else:
+                if verbose:
+                    print(f" -  Current postTxTime:         {frameData[2]}")
+                nodeData[i]['postTxTime'] = frameData[2]
+                nodeData[i]['postTxTimeGT'] = frameData[2]
+                
+                
 
-    sensorParams = { 
-        'where': {
-            'ip5g': lastIP,
-            'OR': None,
-            'ipWifi': lastIP
-            }, 
-        }
-
-    if verbose:
-        print(f"\nWhere parameters in Backend is: {sensorParams['where']}\n")
-        print(f"Where OR key is: {sensorParams['where']['ip5g']}\n")
-
-    sensorData = db.fetch('Node', sensorParams)
+    frameData = nodes[layers-1].split(SEP)
 
     if verbose:
-        print(f"Fetched Node Data is: {sensorData}")
+        print(f"\nSensor Frame Number:        {layers}")
+        print(f" -  Current Receive IP:         {lastIP}")
+        print(f" -  Sensor genTime:             {frameData[0]}")
+        print(f" -  Sensor txTime:              {frameData[1]}")
+        print(f" -  Sensor postTxTime:          {frameData[2]}")
+        print(f" -  Sensor Payload:             {frameData[3]}")
+    nodeData[layers-1]['nodeIP'] = lastIP
+    nodeData[layers-1]['rxTime'] = frameData[0]
+    nodeData[layers-1]['rxTimeGT'] = frameData[0]
+    nodeData[layers-1]['txTime'] = frameData[1]
+    nodeData[layers-1]['txTimeGT'] = frameData[1]
+    nodeData[layers-1]['postTxTime'] = frameData[2]
+    nodeData[layers-1]['postTxTimeGT'] = frameData[2]
+    nodeData[layers-1]['payload'] = frameData[3]
 
-    # Needs updates for the GT data...
-    comTrans = { 
-        'sensorId': sensorData[0]['id'],
-        'combinedDelay': comDelay,
-        'combinedDelayGT': comDelay,
-        'dataTime': frameData[0],
-        'dataTimeGT': frameData[0],
-        'deliveryTime': recvTime,
-        'deliveryTimeGT': recvTime,
-        'technology': interfaceTarget
-        }
 
-    db.insert('CombinedTransfer', comTrans)
+    # comDelay = float(recvTime) - float(frameData[0])
+
+    # print(f"\nNodeData Dict Contains:")
+    # for i in range(len(nodeData)):
+    #     print(nodeData[i])
+
+    db.insertData(nodeData, 101.23)
+
+
+
+
+
+#                End
+#  --   General Thingy Stuff   --
+#######################################
+#######################################
+#  --    Function Creation     --
+#               Start
+
 
 # adapt = NetTechnology()
 
