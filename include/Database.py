@@ -736,7 +736,7 @@ if __name__ == "__main__":
     packet = dataframe.buildHeadendFrame()
 
     print(f"Simulated Headend Packet is: ")
-    print(packet.replace(SEP, green(" | ")).replace(DSEP, blue(" | ")).replace(EOP, magenta(" | ")))
+    print(packet.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")))
 
 
     ##  Second Headend Frame
@@ -750,7 +750,7 @@ if __name__ == "__main__":
     doubet = dataframe.buildHeadendFrame()
 
     print(f"Simulated Headend Packet is: ")
-    print(doubet.replace(SEP, green(" | ")).replace(DSEP, blue(" | ")).replace(EOP, magenta(" | ")))
+    print(doubet.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")))
 
     recvIP = "127.0.0.1"
     recvTime = "78.90"
