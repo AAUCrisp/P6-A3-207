@@ -59,7 +59,7 @@ def unpack(packet, recvIP, recvTime):
                 nodeData[i]['payload'] = pigFrame[1]
                 # nodeData[i]['piggy'] = pigFrame[1]
 
-                ###  OH SHIT!!! Need to add Piggy-data as a Payload !!
+                ###  OH SHIT!!! Need to add Piggy-data as a Combined !!
 
             else:
                 print(f" -  Current postTxTime:         {frameData[2]}")
@@ -94,7 +94,7 @@ def unpack(packet, recvIP, recvTime):
         print(nodeData[i])
 
 
-    db.insertData(nodeData, 101.23)
+    db.insertData(nodeData)
 
 
 
@@ -287,7 +287,7 @@ class Database():
             LIMIT {config['limit']}"""
 
 
-        print(f"\nSQL Statement is:{sql}\n\n")
+        # print(f"\nSQL Statement is:{sql}\n\n")
         self.cur.execute(sql)
         # print("Efter Execute")
         rows = self.cur.fetchall()
@@ -322,66 +322,25 @@ class Database():
         """    
 
         sensorParams = { 
-            'select': "PayloadTransfer.sensorId, PayloadTransfer.id AS lastTxId",
+            'select': "CombinedTransfer.sensorId, CombinedTransfer.id AS lastTxId",
             'where': {
                 'ip5g': nodeIP,
                 'OR': None,
                 'ipWifi': nodeIP
                 },
             'join':{
-                'PayloadTransfer': 'Node.id=PayloadTransfer.sensorId'
+                'CombinedTransfer': 'Node.id=CombinedTransfer.sensorId'
                 },
             'order': {
-                'PayloadTransfer.id': 'DESC'
+                'CombinedTransfer.id': 'DESC'
                 },
             'limit': 1
             }
 
 
-        sensorData = self.fetch('Node', sensorParams)
+        sensorData = db.fetch('Node', sensorParams)
 
         return sensorData
-
-    def fetchOldTransfer(self, txId):
-        """Fetches the needed info for inserting the new sensor data.
-
-        ______  
-
-        Args:
-        ---
-            `nodeIP (str)`: IP address for the origin-sensor
-
-        ______  
-
-        Returns:
-        ---
-            `dict`: with `sensorId` and `lastTxId` keys
-        """    
-
-        params = { 
-            'select': 'PayloadToHeadend.jumpId, HeadendTransfer.rxTime, HeadendTransfer.rxTimeGT',
-            # 'select': {
-            #     "PayloadToHeadend.jumpId",
-            #     "HeadendTransfer.rxTime",
-            #     "HeadendTransfer.rxTimeGT"
-            # },
-            'where': {
-                'PayloadToHeadend.payloadId': txId
-                },
-            'join':{
-                'HeadendTransfer': 'PayloadToHeadend.jumpId=HeadendTransfer.id'
-                },
-            # 'order': {
-            #     'PayloadTransfer.id': 'DESC'
-            #     },
-            # 'limit': 1
-            }
-
-
-        result = self.fetch('PayloadToHeadend', params)
-
-        return result
-
 
 
 ##########################################
@@ -466,15 +425,20 @@ class Database():
 
 
     # Method to run through the frames from each node and insert it into the database
-    def insertData(self, nodeData, endTime):
+    def insertData(self, nodeData):
         
         payloadFrames = []
+        sensorFrames = []
+        # global sensorFrames
         oldDelays = []
         newHeadInput = []
         sensorInfo = {'txId':[], 'fromFrame':[]}
+        oldHeadends = []
         oldTransfers = []
 
-        deliveryTime = endTime
+        # dataGenTime = []
+        deliveryTime = 101.23
+        jumps = len(nodeData)
 
         # print("Full NodeData is:")
         # for i in range(len(nodeData)):
@@ -503,7 +467,7 @@ class Database():
 
                 newHeadInput[i].__setitem__('payload', frame['payload'])
 
-                sensorFetch = self.fetchSensorInfo(frame['nodeIP'])[0]
+                sensorFetch = db.fetchSensorInfo(frame['nodeIP'])[0]
                 comDelay = float(deliveryTime) - float(frame['rxTime'])
 
                 oldTransfers.append(sensorFetch['lastTxId'])
@@ -520,7 +484,7 @@ class Database():
                     'payload': frame['payload']
                 }
 
-                idFetch = self.insert('PayloadTransfer', combinedParams)
+                idFetch = db.insert('CombinedTransfer', combinedParams)
                 txId = idFetch if idFetch else 8
                 sensorInfo['txId'].append(txId)
                 payloadFrames.append(i)
@@ -530,20 +494,21 @@ class Database():
         print(f"Piggy count is: {piggyCount}")
 
         headendParams = {
+            'transferId': [],
             'nodeId': [],
             'rxTime': [],
             'rxTimeGT': [],
             'piggyData': []            
         }
 
-
+        # sensorFrames.extend(payloadFrames)
+        # sensorFrames.reverse()
         sensorInfo['fromFrame'].extend(payloadFrames)
+        # sensorInfo['fromFrame'].reverse()
+        print(f"\n\nPayload Frames between loops are: {payloadFrames}\n\nSensor Frames between loops are: {sensorFrames}\n\n")
 
-        # print(f"\n\nPayload Frames between loops are: {payloadFrames}\n\nSensor Frames between loops are: {sensorFrames}\n\n")
-
-        # print(f"Old Transfers Array contains: {oldTransfers}")
+        print(f"Old Transfers Array contains: {oldTransfers}")
         oldTransfers.reverse()
-
         #######################################################
         ##  --  Run over each node-jump
         for i, newFrame in enumerate(newHeadInput):            
@@ -551,7 +516,15 @@ class Database():
             ##  -- Start by updating the last transfer with the new delays
             if len(oldTransfers) > 0:
 
-                oldHeadendData = self.fetchOldTransfer(oldTransfers[0])
+                oldHeadParams = {
+                    'where': {
+                        'transferId': oldTransfers[0]
+                    }
+                }
+
+
+                oldHeadendData = db.fetch('HeadendTransfer', oldHeadParams)
+
 
                 if len(oldHeadendData) > 0:
                     print(f"""\n\nOld Headend Data is Found\n    Update Data (oldDelays) is:""")
@@ -563,6 +536,7 @@ class Database():
                         print(oldHeadendData[j])
 
 
+                    # print(oldHeadendData[i])
                     processDelay = float(oldDelays[i]['txTime']) - float(oldHeadendData[i]['rxTime'])
                     interfaceDelay = float(oldDelays[i]['postTxTime']) - float(oldDelays[i]['txTime'])
 
@@ -575,10 +549,14 @@ class Database():
                             'processDelay': processDelay,
                             'txInterfaceDelay': interfaceDelay
                         },
-                        'where': {'id': oldHeadendData[i]['jumpId']}
+                        'where': {'id': oldHeadendData[i]['id']}
                     }
 
                     self.update('HeadendTransfer', updateParams)
+
+
+
+                    print(f"\n\nUpdate Params in loop is: {updateParams}\n")
 
                     oldTransfers.pop
 
@@ -589,10 +567,11 @@ class Database():
 
 
 
-            nodeInfo = self.fetchSensorInfo(newFrame['nodeIP'])
+            nodeInfo = db.fetchSensorInfo(newFrame['nodeIP'])
 
             # print(f"NodeInfo Contains: {nodeInfo}")
 
+            headendParams['transferId'].append(sensorInfo['txId'][0])
             headendParams['nodeId'].append(nodeInfo[0]['sensorId'])
             headendParams['rxTime'].append(newFrame['rxTime'])
             headendParams['rxTimeGT'].append(newFrame['rxTimeGT'])
@@ -601,13 +580,13 @@ class Database():
 
             if payloadFrames[0] == i:
                 piggyCount = piggyCount -1
-
-                # print(f"\n\nSensor Frame before Payload Pop: {sensorInfo['fromFrame']}\n\n")
+                # print(f"\n\nSensor Frame before Payload Pop: {sensorFrames}\n\n")
+                print(f"\n\nSensor Frame before Payload Pop: {sensorInfo['fromFrame']}\n\n")
                 payloadFrames.pop(0)
 
 
         # if len(updateParams['values']['txTime']) > 0:
-        #     self.update('HeadendTransfer', updateParams)
+        #     db.update('HeadendTransfer', updateParams)
 
         # sensorInfo['txId'].pop(0)
 
@@ -620,23 +599,42 @@ class Database():
 
 
         relationParams = {
-            'payloadId': [],
+            'combinedId': [],
             'jumpId': []
         }
 
-        headRow = self.insert('HeadendTransfer', headendParams)
-
         for i, txId in reversed(list(enumerate(sensorInfo['txId']))):
+            print(f"Sensor Frames Is: {sensorInfo['fromFrame']}")
+            print(f"Piggy Insert loop has i: {i} and e: {txId}")
 
             stopFrame = sensorInfo['fromFrame'][i] + 1
 
             for j in range(stopFrame):
-                # print(f"\nIn Relation loop, j is: {j}")
-                relationParams['payloadId'].append(txId)
+                print(f"\nIn Id change-loop, j is: {j}")
+                headendParams['transferId'][j] = txId
+                # print(f"\nHeadendTransfer Id in loop is: {headendParams['transferId']}\n")
+
+
+            
+
+
+
+            headendParams['transferId'] = headendParams['transferId'][0:stopFrame]
+            headendParams['nodeId'] = headendParams['nodeId'][0:stopFrame]
+            headendParams['rxTime'] = headendParams['rxTime'][0:stopFrame]
+            headendParams['rxTimeGT'] = headendParams['rxTimeGT'][0:stopFrame]
+            headendParams['piggyData'] = headendParams['piggyData'][0:stopFrame]
+
+
+            headRow = db.insert('HeadendTransfer', headendParams)
+
+            for j in range(stopFrame):
+                print(f"\nIn Relation loop, j is: {j}")
+                relationParams['combinedId'].append(txId)
                 relationParams['jumpId'].append(headRow - j)
             
 
-        self.insert('PayloadToHeadend', relationParams)
+        db.insert('CombinedToHeadend', relationParams)
 
 
         return 1
