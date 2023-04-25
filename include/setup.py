@@ -77,6 +77,8 @@ parser.add_argument('-dev', action=argparse.BooleanOptionalAction)
 parser.add_argument('-v', action=argparse.BooleanOptionalAction)
 parser.add_argument('-delay', type=int, required=False)
 parser.add_argument('-cwd', type=str, required=False)
+parser.add_argument('-sync', type=int, required=False, default=0)
+
 args = parser.parse_args()    # The array containing our arguments
 
 # print(args)
@@ -98,6 +100,12 @@ ipGT = ips[str(args.gt)][interfaceGT] if args.gt else ips['up2'][interfaceGT]
 interfaceSVT = interfaceTarget
 ipSVT = ips['up2'][interfaceSVT]
 
+# Synchronization mode
+modes = {
+    0:"none",
+    1:"ntp"
+}
+syncMode = modes[int(args.sync)]
 
 # Development Arguments
 if args.cwd:
@@ -144,6 +152,11 @@ if verbose:
 def frPrint(payload):
     print(payload.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")))
 
+
+# Synchronization setup
+VKT = Clock()
+GT = Clock()
+RTO = Clock()
 
 
 

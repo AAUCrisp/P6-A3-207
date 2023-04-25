@@ -18,8 +18,6 @@ class Clock:
     def set(self, value):
         self.offset = value - self.parent()
 
-VKT = Clock()
-GT = Clock()
 
 class Sync(threading.Thread):
     """```markdown
@@ -33,8 +31,9 @@ class Sync(threading.Thread):
     *   syncTime(): synchronizes the system with the local time of the other systems in the network
     *   syncVclk(): synchronizes using a vector clock
     ```"""
+    lock = threading.Lock()
 
-    def __init__(self, addressGT = "10.0.0.20", address = '192.168.1.107', interface='wifi', interfaceGT = 'ethernet') -> None:
+    def __init__(self, clock:Clock, address = '192.168.1.107', interface='wifi') -> None:
         """```markdown
         
         This is the constructor of this class, it takes 2 parameters
@@ -44,20 +43,8 @@ class Sync(threading.Thread):
         """
         self.address = address
         self.interface = interface
-        self.addressGT = addressGT
-        self.interfaceGT = interfaceGT
+        self.clock = clock
         super().__init__(daemon=True)
-        self.lock = threading.Lock()
-
-
-    def syncGT(self):
-        """This method synchronizes the "Ground Truth", this is interpreted as NTP synchronization, here a method of ntplib has been modified as shown below to use a specific interface."""
-        # get the NTP timestamp
-        ethernet = NetTechnology(self.interfaceGT)
-
-        return requestNTP(self.addressGT, interface=ethernet.getInterface())
-        # set the NTP timestamp on the system, this will only be changed for the running process if NTP synchronization is automatic on the system its running on.
-        #os.system(f'date -s @{NTP}') <- deprecated functionality
 
     def sync(self):
         """This method synchronizes the "System Virtual Time", this is interpreted as NTP synchronization, here a method of ntplib has been modified as shown below to use a specific interface."""
@@ -68,18 +55,17 @@ class Sync(threading.Thread):
         # set the NTP timestamp on the system, this will only be changed for the running process if NTP synchronization is automatic on the system its running on.
         #os.system(f'date -s @{NTP}') <- deprecated functionality
 
-    def suspend(self):
-        self.lock.acquire()
-    def resume(self):
-        self.lock.release()
+    def suspend():
+        Sync.lock.acquire()
+    def resume():
+        Sync.lock.release()
         time.sleep(.1)
 
     def run(self) -> None:
         while True:
-            self.lock.acquire()
-            GT.set(self.syncGT())
-            VKT.set(self.sync())
-            self.lock.release()
+            Sync.lock.acquire()
+            self.clock.set(self.sync())
+            Sync.lock.release()
             time.sleep(30)
 
     
