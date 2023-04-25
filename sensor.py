@@ -23,7 +23,6 @@ class Sensor:
         self.network = Network(tech)
 
         # Connect to the address passed to the constructor
-        # self.network.connect(addr[0], addr[1])
         self.network.connect(ipOut, portOut)
     
     def run(self):

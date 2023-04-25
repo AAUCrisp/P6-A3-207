@@ -2,7 +2,7 @@ from include.setup import *
 from include.Database import *
 
 SERVERADDR = ""
-SERVERPORT= portIn
+SERVERPORT = portIn
 
 def unpack(packet, recvIP, recvTime):
 
@@ -14,7 +14,6 @@ def unpack(packet, recvIP, recvTime):
     if layers > 0:
         # for i, key in enumerate(nodes):
         for i in range(layers-1):
-            # frameData = layers[i].split(SEP)
             frameData = nodes[i].split(SEP)
             if verbose:
                 print(f"\nCurrent Frame Number:       {i}")
@@ -47,7 +46,7 @@ def unpack(packet, recvIP, recvTime):
 
     comDelay = float(recvTime) - float(frameData[0])
 
-    nodeParams = { 
+    sensorParams = { 
         'where': {
             'ip5g': lastIP,
             'OR': None,
@@ -56,16 +55,17 @@ def unpack(packet, recvIP, recvTime):
         }
 
     if verbose:
-        print(f"\nWhere parameters in Backend is: {nodeParams['where']}\n")
-        print(f"Where OR key is: {nodeParams['where']['ip5g']}\n")
+        print(f"\nWhere parameters in Backend is: {sensorParams['where']}\n")
+        print(f"Where OR key is: {sensorParams['where']['ip5g']}\n")
 
-    nodeData = db.fetch('Node', nodeParams)
+    sensorData = db.fetch('Node', sensorParams)
 
     if verbose:
-        print(f"Fetched Node Data is: {nodeData}")
+        print(f"Fetched Node Data is: {sensorData}")
 
+    # Needs updates for the GT data...
     comTrans = { 
-        'sensorId': nodeData[0]['id'],
+        'sensorId': sensorData[0]['id'],
         'combinedDelay': comDelay,
         'combinedDelayGT': comDelay,
         'dataTime': frameData[0],
@@ -90,17 +90,15 @@ db = Database(dbPath)     # Prepare the database
 while True:
     for key in net.data.keys():
         if len(net.data[key]) > 0:
-            print(f"\nData Received from Node\n___________")
-
-            # Thomas' formating thing...
             data = net.data[key].pop(0)
+
+            print(f"\n___________\nData Received from Node")
+            frPrint(data['data'])   # Thomas' Formatting Thing
+
             if verbose:
-                frPrint(data['data'])
                 print(f"\nDataframe using Key is: {net.data[key]}")
-                # print(f"Dataframe is using Key: {net.data[key][0]['data']}")
-                # print(proc.unpack(net.data[key]['data']))
+
             unpack(data['data'], key, data['recvTime'])
-            # net.data[key].pop(0)
             print(f"______________________________________\n")
 
         else:
