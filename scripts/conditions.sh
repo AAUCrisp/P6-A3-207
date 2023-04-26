@@ -43,11 +43,9 @@ function stressTest(){
 }
 
 ############################## main section #############################
-if [ $EUID != 0 ]; then
+if [ $EUID != 0 ] && [ "$1" != "help" ]; then
     printf "\033[38;2;255;0;0mERROR\033[0m: This script needs root access\n"
-    if [ "$1" != "help" ]; then
-        exit 1
-    fi
+    exit 1
 fi
 # Extract arguments
 for arg in "$@"; do
@@ -86,8 +84,7 @@ ${bold}Commands${reset}:
 ${bold}Arguments${reset}:
     ${green}--datarate${reset}:\tSpecify the datarate for the limit command
     ${green}--host${reset}:\tSpecify the host to use for the stress command
-    ${green}--port${reset}:\tSpecify the port to use for the stress command
-\n"
+    ${green}--port${reset}:\tSpecify the port to use for the stress command\n"
 else
     printf "No such command: \033[38;2;255;75;0m%s\033[0m, type './scripts/conditions.sh help' for help\n" "$1"
     exit 1
