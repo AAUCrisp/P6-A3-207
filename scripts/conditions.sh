@@ -44,7 +44,7 @@ function stressTest(){
 
 ############################## main section #############################
 if [ $EUID != 0 ] && [ "$1" != "help" ]; then
-    printf "\033[38;2;255;0;0mERROR\033[0m: This script requires root access\n"
+    printf "\033[38;2;255;0;0mError\033[0m: This script requires root access\n"
     exit 1
 fi
 # Extract arguments
