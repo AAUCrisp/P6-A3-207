@@ -93,6 +93,7 @@ class Sensor:
                     # Define a countdown until this while loop should end
                     countdown = int(sleepEnd-VKT.get()+1)
                     # Print a formatted string with the aforementioned count of sent data, and a countdown to the next transmission
+
                     print(f"{UP}Transfers: {green(sent)}   Next transfer in: {green(countdown)}")
 
                     if not self.network.running: return unhide()
