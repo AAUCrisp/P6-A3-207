@@ -5,7 +5,7 @@ from include.setup import *
 # Adapted from http://stackoverflow.com/a/15645169/221061
 
 HEADENDIP = "192.168.1.189" #IP Address of the device running this script
-BACKENDIP = ipOut           #IP Address of target Backend sever
+BACKENDIP = int(ipOut)           #IP Address of target Backend sever (192.168.1.107 by default)
 
 
 class TCPProxyProtocol(protocol.Protocol):
@@ -172,7 +172,7 @@ LISTEN_PORT = int(portIn)
 DST_PORT = int(portOut)
 DST_HOST = "backend" #string only needed if identifying backend by domain name
 local_ip = HEADENDIP
-DST_IP = BACKENDIP
+DST_IP = int(portOut)
 print("")
 print("Headend IP: %s" % local_ip)
 print("Backend IP: %s" % DST_IP)
@@ -197,4 +197,4 @@ factory.protocol = TCPProxyProtocol
 reactor.listenTCP(LISTEN_PORT, factory)
 reactor.run()
 
-print("end of program")
+print("exited program")

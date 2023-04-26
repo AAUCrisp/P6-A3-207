@@ -10,7 +10,7 @@ try:
             if len(s.data[key]) > 0:
                 for _ in range(len(s.data.keys())):
                     data = s.data[key].pop(0)
-                    print(data["data"].replace(SEP, red("\t| ")).replace(PB, blue("\t| ")).replace(EON, magenta("\t| ")))
+                    print(data["data"].replace(SEP, red("\t| ")).replace(PB, blue("\t| ")).replace(EON, magenta("\t| ")).replace(OFF, green("\t| ")))
             else:
                 sleep(1)
 except KeyboardInterrupt:
