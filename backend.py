@@ -36,8 +36,8 @@ def unpack(packet, recvIP, recvTime):
             lastIP = frameData[3]
 
 
-            if frameData[2].count(DSEP) > 0:
-                pigFrame = frameData[2].split(DSEP)
+            if frameData[2].count(PB) > 0:
+                pigFrame = frameData[2].split(PB)
 
                 if verbose:
                     print(f" -  Current postTxTime:         {pigFrame[0]}")
