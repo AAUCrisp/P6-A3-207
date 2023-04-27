@@ -12,15 +12,17 @@ from include.setup import *
 
 # txInterval = 3
 
-syncLock = Condition()
 
 class Sensor:
     """This is the main class of the sensor. it will use the programs defined under `include/` to emulate the functionality of a sensor."""
 
-    def __init__(self, addr, tech) -> None:
+    def __init__(self, tech, target=lambda: "some data") -> None:
         """This is the constructor of the sensor class, it will initialize a network type and connect to a headend server."""
         # initialize the loopback network
         self.network = Network(tech)
+
+        # target sensor collection function, the default just contains the string "some data"
+        self.target = target
 
         # Connect to the address passed to the constructor
         # self.network.connect(addr[0], addr[1])
@@ -35,63 +37,72 @@ class Sensor:
 
             # set default values for some post processing data
             txTime = -1
-            GTTxTime = -1
             postTxTime = -1
-            GTPostTxTime = -1
             sent = 0
+            RTOdifference = None
+            GTdifference = None
 
             # run infinitely
             while True:
-                # acquire the lock for synchronization
-                syncLock.acquire()
+                # Make sure the synchronziation
+                Sync.suspend()
                 # initialize the dataframe object
                 dataframe = ProcessData()
 
                 # Capture the time the data has been generated
-                dataTime = SVTClock.get()
-                GTDataTime = GTClock.get()
+                dataTime = VKT.get()
                 # attach the data time to the dataframe
                 dataframe.setDataTime(dataTime)
-                dataframe.setGTDataTime(GTDataTime)
                 # attach the previous transmit time to the dataframe
                 dataframe.setTxTime(txTime)
-                dataframe.setGTTxTime(GTTxTime)
                 # attach the post transmission time to the dataframe
                 dataframe.setPostTxTime(postTxTime)
-                dataframe.setGTPostTxTime(GTPostTxTime)
                 # attach the payload to the dataframe
-                dataframe.setPayload("some data")
+                dataframe.setPayload(self.target())
+                # attach offsets if they have changed
+                if not RTOdifference == RTO.offset or not GTdifference == GT.offset:
+                    dataframe.setRTO(RTO.offset)
+                    RTOdifference = RTO.offset
+                    dataframe.setGT(GT.offset)
+                    GTdifference = GT.offset
 
                 # Build the dataframe into a string form
                 packet = dataframe.buildSensorFrame()
                 # Capture the time the data has begun transmission
-                txTime = SVTClock.get()
-                GTTxTime = GTClock.get()
+                txTime = VKT.get()
                 # Send the built dataframe object over the network
                 self.network.transmit(packet)
                 # Capture the post transmission time
-                postTxTime = SVTClock.get()
-                GTPostTxTime = GTClock.get()
+                postTxTime = VKT.get()
 
                 # Define when the next packet should be transmitted
-                sleepEnd = SVTClock.get() + txInterval
+                sleepEnd = VKT.get() + txInterval
                 # Increment a value to keep track of time
                 sent = sent+1
 
                 # A while loop that runs while the sensor should not be transmitting
-                while sleepEnd > SVTClock.get():
+                if verbose:
+                    print(f'{UP}{"_"*50}')
+                    for label, field in zip(
+                        ["dataTime", "txTime", "postTxTime", "payload", "GT", "RTO"],
+                        [dataframe.rxTime, dataframe.txTime, dataframe.postTxTime, dataframe.payload, dataframe.GT, dataframe.RTO]):
+                        print(f'{label}:\r\t\t{green(field)}{CLEAR}')
+                    print()
+
+                while sleepEnd > VKT.get():
                     # Define a countdown until this while loop should end
-                    countdown = int(sleepEnd-SVTClock.get()+1)
+                    countdown = int(sleepEnd-VKT.get()+1)
                     # Print a formatted string with the aforementioned count of sent data, and a countdown to the next transmission
-                    print(f"{UP}Transfers: {sent}   Next transfer in: {countdown}\n{dataTime} {GTDataTime}{UP}")
+
+                    print(f"{UP}Transfers: {green(sent)}   Next transfer in: {green(countdown)}")
 
                     if not self.network.running: return unhide()
                     # Sleep to preserve system resources
                     sleep(1)
-                # Release the syncronization lock
-                syncLock.release()
-                # Sleep for a while to allow the syncronization to take the lock
-                sleep(.1)
+                if verbose:
+                    print(f'{UP*7}', end="")
+                # Let synhronization have a chance to take the lock
+                Sync.resume()
 
         # Catch keyboardinterrupts to exit the program
         except KeyboardInterrupt: 
@@ -99,39 +110,37 @@ class Sensor:
             unhide()
             self.network.close()
 
-# This method defines synchronization of the SVTClock and GTClock every 30 seconds
-def runSync(started = False):
-    # run in a thread
-    if not started: return threading.Thread(target=runSync, args=[True], daemon=True).start()
 
-    # define global variables to be used in other functions
-    global SVTClock, GTClock, syncLock
-    # Define a local synchronization object
-    s = Sync(
-        addressGT=  ipGT,
-        address=    ipSVT,
-        interfaceGT=interfaceGT,
-        interface=  interfaceSVT
-    )
-    # A while loop to run while the program is running, synchronizing every 30 seconds
-    while True:
-        # acquire the synchronization lock
-        syncLock.acquire()
-        # set the "Ground Truth" clock using the synchronization object
-        GTClock.set(s.syncGT())
-        # Set the "System Virtual Time" clock using the synchronization object
-        SVTClock.set(s.sync())
-        # Release the Synchronization lock
-        syncLock.release()
-        sleep(30) # only sync every 30 seconds
 
 # The main of this program
 if "main" in __name__:
-    # start a synchronizing thread
-    runSync()
+    #define a synchronization object for the clock GT
+    syncGT = Sync(
+        address=ipGT,
+        interface=interfaceGT,
+        clock=GT
+    )
+    #start the synchronization thread
+    syncGT.start()
+
+    syncRTO = Sync(
+        address=ipSVT,
+        interface=interfaceSVT,
+        clock=RTO
+    )
+    syncRTO.start()
+
+    #if NTP is desired, then also define and start a VKT synchronization object
+    if syncMode == "ntp":
+        syncVKT = Sync(
+            address=ipSVT,
+            interface=interfaceSVT,
+            clock=VKT
+        )
+        syncVKT.start()
 
     # create a sensor object with the headend address as an argument
-    sensor = Sensor((ipOut, portOut), interfaceTarget)
+    sensor = Sensor(interfaceTarget)
     # run the sensor
     sensor.run()
     

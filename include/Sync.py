@@ -1,11 +1,25 @@
 from ntplib import NTPPacket, system_to_ntp_time, time, NTPException, NTPStats
 import socket
 import os
+import threading
 from include.NetTechnology import *
 
 
+class Clock:
+    offset = 0
+    parent = None
 
-class Sync:
+    def __init__(self, parentClock = time.time) -> None:
+        self.parent = parentClock
+
+    def get(self) -> float:
+        return self.parent() + self.offset
+
+    def set(self, value):
+        self.offset = value - self.parent()
+
+
+class Sync(threading.Thread):
     """```markdown
     
     This class is used to synchronize the testbed, it will have 2 attributes and 3 methods:
@@ -17,8 +31,9 @@ class Sync:
     *   syncTime(): synchronizes the system with the local time of the other systems in the network
     *   syncVclk(): synchronizes using a vector clock
     ```"""
+    lock = threading.Lock()
 
-    def __init__(self, addressGT, address = '127.0.0.1', interface='wifi', interfaceGT = 'ethernet') -> None:
+    def __init__(self, clock:Clock, address = '192.168.1.107', interface='wifi') -> None:
         """```markdown
         
         This is the constructor of this class, it takes 2 parameters
@@ -28,18 +43,8 @@ class Sync:
         """
         self.address = address
         self.interface = interface
-        self.addressGT = addressGT
-        self.interfaceGT = interfaceGT
-
-
-    def syncGT(self):
-        """This method synchronizes the "Ground Truth", this is interpreted as NTP synchronization, here a method of ntplib has been modified as shown below to use a specific interface."""
-        # get the NTP timestamp
-        ethernet = NetTechnology(self.interfaceGT)
-
-        return requestNTP(self.addressGT, interface=ethernet.getInterface())
-        # set the NTP timestamp on the system, this will only be changed for the running process if NTP synchronization is automatic on the system its running on.
-        #os.system(f'date -s @{NTP}') <- deprecated functionality
+        self.clock = clock
+        super().__init__(daemon=True)
 
     def sync(self):
         """This method synchronizes the "System Virtual Time", this is interpreted as NTP synchronization, here a method of ntplib has been modified as shown below to use a specific interface."""
@@ -50,14 +55,21 @@ class Sync:
         # set the NTP timestamp on the system, this will only be changed for the running process if NTP synchronization is automatic on the system its running on.
         #os.system(f'date -s @{NTP}') <- deprecated functionality
 
-class Clock:
-    offset = 0
+    def suspend():
+        Sync.lock.acquire()
+    def resume():
+        Sync.lock.release()
+        time.sleep(.1)
 
-    def get(self) -> float:
-        return time.time() + self.offset
+    def run(self) -> None:
+        while True:
+            Sync.lock.acquire()
+            self.clock.set(self.sync())
+            Sync.lock.release()
+            time.sleep(30)
 
-    def set(self, value):
-        self.offset = value - time.time()
+    
+
 
 # This function is a modified version of the one found at: https://github.com/cf-natali/ntplib/blob/08d0f7ef766715a52f472901de5e382c8f773855/ntplib.py#L286
 def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_UNSPEC, interface:str = "lo"):  # pylint: disable=no-self-use,too-many-arguments
@@ -111,10 +123,6 @@ def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_
         stats.dest_timestamp = dest_timestamp
 
         return stats.tx_time
-
-GTClock = Clock()
-SVTClock = Clock()
-
 
 
 
