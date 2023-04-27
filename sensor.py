@@ -16,7 +16,7 @@ from include.setup import *
 class Sensor:
     """This is the main class of the sensor. it will use the programs defined under `include/` to emulate the functionality of a sensor."""
 
-    def __init__(self, tech, target=lambda: "some data") -> None:
+    def __init__(self, tech, target=lambda: "some data2") -> None:
         """This is the constructor of the sensor class, it will initialize a network type and connect to a headend server."""
         # initialize the loopback network
         self.network = Network(tech)
@@ -26,7 +26,7 @@ class Sensor:
 
         # Connect to the address passed to the constructor
         # self.network.connect(addr[0], addr[1])
-        self.network.connect(ipOut, portOut)
+        self.network.connect(ipOut, int(portOut))
     
     def run(self):
         """This method runs the sensor program, it will send data using the network every <txInterval> seconds"""

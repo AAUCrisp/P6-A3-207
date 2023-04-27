@@ -29,7 +29,7 @@ class headendlistener:
         
         #connect to backend
         try:
-            self.net.connect("192.168.1.107", 8888)
+            self.net.connect(SERVERADDR, SERVERPORT)
         except:
             sys.exit("ERROR: Could not connect to backend")
 
@@ -37,63 +37,66 @@ class headendlistener:
         
         try:
             while True:
-                for key in self.net.data.keys():
-                    if len(self.net.data[key]) > 0:
-                        print(f"\nReceived data from node: %s"% key)
+                if self.net.data.qsize() > 0:
+                    data = self.net.popData()
+                    ip = data["id"]
+                    rxTime = data["recvTime"]
+                    payload = data["data"]
 
-                        # Get sensor packet from input buffer                      
-                        data = self.net.data[key].pop(0)
+                    print(f"\nReceived data from node: %s"% ip)
+
+                    # Get sensor packet from input buffer                      
 
 
-                        #start creating new frame
-                        dataframe = ProcessData()
-                        # Capture the time the data has been generated
-                        dataTime = data["recvTime"]
+                    #start creating new frame
+                    dataframe = ProcessData()
+                    # Capture the time the data has been generated
+                    dataTime = rxTime
 
-                        # attach the data time to the dataframe
-                        dataframe.setDataTime(dataTime)
+                    # attach the data time to the dataframe
+                    dataframe.setDataTime(dataTime)
                         
 
-                        # attach the previous transmit time to the dataframe
-                        dataframe.setTxTime(self.txTime)
+                    # attach the previous transmit time to the dataframe
+                    dataframe.setTxTime(self.txTime)
 
 
-                        # attach the post transmission time to the dataframe
-                        dataframe.setPostTxTime(self.postTxTime)
+                    # attach the post transmission time to the dataframe
+                    dataframe.setPostTxTime(self.postTxTime)
                       
 
-                        #attach sender data to dataframe
-                        dataframe.receivedIP=key
+                    #attach sender data to dataframe
+                    dataframe.receivedIP=ip
                         
-                        # attach the payload to the dataframe
-                        dataframe.setPayload(data["data"])
+                    # attach the payload to the dataframe
+                    dataframe.setPayload(payload)
 
-                        if not self.RTOdifference == RTO.offset or not self.GTdifference == GT.offset:
-                            dataframe.setRTO(RTO.offset)
-                            self.RTOdifference = RTO.offset
-                            dataframe.setGT(GT.offset)
-                            self.GTdifference = GT.offset
+                    if not self.RTOdifference == RTO.offset or not self.GTdifference == GT.offset:
+                        dataframe.setRTO(RTO.offset)
+                        self.RTOdifference = RTO.offset
+                        dataframe.setGT(GT.offset)
+                        self.GTdifference = GT.offset
 
-                        #build dataframe into string form
-                        packet = dataframe.buildHeadendFrame()
-                        # Capture the time the data has begun transmission
-                        self.txTime = VKT.get()              
+                    #build dataframe into string form
+                    packet = dataframe.buildHeadendFrame()
+                    # Capture the time the data has begun transmission
+                    self.txTime = VKT.get()              
                         
-                        #transmit packet
-                        self.net.transmit(packet)
-                        self.postTxTime = VKT.get()                  
+                    #transmit packet
+                    self.net.transmit(packet)
+                    self.postTxTime = VKT.get()                  
 
-                        if verbose:
-                            print("Recieved Packet:")
-                            frPrint(data['data'])
-                            print("")
+                    if verbose:
+                        print("Recieved Packet:")
+                        frPrint(data['data'])
+                        print("")
 
-                            print("Transmitting Packet: ")
-                            frPrint(packet)           
-                        print(f"______________________________________\n")
+                        print("Transmitting Packet: ")
+                        frPrint(packet)           
+                    print(f"______________________________________\n")
 
-                    else:
-                        sleep(1)
+                else:
+                    sleep(1)
         except KeyboardInterrupt:
             print("\rClosing network, please don't keyboardinterrupt again...")
 
