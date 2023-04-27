@@ -80,30 +80,40 @@ for arg in "$@"; do
     fi
 done
 
+# Resolve dependencies
+if [ "$(which netcat)" ]; then
+    printf "Found netcat installed at: %s\n" "$(which netcat)"
+else 
+    printf "\033[38;2;255;0;0mError\033[0m: netcat is not installed!\n"
+    exit 1
+fi
+if [ "$(which tt)" ]; then
+    printf "Found traffictoll installed at: %s\n" "$(which tt)"
+else
+    printf "\033[38;2;255;0;0mError\033[0m: TrafficToll is not installed!\n"
+    exit 1
+fi
 
+# execute commands passed as argument
 if [ "$1" == "limit" ]; then
     limit
 elif [ "$1" == "stress" ]; then
     stressTest
 elif [ "$1" == "help" ]; then
-    orange="\033[38;2;255;75;0m"
-    green="\033[38;2;0;255;0m"
-    bold="\033[1m"
-    reset="\033[0m"
-    printf "${bold}Usage${reset}:\t\t./scripts/conditions.sh <${orange}command${reset}> <${green}arg1${reset}>=<val1> <${green}arg2${reset}>=<val2> ...
-${bold}Example${reset}:\t./scripts/conditions.sh stress --host=localhost --port=8888
+    printf "\033[1mUsage\033[0m:\t\t./scripts/conditions.sh <\033[38;2;255;75;0mcommand\033[0m> <\033[38;2;0;255;0marg1\033[0m>=<val1> <\033[38;2;0;255;0marg2\033[0m>=<val2> ...
+\033[1mExample\033[0m:\t./scripts/conditions.sh stress --host=localhost --port=8888
 
-${bold}Commands${reset}:
-    ${orange}limit${reset}:\tLimit the datarate on a network interface using TrafficToll
-    ${orange}stress${reset}:\tStress test the network by flooding it with UDP packets using NetCat
-    ${orange}help${reset}:\tDisplay this help message
+\033[1mCommands\033[0m:
+    \033[38;2;255;75;0mlimit\033[0m:\tLimit the datarate on a network interface using TrafficToll
+    \033[38;2;255;75;0mstress\033[0m:\tStress test the network by flooding it with UDP packets using NetCat
+    \033[38;2;255;75;0mhelp\033[0m:\tDisplay this help message
 
-${bold}Arguments${reset}:
-    ${green}--datarate${reset}:\tSpecify the datarate for the limit command
-    ${green}--iface${reset}:\tSpecify an interface on the command line for the limit command
-    ${green}--host${reset}:\tSpecify the host to use for the stress command
-    ${green}--port${reset}:\tSpecify the port to use for the stress command
-    ${green}--type${reset}:\tSpecify the type of the connetion in the stress test, values can be [client, server, both]\n"
+\033[1mArguments\033[0m:
+    \033[38;2;0;255;0m--datarate\033[0m:\tSpecify the datarate for the limit command
+    \033[38;2;0;255;0m--iface\033[0m:\tSpecify an interface on the command line for the limit command
+    \033[38;2;0;255;0m--host\033[0m:\tSpecify the host to use for the stress command
+    \033[38;2;0;255;0m--port\033[0m:\tSpecify the port to use for the stress command
+    \033[38;2;0;255;0m--type\033[0m:\tSpecify the type of the connetion in the stress test, values can be [client, server, both]\n"
 else
     printf "No such command: \033[38;2;255;75;0m%s\033[0m, type './scripts/conditions.sh help' for help\n" "$1"
     exit 1
