@@ -24,7 +24,7 @@ class headendlistener:
     def run(self):
         #start listener in thread
         Thread(target=self.net.listener, args=[SERVERPORT], daemon=True).start()
-        print("Headend recv socket is now listening.")
+        print("Headend recv socket is now listening.....")
         print("")
         
         #connect to backend
@@ -39,7 +39,7 @@ class headendlistener:
             while True:
                 for key in self.net.data.keys():
                     if len(self.net.data[key]) > 0:
-                        print(f"\nData Received from Node\n___________")
+                        print(f"\nReceived data from node: %s"% key)
 
                         # Get sensor packet from input buffer                      
                         data = self.net.data[key].pop(0)
@@ -79,12 +79,9 @@ class headendlistener:
                         # Capture the time the data has begun transmission
                         self.txTime = VKT.get()              
                         
-
-                       # print("Transmitting packet:")
-                        #frPrint(packet)
-
                         #transmit packet
-                        self.net.transmit(packet)                  
+                        self.net.transmit(packet)
+                        self.postTxTime = VKT.get()                  
 
                         if verbose:
                             print("Recieved Packet:")
@@ -92,10 +89,7 @@ class headendlistener:
                             print("")
 
                             print("Transmitting Packet: ")
-                            frPrint(packet)
-                            #print(f"\nDataframe using Key is: {self.net.data[key]}")
-                            # print(f"Dataframe is using Key: {net.data[key][0]['data']}")
-                            # print(proc.unpack(net.data[key]['data']))             
+                            frPrint(packet)           
                         print(f"______________________________________\n")
 
                     else:
