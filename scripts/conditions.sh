@@ -38,10 +38,10 @@ EOF
 function stressTest(){
     if [[ "$TYPE" == server ]]; then
 	echo "Initializing server..."
-        nc --listen -p "$PORT" -c -v -v
+        nc -l -p "$PORT" -c -v -v
     elif [[ "$TYPE" == both ]]; then
 	echo "Initializing server..."
-	screen -dmS netcat nc --listen -l -p "$PORT" -c -v -v
+	screen -dmS netcat nc -l -p "$PORT" -c -v -v
 	sleep 1
     fi
     if [[ "$TYPE" == client ]] || [[ "$TYPE" == both ]]; then
