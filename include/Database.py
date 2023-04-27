@@ -1,148 +1,307 @@
-# from setup import *
-from include.setup import *
+# from include.setup import *
 import sqlite3
 # import subprocess
 
+# rto = None
+# gt = None
 
 ##########################################
 #  Remove after figuring shit out!!!
 
-# from ProcessData import *
-# from Formatting import *
+from ProcessData import *
+from Formatting import *
+
+   # The array containing our arguments
+verbose = True
+
+
+def frPrint(payload):
+    print(payload.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")).replace(OFF, cyan(" | ")))
+
+
 
 # SEP =   "\uFFFF"
 # """Regular field seperator"""
-# DSEP =  "\uFFFE"
+# PB =  "\uFFFE"
 # """Piggyback data field seperator"""
-# EOP =   "\uFFFD"
+# EON =   "\uFFFD"
 # """End Of Packet seperator"""
-# interfaceTarget = "wifi"
+interfaceTarget = "wifi"
 
 
-# def unpack(packet, recvIP, recvTime):
+def unpack(packet, recvIP, recvTime):
 
-#     layers = packet.count(EOP) + 1  # Check the number of headend jumps
-#     nodes = packet.split(EOP)       # Split the frames from each headend
+    layers = packet.count(EON)      # Check the number of headend jumps
+    # layers = packet.count(EON) + 1  # Check the number of headend jumps
+    nodes = packet.split(EON)       # Split the frames from each headend
 
-#     nodeData = [{key: value for key, value in []} for i in range(layers)]
+    nodeData = [{key: value for key, value in []} for i in range(layers)]
 
-#     lastIP = recvIP
+    lastIP = recvIP
+    newRTO = None
+    newGT = None
 
-#     print(f"Frame Layers: {layers}\n")
+    print(f"Frame Layers: {layers}\n")
 
-#     if layers > 0:
-#         # for i, key in enumerate(nodes):
-#         # for i in range(layers-1):
-#         for i in range(layers-1):
-#             frameData = nodes[i].split(SEP)
+    for i in range(layers):
+        frameData = nodes[i].split(SEP)
 
-#             print(f"\nHeadend Frame Number:       {i+1}\n")
-#             # print(f" -  Current Frama Data:         {key}")
-#             print(f" -  Current Receive IP:         {lastIP}")
-#             print(f" -  Current rxTime:             {frameData[0]}")
-#             print(f" -  Current txTime:             {frameData[1]}")
-#             nodeData[i]['nodeIP'] = lastIP
-#             nodeData[i]['rxTime'] = frameData[0]
-#             nodeData[i]['rxTimeGT'] = frameData[0]
-#             nodeData[i]['txTime'] = frameData[1]
-#             nodeData[i]['txTimeGT'] = frameData[1]
-#             # print(f" -  Current Payload:            {frameData[4]}")
-#             lastIP = frameData[3]
+        if verbose:
+            print(f"\nHeadend Frame Number:       {i+1}\n")
+            # print(f" -  Current Frama Data:         {key}")
+            print(f" -  Current Receive IP:         {lastIP}")
+            print(f" -  Current rxTime:             {frameData[0]}")
+            print(f" -  Current txTime:             {frameData[1]}")
 
-#             # pigLen = frameData[2].count(DSEP)
-#             # print(f"Piggy Frame: {pigLen}")
+        nodeData[i]['nodeIP'] = lastIP
+        nodeData[i]['rxTime'] = frameData[0]
+        # nodeData[i]['rxTimeGT'] = frameData[0]
+        nodeData[i]['txTime'] = frameData[1]
+        # nodeData[i]['txTimeGT'] = frameData[1]
+        # print(f" -  Current Payload:            {frameData[4]}")
 
-#             if frameData[2].count(DSEP) > 0:
-#                 pigFrame = frameData[2].split(DSEP)
-#                 print(f" -  Current postTxTime:         {pigFrame[0]}")
-#                 print(f" -  Current Piggy:              {pigFrame[1]}")
-#                 nodeData[i]['postTxTime'] = pigFrame[0]
-#                 nodeData[i]['postTxTimeGT'] = pigFrame[0]
-#                 nodeData[i]['payload'] = pigFrame[1]
-#                 # nodeData[i]['piggy'] = pigFrame[1]
 
-#                 ###  OH SHIT!!! Need to add Piggy-data as a Payload !!
+        optFrame = frameData[2].split(PB)
 
-#             else:
-#                 print(f" -  Current postTxTime:         {frameData[2]}")
-#                 nodeData[i]['postTxTime'] = frameData[2]
-#                 nodeData[i]['postTxTimeGT'] = frameData[2]
-                
+        # print(f"OptFrame contains:   {optFrame}")
 
 
 
-#     frameData = nodes[layers-1].split(SEP)
+        #  --  If there's new Offsets  --
+        if optFrame[0].count(OFF) > 0:
 
-#     print(f"\nSensor Frame Number:        {layers}")
-#     print(f" -  Current Receive IP:         {lastIP}")
-#     print(f" -  Sensor genTime:             {frameData[0]}")
-#     print(f" -  Sensor txTime:              {frameData[1]}")
-#     print(f" -  Sensor postTxTime:          {frameData[2]}")
-#     print(f" -  Sensor Payload:             {frameData[3]}")
-#     nodeData[layers-1]['nodeIP'] = lastIP
-#     nodeData[layers-1]['rxTime'] = frameData[0]
-#     nodeData[layers-1]['rxTimeGT'] = frameData[0]
-#     nodeData[layers-1]['txTime'] = frameData[1]
-#     nodeData[layers-1]['txTimeGT'] = frameData[1]
-#     nodeData[layers-1]['postTxTime'] = frameData[2]
-#     nodeData[layers-1]['postTxTimeGT'] = frameData[2]
-#     nodeData[layers-1]['payload'] = frameData[3]
+            # print(f"Inside Offset Area")
 
-#     # comDelay = float(recvTime) - float(frameData[0])
+            offsetFrame = optFrame[0].split(OFF)
+            nodeData[i]['postTxTime'] = offsetFrame[0]
+            newRTO = offsetFrame[1]
+            newGT = offsetFrame[2]
+            nodeData[i]['RTO'] = offsetFrame[1]
+            nodeData[i]['GT']= offsetFrame[2]
+
+            if verbose:
+                print(f" -  Current postTxTime:         {offsetFrame[0]}")
 
 
-#     print(f"\nNodeData Dict Contains:")
-#     for i in range(len(nodeData)):
-#         print(nodeData[i])
+        else:
+            if verbose:
+                print(f" -  Current postTxTime:         {optFrame[0]}")
+            nodeData[i]['postTxTime'] = optFrame[0]
 
-
-#     db.insertData(nodeData, 101.23)
-
-
-
-
-# def transposeArray(matrix):
-    
-#     # print(f"Array in Transpose is: {matrix}")
-
-#     length = len(matrix)
-
-#     for i, key in enumerate(matrix):
         
-#         depth = len(matrix[key])
-#         global result
+        
+        #  --  If there's Piggy Data  --
+        # if optFrame[1]:
+        if len(optFrame) > 1:
+        # if frameData[2].count(PB) > 0:
+            pigFrame = frameData[2].split(PB)
+            # pigFrame = optFrame[1].split(PB)
 
-#         if i == 0:
-#             result = [[None for j in range(length)] for i in range(depth)]
-#             # print(f"Empty array has structure {result}")
+            # print(f"Inside Piggy Area")
 
-#         for j, value in enumerate(matrix[key]):
+            if verbose:
+                # print(f" -  Current postTxTime:         {optFrame[0].split(OFF)[0]}")
+                print(f" -  Current Piggy:              {optFrame[1]}")
 
-#             result[j][i] = value
+            nodeData[i]['payload'] = pigFrame[1]
+        
+        if i < layers - 1:
+            lastIP = frameData[3]
+        
+        else:
+            nodeData[i]['payload'] = nodes[i+1]
 
-#             # print(f"""
-#             # In Transpose:
-#             #     i is: {i}
-#             #     key is: {key}
-#             #     j is: {j}
-#             #     value is: {value}
-#             #     array is now: {array}""")
+
+    # nodeData[layers-1]['payload'] = nodes[layers-1]
+    print(f" -  Sensor Payload:             {nodeData[layers-1]['payload']}")
+
+
+    db.insertData(nodeData, 101.23)
+
+
+
+
+def old_unpack(packet, recvIP, recvTime):
+
+    # layers = packet.count(EON)      # Check the number of headend jumps
+    layers = packet.count(EON) + 1  # Check the number of headend jumps
+    nodes = packet.split(EON)       # Split the frames from each headend
+
+    nodeData = [{key: value for key, value in []} for i in range(layers)]
+
+    lastIP = recvIP
+    newRTO = None
+    newGT = None
+
+    print(f"Frame Layers: {layers}\n")
+
+    if layers > 0:
+        for i in range(layers-1):
+            frameData = nodes[i].split(SEP)
+
+            if verbose:
+                print(f"\nHeadend Frame Number:       {i+1}\n")
+                # print(f" -  Current Frama Data:         {key}")
+                print(f" -  Current Receive IP:         {lastIP}")
+                print(f" -  Current rxTime:             {frameData[0]}")
+                print(f" -  Current txTime:             {frameData[1]}")
+
+            nodeData[i]['nodeIP'] = lastIP
+            nodeData[i]['rxTime'] = frameData[0]
+            # nodeData[i]['rxTimeGT'] = frameData[0]
+            nodeData[i]['txTime'] = frameData[1]
+            # nodeData[i]['txTimeGT'] = frameData[1]
+            # print(f" -  Current Payload:            {frameData[4]}")
+            lastIP = frameData[3]
+
+            optFrame = frameData[2].split(PB)
+
+            # print(f"OptFrame contains:   {optFrame}")
+
+            #  --  If there's Piggy Data  --
+            if optFrame[1]:
+            # if frameData[2].count(PB) > 0:
+                pigFrame = frameData[2].split(PB)
+                # pigFrame = optFrame[1].split(PB)
+
+                # print(f"Inside Piggy Area")
+
+                if verbose:
+                    print(f" -  Current postTxTime:         {optFrame[0].split(OFF)[0]}")
+                    print(f" -  Current Piggy:              {optFrame[1]}")
+                    # print(f" -  Current postTxTime:         {pigFrame[0]}")
+                    # print(f" -  Current Piggy:              {pigFrame[1]}")
+                # nodeData[i]['postTxTime'] = pigFrame[0]
+                # nodeData[i]['postTxTimeGT'] = optFrame[0]
+                nodeData[i]['payload'] = pigFrame[1]
+
+            #  --  If there's new Offsets  --
+            if optFrame[0].count(OFF) > 0:
+
+                # print(f"Inside Offset Area")
+
+                offsetFrame = optFrame[0].split(OFF)
+                nodeData[i]['postTxTime'] = offsetFrame[0]
+                newRTO = offsetFrame[1]
+                newGT = offsetFrame[2]
+
+                if verbose:
+                    print(f" -  Current postTxTime:         {offsetFrame[0]}")
+
+
+            else:
+                if verbose:
+                    print(f" -  Current postTxTime:         {optFrame[0]}")
+                nodeData[i]['postTxTime'] = optFrame[0]
+                nodeData[i]['postTxTimeGT'] = frameData[2]
+
+
+    ####################################################
+    ##  --  Outdated Last Frame Area  --  ##
+
+
+    frameData = nodes[layers-1].split(SEP)
+
+    nodeData[layers-1]['nodeIP'] = lastIP
+    nodeData[layers-1]['rxTime'] = frameData[0]
+    nodeData[layers-1]['txTime'] = frameData[1]
+    nodeData[layers-1]['payload'] = frameData[3]
+
+    optFrame = frameData[2].split(PB)
+
+    # print(f"OptFrame contains:   {optFrame}")
+
+    #  --  If there's new Offsets  --
+    if optFrame[0].count(OFF) > 0:
+
+        print(f"Inside Offset Area")
+
+        offsetFrame = optFrame[0].split(OFF)
+        # nodeData[i]['postTxTime'] = offsetFrame[0]
+        nodeData[layers-1]['postTxTime'] = offsetFrame[0]
+        newRTO = offsetFrame[1]
+        newGT = offsetFrame[2]
+
+        if verbose:
+            print(f" -  Current postTxTime:         {optFrame[0].split(OFF)[0]}")
+
+
+    else:
+        if verbose:
+            print(f" -  Current postTxTime:         {optFrame[0]}")
+        nodeData[layers-1]['postTxTime'] = optFrame[0]
+
+
+
+    if verbose:
+        print(f"\nSensor Frame Number:        {layers}")
+        print(f" -  Current Receive IP:         {nodeData[layers-1]['nodeIP']}")
+        print(f" -  Sensor genTime:             {nodeData[layers-1]['rxTime']}")
+        print(f" -  Sensor txTime:              {nodeData[layers-1]['txTime']}")
+        print(f" -  Sensor postTxTime:          {nodeData[layers-1]['postTxTime']}")
+        print(f" -  Sensor Payload:             {nodeData[layers-1]['payload']}")
+
+        if newGT or newRTO:
+            print(f" -  New RTO Offset:             {newRTO}")
+            print(f" -  New GT Offset:              {newGT}")
+
+
+
+
+    # comDelay = float(recvTime) - float(frameData[0])
+
+    # print(f"\nNodeData Dict Contains:")
+    # for i in range(len(nodeData)):
+    #     print(nodeData[i])
+
+    db.insertData(nodeData, 101.23)
+
+
+
+
+
+def transposeArray(matrix):
+    
+    # print(f"Array in Transpose is: {matrix}")
+
+    length = len(matrix)
+
+    for i, key in enumerate(matrix):
+        
+        depth = len(matrix[key])
+        global result
+
+        if i == 0:
+            result = [[None for j in range(length)] for i in range(depth)]
+            # print(f"Empty array has structure {result}")
+
+        for j, value in enumerate(matrix[key]):
+
+            result[j][i] = value
+
+            # print(f"""
+            # In Transpose:
+            #     i is: {i}
+            #     key is: {key}
+            #     j is: {j}
+            #     value is: {value}
+            #     array is now: {array}""")
     
     
-#     return result
+    return result
 
 
-# def dict_depth(dic, level = 1):
+def dict_depth(dic, level = 1):
 
-#     str_dic = str(dic)
-#     counter = 0
-#     for i in str_dic:
-#         if i == "{" or i == "[":
-#             counter += 1
-#         elif i == "}" or i == "]":
-#             break
+    str_dic = str(dic)
+    counter = 0
+    for i in str_dic:
+        if i == "{" or i == "[":
+            counter += 1
+        elif i == "}" or i == "]":
+            break
 
-#     return(counter)
+    return(counter)
 
 #  Remove after figuring shit out!!!
 ###########################################
@@ -361,7 +520,7 @@ class Database():
         """    
 
         params = { 
-            'select': 'PayloadToHeadend.jumpId, HeadendTransfer.rxTime, HeadendTransfer.rxTimeGT',
+            'select': 'PayloadToHeadend.jumpId, HeadendTransfer.rxTime, HeadendTransfer.RTO, HeadendTransfer.GT',
             # 'select': {
             #     "PayloadToHeadend.jumpId",
             #     "HeadendTransfer.rxTime",
@@ -478,26 +637,43 @@ class Database():
 
         deliveryTime = endTime
 
-        # print("Full NodeData is:")
-        # for i in range(len(nodeData)):
-        #     print(nodeData[i])
+        newRTO = False
+        newGT = False
+
+
+        print("Full NodeData is:")
+        for i in range(len(nodeData)):
+            print(nodeData[i])
 
 
         for i, frame in enumerate(nodeData):
 
-            oldDelays.append({
+            oldHeadInput = {
                 'nodeIP': frame['nodeIP'],
                 'txTime': frame['txTime'],
-                'txTimeGT': frame['txTimeGT'],
                 'postTxTime': frame['postTxTime'],
-                'postTxTimeGT': frame['postTxTimeGT']
-            })
+            }
 
-            newHeadInput.append({
+            oldDelays.append(oldHeadInput)
+
+
+            newHeadData = {
                 'nodeIP': frame['nodeIP'],
                 'rxTime': frame['rxTime'],
-                'rxTimeGT': frame['rxTimeGT']
-            })
+            }
+
+            # if frame['RTO']:
+            if 'RTO' in frame:
+                # newHeadData.append(frame['RTO'])
+                newHeadData.__setitem__('RTO', frame['RTO'])
+                newRTO = True
+            # if frame['GT']:
+            if 'GT' in frame:
+                # newHeadData.append(frame['GT'])
+                newHeadData.__setitem__('GT', frame['GT'])
+                newGT = True
+
+            newHeadInput.append(newHeadData)
 
 
             ##  --  Payload Present  --  ##
@@ -517,11 +693,11 @@ class Database():
                 combinedParams = {
                     'sensorId': sensorFetch['sensorId'],
                     'combinedDelay': comDelay,
-                    'combinedDelayGT': comDelay,
+                    # 'combinedDelayGT': comDelay,
                     'dataTime': frame['rxTime'],
-                    'dataTimeGT': frame['rxTime'],
+                    # 'dataTimeGT': frame['rxTime'],
                     'deliveryTime': deliveryTime,
-                    'deliveryTimeGT': deliveryTime,
+                    # 'deliveryTimeGT': deliveryTime,
                     # 'technology': sensorFetch['technology'],
                     'technology': interfaceTarget,
                     'payload': frame['payload']
@@ -539,8 +715,9 @@ class Database():
         headendParams = {
             'nodeId': [],
             'rxTime': [],
-            'rxTimeGT': [],
-            'piggyData': []            
+            'piggyData': [],
+            'RTO': [],
+            'GT': []
         }
 
 
@@ -561,6 +738,7 @@ class Database():
                 oldHeadendData = self.fetchOldTransfer(oldTransfers[0])
 
                 if len(oldHeadendData) > 0:
+                    oldHeadendData.reverse()
                     print(f"""\n\nOld Headend Data is Found\n    Update Data (oldDelays) is:""")
                     for j in range(len(oldDelays)):
                         print(oldDelays[j])
@@ -569,6 +747,18 @@ class Database():
                     for j in range(len(oldHeadendData)):
                         print(oldHeadendData[j])
 
+                    print(f"""\n\n    New Headend Input Data is:""")
+                    for j in range(len(newHeadInput)):
+                        print(newHeadInput[j])
+
+                    if 'RTO' not in newFrame:
+                        print(f"\n\nAdding old Offset, as there isn't a new one\n\n")
+                        newHeadInput[i].__setitem__('RTO', oldHeadendData[i]['RTO'])
+
+                    if 'GT' not in newFrame:
+                        print(f"\n\nAdding old Offset, as there isn't a new one\n\n")
+                        newHeadInput[i].__setitem__('GT', oldHeadendData[i]['GT'])
+
 
                     processDelay = float(oldDelays[i]['txTime']) - float(oldHeadendData[i]['rxTime'])
                     interfaceDelay = float(oldDelays[i]['postTxTime']) - float(oldDelays[i]['txTime'])
@@ -576,9 +766,7 @@ class Database():
                     updateParams = {
                         'values': {
                             'txTime': oldDelays[i]['txTime'],
-                            'txTimeGT': oldDelays[i]['txTime'],
                             'postTxTime': oldDelays[i]['postTxTime'],
-                            'postTxTimeGT': oldDelays[i]['postTxTime'],
                             'processDelay': processDelay,
                             'txInterfaceDelay': interfaceDelay
                         },
@@ -591,6 +779,8 @@ class Database():
 
                 else:
                     print(f"No old Headend data found.\n")
+                    newHeadInput[i].__setitem__('RTO', 0)
+                    newHeadInput[i].__setitem__('GT', 0)
 
             print(f"Payload Frames are: {payloadFrames}")
 
@@ -602,8 +792,9 @@ class Database():
 
             headendParams['nodeId'].append(nodeInfo[0]['sensorId'])
             headendParams['rxTime'].append(newFrame['rxTime'])
-            headendParams['rxTimeGT'].append(newFrame['rxTimeGT'])
             headendParams['piggyData'].append(piggyCount)
+            headendParams['RTO'].append(newHeadInput[i]['RTO'])
+            headendParams['GT'].append(newHeadInput[i]['GT'])
 
 
             if payloadFrames[0] == i:
@@ -718,11 +909,14 @@ if __name__ == "__main__":
 
     ############################
     ##  Sensor Frame (IP0)
-    frame = "12.34" + SEP + "23.45" + SEP + "34.56" + SEP + "Random Sensor Data"
+
+    frame = "12.34" + SEP + "23.45" + SEP + "34.56" + OFF + "-98.76" + OFF + "-87.65" +  SEP + "Random Sensor Data"
+    frame = "12.34" + SEP + "23.45" + SEP + "34.56" + OFF + "-98.76" + OFF + "-87.65" +  EON + "Random Sensor Data"
     # - This from UP0
     ############################
 
     dataframe = ProcessData()
+
 
     ##  First Headend Frame (UP1)
     dataframe.setDataTime("45.67")
@@ -735,11 +929,12 @@ if __name__ == "__main__":
 
     packet = dataframe.buildHeadendFrame()
 
-    print(f"Simulated Headend Packet is: ")
-    print(packet.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")))
 
+    # print(f"Simulated Headend Packet is: ")
+    # frPrint(packet)
 
-    ##  Second Headend Frame
+   
+    ##  Second Headend Frame (Localhost)
     dataframe.setDataTime("78.90")
     dataframe.setTxTime("89.01")
     dataframe.setPostTxTime("90.12")
@@ -750,10 +945,11 @@ if __name__ == "__main__":
     doubet = dataframe.buildHeadendFrame()
 
     print(f"Simulated Headend Packet is: ")
-    print(doubet.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")))
+    frPrint(doubet)
+    # print(doubet.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")))
 
     recvIP = "127.0.0.1"
-    recvTime = "78.90"
+    recvTime = "109.87"
 
 
     # unpack(packet, recvIP, recvTime)
