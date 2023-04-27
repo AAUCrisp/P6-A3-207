@@ -3,6 +3,8 @@
 datarate=1bps
 HOST=localhost
 PORT=10000
+TYPE=both
+INTERFACE="placeholder"
 
 function limit() {
     printf "Setting datarate of the specified interface to: %s\n\trun now? (y/N): " "$datarate"
@@ -21,10 +23,12 @@ upload-priority: 0
 EOF
     read -r in
     if [ "$in" == "y" ] || [ "$in" == "Y" ]; then
-        nmcli d
-        printf "Specify the interface name, a table of devices should be defined above: "
-        read -r interface
-        tt "$interface" /tmp/TrafficToll.yaml
+	if [ "$INTERFACE" == "placeholder" ]; then
+            nmcli d
+            printf "Specify the interface name, a table of devices should be defined above: "
+            read -r INTERFACE
+	fi
+        tt "$INTERFACE" /tmp/TrafficToll.yaml
     else
         printf "execute this script again with 'y' to the previous prompt or execute \033[38;2;150;150;150mtt\033[0m (installed with sudo \033[38;2;150;150;150mpip3.10 install traffictoll\033[0m or \033[38;2;150;150;150msudo pip3.10 install -r requirements\033[0m)\n"
     fi
@@ -32,14 +36,23 @@ EOF
 }
 
 function stressTest(){
-    screen -dmS netcat nc --listen -p "$PORT" -c
-    sleep 1
-    exec 3<>/dev/tcp/"$HOST"/"$PORT"
-    i=0
-    while true; do
-        i=$((i+1))
-        echo -ne "$i\r" >&3
-    done
+    if [[ "$TYPE" == server ]]; then
+	echo "Initializing server..."
+        nc --listen -p "$PORT" -c -v -v
+    elif [[ "$TYPE" == both ]]; then
+	echo "Initializing server..."
+	screen -dmS netcat nc --listen -l -p "$PORT" -c -v -v
+	sleep 1
+    fi
+    if [[ "$TYPE" == client ]] || [[ "$TYPE" == both ]]; then
+	echo "Initializing client..."
+	exec 3<>/dev/tcp/"$HOST"/"$PORT"
+	i=0
+	    while true; do
+		i=$((i+1))
+		echo -ne "$i\r" >&3
+	    done
+    fi
 }
 
 ############################## main section #############################
@@ -57,6 +70,10 @@ for arg in "$@"; do
         HOST=${arg#*"="}
     elif [[ "$arg" == --port* ]]; then
         PORT=${arg#*"="}
+    elif [[ "$arg" == --iface* ]]; then
+	INTERFACE=${arg#*"="}
+    elif [[ "$arg" == --type* ]]; then
+	TYPE=${arg#*"="}
     else
         printf "No such argument: \033[38;2;0;255;0m%s\033[0m, type './scripts/conditions.sh help' for help\n" "$arg"
         exit 1
@@ -83,8 +100,10 @@ ${bold}Commands${reset}:
 
 ${bold}Arguments${reset}:
     ${green}--datarate${reset}:\tSpecify the datarate for the limit command
+    ${green}--iface${reset}:\tSpecify an interface on the command line for the limit command
     ${green}--host${reset}:\tSpecify the host to use for the stress command
-    ${green}--port${reset}:\tSpecify the port to use for the stress command\n"
+    ${green}--port${reset}:\tSpecify the port to use for the stress command
+    ${green}--type${reset}:\tSpecify the type of the connetion in the stress test, values can be [client, server, both]\n"
 else
     printf "No such command: \033[38;2;255;75;0m%s\033[0m, type './scripts/conditions.sh help' for help\n" "$1"
     exit 1
