@@ -62,7 +62,7 @@ if [ $EUID != 0 ] && [ "$1" != "help" ]; then
 fi
 # Extract arguments
 for arg in "$@"; do
-    if [[ "$arg" == "$1" ]]; then
+    if [[ "$arg" != --* ]]; then
         continue
     elif [[ "$arg" == --datarate* ]]; then
         datarate=${arg#*"="}
