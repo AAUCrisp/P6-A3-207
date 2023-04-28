@@ -41,7 +41,7 @@ function stressTest(){
         netcat -l "$HOST" "$PORT"
     elif [[ "$TYPE" == both ]]; then
 	    echo "Initializing server..."
-	    screen -dmS netcat -l "$HOST" "$PORT"
+	    screen -dmS nc netcat -l "$HOST" "$PORT"
 	    sleep 1
     fi
     if [[ "$TYPE" == client ]] || [[ "$TYPE" == both ]]; then
