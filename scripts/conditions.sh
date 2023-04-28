@@ -24,7 +24,7 @@ EOF
     read -r in
     if [ "$in" == "y" ] || [ "$in" == "Y" ]; then
 	if [ "$INTERFACE" == "placeholder" ]; then
-            nmcli d
+            ip -c link
             printf "Specify the interface name, a table of devices should be defined above: "
             read -r INTERFACE
 	fi
@@ -38,19 +38,19 @@ EOF
 function stressTest(){
     if [[ "$TYPE" == server ]]; then
 	echo "Initializing server..."
-        netcat -l -p "$PORT" -c -v -v
+        netcat -l "$HOST" "$PORT"
     elif [[ "$TYPE" == both ]]; then
-	echo "Initializing server..."
-	screen -dmS netcat nc -l -p "$PORT" -c -v -v
-	sleep 1
+	    echo "Initializing server..."
+	    screen -dmS netcat -l "$HOST" "$PORT"
+	    sleep 1
     fi
     if [[ "$TYPE" == client ]] || [[ "$TYPE" == both ]]; then
-	echo "Initializing client..."
-	exec 3<>/dev/tcp/"$HOST"/"$PORT"
-	i=0
+	    echo "Initializing client..."
+	    exec 3<>/dev/tcp/"$HOST"/"$PORT"
+	    i=0
 	    while true; do
-		i=$((i+1))
-		echo -ne "$i\r" >&3
+		    i=$((i+1))
+		    echo -ne "$i\r" >&3
 	    done
     fi
 }
