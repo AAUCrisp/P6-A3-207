@@ -1,7 +1,7 @@
 from include.setup import *
 
-SERVERADDR = "192.168.1.107"
-SERVERPORT= 8888
+SERVERADDR = ipOut
+SERVERPORT= int(portOut)
 
 class headendlistener:
 
@@ -34,10 +34,13 @@ class headendlistener:
             sys.exit("ERROR: Could not connect to backend")
 
 
-        
+        #Read and forward sensor data
         try:
             while True:
-                if self.net.data.qsize() > 0:
+                QueueSize =  self.net.data.qsize() #get size of packet queue
+                print("Queue Size: %d"%QueueSize)
+                #if self.net.data.qsize() > 0:
+                if QueueSize > 0: #if quee isn't empty, then pop first item
                     data = self.net.popData()
                     ip = data["id"]
                     rxTime = data["recvTime"]
@@ -94,6 +97,7 @@ class headendlistener:
                         print("Transmitting Packet: ")
                         frPrint(packet)           
                     print(f"______________________________________\n")
+
 
                 else:
                     sleep(1)
