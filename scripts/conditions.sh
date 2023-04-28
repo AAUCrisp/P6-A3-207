@@ -5,6 +5,7 @@ HOST=localhost
 PORT=10000
 TYPE=both
 INTERFACE="placeholder"
+verbose=0
 
 function limit() {
     printf "Setting datarate of the specified interface to: %s\n\trun now? (y/N): " "$datarate"
@@ -24,8 +25,9 @@ EOF
     read -r in
     if [ "$in" == "y" ] || [ "$in" == "Y" ]; then
 	if [ "$INTERFACE" == "placeholder" ]; then
-            ip -c link
-            printf "Specify the interface name, a table of devices should be defined above: "
+            printf "Specify the \033[38;2;150;150;255minterface name\033[0m, a list of devices should be defined above ["
+            python3.10 -c "import json;data='$(ip -j a)';print(', '.join(['\033[38;2;150;150;255m'+interface['ifname']+'\033[0m' for interface in json.loads(data)]), end='')"
+            printf "]: "
             read -r INTERFACE
 	fi
         tt "$INTERFACE" /tmp/TrafficToll.yaml
@@ -86,6 +88,8 @@ for arg in "$@"; do
                 exit 1
             fi
         fi
+    elif [ "$arg" == "--verbose" ]; then
+        verbose=1
     else
         printf "No such argument: \033[38;2;0;255;0m%s\033[0m, type './scripts/conditions.sh help' for help\n" "$arg"
         exit 1
@@ -94,13 +98,17 @@ done
 
 # Resolve dependencies
 if [ "$(which netcat)" ]; then
-    printf "Found netcat installed at: %s\n" "$(which netcat)"
+    if [ "$verbose" == 1 ]; then
+        printf "Found netcat installed at: %s\n" "$(which netcat)"
+    fi
 else 
     printf "\033[38;2;255;0;0mError\033[0m: netcat is not installed!\n"
     exit 1
 fi
 if [ "$(which tt)" ]; then
-    printf "Found traffictoll installed at: %s\n" "$(which tt)"
+    if [ "$verbose" == 1 ]; then
+        printf "Found traffictoll installed at: %s\n" "$(which tt)"
+    fi
 else
     printf "\033[38;2;255;0;0mError\033[0m: TrafficToll is not installed!\n"
     exit 1
@@ -112,7 +120,7 @@ if [ "$1" == "limit" ]; then
 elif [ "$1" == "stress" ]; then
     stressTest
 elif [ "$1" == "help" ]; then
-    printf "\033[1mUsage\033[0m:\t\t./scripts/conditions.sh <\033[38;2;255;75;0mcommand\033[0m> <\033[38;2;0;255;0marg1\033[0m>=<val1> <\033[38;2;0;255;0marg2\033[0m>=<val2> ...
+    printf "\033[1mUsage\033[0m:\t\t./scripts/conditions.sh \033[38;2;255;75;0m<command>\033[0m \033[38;2;0;255;0m<arg1>\033[0m=\033[38;2;100;50;200m<val1>\033[0m \033[38;2;0;255;0m<arg2>\033[0m=\033[38;2;100;50;200m<val2>\033[0m ...
 \033[1mExample\033[0m:\t./scripts/conditions.sh stress --host=localhost --port=8888
 
 \033[1mCommands\033[0m:
@@ -121,11 +129,12 @@ elif [ "$1" == "help" ]; then
     \033[38;2;255;75;0mhelp\033[0m:\tDisplay this help message
 
 \033[1mArguments\033[0m:
+    \033[38;2;0;255;0m--modemtype\033[0m:\tSpecify the type of the modem, this will set it systemwide, possible values are: [\033[38;2;100;50;200m3G\033[0m, \033[38;2;100;50;200m4G\033[0m, \033[38;2;100;50;200m5G\033[0m]
     \033[38;2;0;255;0m--datarate\033[0m:\tSpecify the datarate for the limit command
     \033[38;2;0;255;0m--iface\033[0m:\tSpecify an interface on the command line for the limit command
     \033[38;2;0;255;0m--host\033[0m:\tSpecify the host to use for the stress command
     \033[38;2;0;255;0m--port\033[0m:\tSpecify the port to use for the stress command
-    \033[38;2;0;255;0m--type\033[0m:\tSpecify the type of the connetion in the stress test, values can be [client, server, both]\n"
+    \033[38;2;0;255;0m--type\033[0m:\tSpecify the type of the connetion in the stress test, values can be [\033[38;2;100;50;200mclient\033[0m, \033[38;2;100;50;200mserver\033[0m, \033[38;2;100;50;200mboth\033[0m]\n"
 else
     printf "No such command: \033[38;2;255;75;0m%s\033[0m, type './scripts/conditions.sh help' for help\n" "$1"
     exit 1
