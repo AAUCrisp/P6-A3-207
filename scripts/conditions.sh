@@ -78,8 +78,13 @@ for arg in "$@"; do
         val=${arg#*"="}
         if [ "$(mmcli -m any --set-allowed-modes="$val")" ]; then
             echo "Set the modem type to $val"
+            if [ $# == 1 ]; then
+                exit 0
+            fi
         else
-            exit 1
+            if [ $# == 1 ]; then
+                exit 1
+            fi
         fi
     else
         printf "No such argument: \033[38;2;0;255;0m%s\033[0m, type './scripts/conditions.sh help' for help\n" "$arg"
