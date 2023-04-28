@@ -149,35 +149,8 @@ if verbose:
 
 
 
-#                End
-#  --   General Thingy Stuff   --
-#######################################
-#######################################
-#  --    Function Creation     --
-#               Start
-
-
-
 def frPrint(payload):
     print(payload.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")).replace(OFF, cyan(" | ")))
-
-
-
-def dict_depth(dic, level = 1):
-
-    str_dic = str(dic)
-    counter = 0
-    for i in str_dic:
-        if i == "{" or i == "[":
-            counter += 1
-        elif i == "}" or i == "]":
-            break
-
-    return(counter)
-# Synchronization setup
-VKT = Clock()
-GT = Clock()
-RTO = Clock()
 
 
 

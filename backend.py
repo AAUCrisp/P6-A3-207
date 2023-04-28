@@ -5,6 +5,7 @@ SERVERADDR = ""
 SERVERPORT = portIn
 SERVERPORT = portIn
 
+
 def unpack(packet, recvIP, recvTime):
 
     layers = packet.count(EON)      # Check the number of headend jumps
@@ -14,98 +15,83 @@ def unpack(packet, recvIP, recvTime):
     nodeData = [{key: value for key, value in []} for i in range(layers)]
 
     lastIP = recvIP
+    newRTO = None
+    newGT = None
 
     print(f"Frame Layers: {layers}\n")
 
-    if layers > 0:
-        for i in range(layers-1):
-            frameData = nodes[i].split(SEP)
+    for i in range(layers):
+        frameData = nodes[i].split(SEP)
+
+        if verbose:
+            print(f"\nHeadend Frame Number:       {i+1}\n")
+            # print(f" -  Current Frama Data:         {key}")
+            print(f" -  Current Receive IP:         {lastIP}")
+            print(f" -  Current rxTime:             {frameData[0]}")
+            print(f" -  Current txTime:             {frameData[1]}")
+
+        nodeData[i]['nodeIP'] = lastIP
+        nodeData[i]['rxTime'] = frameData[0]
+        nodeData[i]['txTime'] = frameData[1]
+
+
+        optFrame = frameData[2].split(PB)
+
+        # print(f"OptFrame contains:   {optFrame}")
+
+
+
+        #  --  If there's new Offsets  --
+        if optFrame[0].count(OFF) > 0:
+
+            # print(f"Inside Offset Area")
+
+            offsetFrame = optFrame[0].split(OFF)
+            nodeData[i]['postTxTime'] = offsetFrame[0]
+            newRTO = offsetFrame[1]
+            newGT = offsetFrame[2]
+            nodeData[i]['RTO'] = offsetFrame[1]
+            nodeData[i]['GT']= offsetFrame[2]
 
             if verbose:
-                print(f"\nHeadend Frame Number:       {i+1}\n")
-                # print(f" -  Current Frama Data:         {key}")
-                print(f" -  Current Receive IP:         {lastIP}")
-                print(f" -  Current rxTime:             {frameData[0]}")
-                print(f" -  Current txTime:             {frameData[1]}")
+                print(f" -  Current postTxTime:         {offsetFrame[0]}")
 
-            nodeData[i]['nodeIP'] = lastIP
-            nodeData[i]['rxTime'] = frameData[0]
-            # nodeData[i]['rxTimeGT'] = frameData[0]
-            nodeData[i]['txTime'] = frameData[1]
-            # nodeData[i]['txTimeGT'] = frameData[1]
-            # print(f" -  Current Payload:            {frameData[4]}")
+
+        else:
+            if verbose:
+                print(f" -  Current postTxTime:         {optFrame[0]}")
+            nodeData[i]['postTxTime'] = optFrame[0]
+
+        
+        
+        #  --  If there's Piggy Data  --
+        # if optFrame[1]:
+        if len(optFrame) > 1:
+        # if frameData[2].count(PB) > 0:
+            pigFrame = frameData[2].split(PB)
+            # pigFrame = optFrame[1].split(PB)
+
+            # print(f"Inside Piggy Area")
+
+            if verbose:
+                # print(f" -  Current postTxTime:         {optFrame[0].split(OFF)[0]}")
+                print(f" -  Current Piggy:              {optFrame[1]}")
+
+            nodeData[i]['payload'] = pigFrame[1]
+        
+        if i < layers - 1:
             lastIP = frameData[3]
+        
+        else:
+            nodeData[i]['payload'] = nodes[i+1]
 
 
-            if frameData[2].count(PB) > 0:
-                pigFrame = frameData[2].split(PB)
-
-                if verbose:
-                    print(f" -  Current postTxTime:         {pigFrame[0]}")
-                    print(f" -  Current Piggy:              {pigFrame[1]}")
-                nodeData[i]['postTxTime'] = pigFrame[0]
-                # nodeData[i]['postTxTimeGT'] = pigFrame[0]
-                nodeData[i]['payload'] = pigFrame[1]
-
-            else:
-                if verbose:
-                    print(f" -  Current postTxTime:         {frameData[2]}")
-                nodeData[i]['postTxTime'] = frameData[2]
-                nodeData[i]['postTxTimeGT'] = frameData[2]
-
-            nodeData[i]['nodeIP'] = lastIP
-            nodeData[i]['rxTime'] = frameData[0]
-            nodeData[i]['rxTimeGT'] = frameData[0]
-            nodeData[i]['txTime'] = frameData[1]
-            nodeData[i]['txTimeGT'] = frameData[1]
-            # print(f" -  Current Payload:            {frameData[4]}")
-            lastIP = frameData[3]
+    # nodeData[layers-1]['payload'] = nodes[layers-1]
+    print(f" -  Sensor Payload:             {nodeData[layers-1]['payload']}")
 
 
-            if frameData[2].count(PB) > 0:
-                pigFrame = frameData[2].split(PB)
+    db.insertData(nodeData, recvTime)
 
-                if verbose:
-                    print(f" -  Current postTxTime:         {pigFrame[0]}")
-                    print(f" -  Current Piggy:              {pigFrame[1]}")
-                nodeData[i]['postTxTime'] = pigFrame[0]
-                nodeData[i]['postTxTimeGT'] = pigFrame[0]
-                nodeData[i]['payload'] = pigFrame[1]
-
-            else:
-                if verbose:
-                    print(f" -  Current postTxTime:         {frameData[2]}")
-                nodeData[i]['postTxTime'] = frameData[2]
-                nodeData[i]['postTxTimeGT'] = frameData[2]
-
-
-
-    frameData = nodes[layers-1].split(SEP)
-
-    if verbose:
-        print(f"\nSensor Frame Number:        {layers}")
-        print(f" -  Current Receive IP:         {lastIP}")
-        print(f" -  Sensor genTime:             {frameData[0]}")
-        print(f" -  Sensor txTime:              {frameData[1]}")
-        print(f" -  Sensor postTxTime:          {frameData[2]}")
-        print(f" -  Sensor Payload:             {frameData[3]}")
-    nodeData[layers-1]['nodeIP'] = lastIP
-    nodeData[layers-1]['rxTime'] = frameData[0]
-    nodeData[layers-1]['rxTimeGT'] = frameData[0]
-    nodeData[layers-1]['txTime'] = frameData[1]
-    nodeData[layers-1]['txTimeGT'] = frameData[1]
-    nodeData[layers-1]['postTxTime'] = frameData[2]
-    nodeData[layers-1]['postTxTimeGT'] = frameData[2]
-    nodeData[layers-1]['payload'] = frameData[3]
-
-
-    # comDelay = float(recvTime) - float(frameData[0])
-
-    # print(f"\nNodeData Dict Contains:")
-    # for i in range(len(nodeData)):
-    #     print(nodeData[i])
-
-    db.insertData(nodeData, 101.23)
 
 
 
