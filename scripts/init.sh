@@ -1,16 +1,12 @@
 #!/bin/bash
 
 if [ "$1" == "help" ]; then
-    orange="\033[38;2;255;75;0m"
-    green="\033[38;0;255;0m"
-    bold="\033[1m"
-    reset="\033[0m"
-    printf "${bold}Usage${reset}:\t\t./scripts/init.sh
+    printf "\033[1mUsage\033[0m:\t\t./scripts/init.sh
 
-${bold}Commands${reset}:
-    ${orange}help${reset}:\tShows the current help message.
+\033[1mCommands\033[0m:
+    \033[38;2;255;75;0mhelp\033[0m:\tShows the current help message.
 
-${bold}Description${reset}:\tThis script is used to set the ip addresses of this system, it should be executed by a non-root user to ensure the naming of the device follows the correct ip address. 
+\033[1mDescription\033[0m:\tThis script is used to set the ip addresses of this system, it should be executed by a non-root user to ensure the naming of the device follows the correct ip address. 
 \t\tThis script can be extended to allow more initialization\n"
     exit 0
 fi

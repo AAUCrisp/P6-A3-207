@@ -38,7 +38,7 @@ EOF
 function stressTest(){
     if [[ "$TYPE" == server ]]; then
 	echo "Initializing server..."
-        nc -l -p "$PORT" -c -v -v
+        netcat -l -p "$PORT" -c -v -v
     elif [[ "$TYPE" == both ]]; then
 	echo "Initializing server..."
 	screen -dmS netcat nc -l -p "$PORT" -c -v -v
@@ -74,6 +74,10 @@ for arg in "$@"; do
 	INTERFACE=${arg#*"="}
     elif [[ "$arg" == --type* ]]; then
 	TYPE=${arg#*"="}
+    elif [[ "$arg" == --modemtype* ]]; then
+        val=${arg#*"="}
+        mmcli -m any --set-allowed-modes="$val"
+        echo "Set the modem type to $val"
     else
         printf "No such argument: \033[38;2;0;255;0m%s\033[0m, type './scripts/conditions.sh help' for help\n" "$arg"
         exit 1
