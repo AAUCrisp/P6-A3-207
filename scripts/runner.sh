@@ -18,20 +18,16 @@ fi
 # define a table of corresponding names and ip addresses
 mapping='{
     "up0":{
-        "ip":"192.168.1.105", 
-        "source":"~/P6-A3-207"
+        "ip":"192.168.1.105"
     },
     "up1":{
-        "ip":"192.168.1.80", 
-        "source":"~/P6-A3-207"
+        "ip":"192.168.1.80"
     },
     "up2":{
-        "ip":"192.168.1.107", 
-        "source":"~/P6-A3-207"
+        "ip":"192.168.1.107"
     },
     "up3":{
-        "ip":"192.168.1.109", 
-        "source":"~/P6-A3-207"
+        "ip":"192.168.1.109"
     },
     "cal":{
         "ip":"192.168.1.189"
@@ -40,11 +36,11 @@ mapping='{
         "ip":"192.168.1.76"
     },
     "tho":{
-        "ip":"192.168.1.176", 
-        "source":"~/git/P6-A3-207"
+        "ip":"192.168.1.176"
     },
     "ub8":{
-        "ip":"192.168.1.182"}
+        "ip":"192.168.1.182"
+    }
 }'
 verbose=0
 nodes=()
@@ -100,9 +96,9 @@ for backend in "${backends[@]}"; do
         printf "Running node \033[38;2;255;75;0m%s\033[0m as a backend\n" "$name@$ip"
     fi
     if [ "$(echo "$backend" | jq -c -r .args)" == "null" ]; then
-        echo "cd $(echo "$mapping" | jq -c -r ."$name".source) && screen -dmS backend python3.10 backend.py" | ssh "$name"@"$ip" 'bash -s'
+        ssh "$name"@"$ip" "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS backend python3.10 backend.py"
     else
-        echo "cd $(echo "$mapping" | jq -c -r ."$name".source) && screen -dmS backend python3.10 backend.py $(echo "$backend" | jq -c -r .args[])" | ssh "$name"@"$ip" 'bash -s'
+        echo "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS backend python3.10 backend.py $(echo "$backend" | jq -c -r .args[])" | ssh "$name"@"$ip" 'bash -s'
     fi
 done
 
@@ -114,9 +110,9 @@ for headend in "${headends[@]}"; do
         printf "Running node \033[38;2;255;75;0m%s\033[0m as a headend\n" "$name@$ip"
     fi
     if [ "$(echo "$headend" | jq -c -r .args)" == "null" ]; then
-        echo "cd $(echo "$mapping" | jq -c -r ."$name".source) && screen -dmS headend python3.10 headend.py" | ssh "$name"@"$ip" 'bash -s'
+        ssh "$name"@"$ip" "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS headend python3.10 headend.py"
     else
-        echo "cd $(echo "$mapping" | jq -c -r ."$name".source) && screen -dmS headend python3.10 headend.py $(echo "$headend" | jq -c -r .args[])" | ssh "$name"@"$ip" 'bash -s' 
+        echo "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS headend python3.10 headend.py $(echo "$headend" | jq -c -r .args[])" | ssh "$name"@"$ip" 'bash -s' 
     fi
 done
 
@@ -128,9 +124,9 @@ for sensor in "${sensors[@]}"; do
         printf "Running node \033[38;2;255;75;0m%s\033[0m as a sensor\n" "$name@$ip"
     fi
     if [ "$(echo "$sensor" | jq -c -r .args)" == "null" ]; then
-        echo "cd $(echo "$mapping" | jq -c -r ."$name".source) && screen -dmS sensor python3.10 sensor.py" | ssh "$name"@"$ip" 'bash -s'
+        ssh "$name"@"$ip" "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS sensor python3.10 sensor.py"
     else
-        echo "cd $(echo "$mapping" | jq -c -r ."$name".source) && screen -dmS sensor python3.10 sensor.py $(echo "$sensor" | jq -c -r .args[])" | ssh "$name"@"$ip" 'bash -s'
+        echo "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS sensor python3.10 sensor.py $(echo "$sensor" | jq -c -r .args[])" | ssh "$name"@"$ip" 'bash -s'
     fi
 done
 
@@ -144,7 +140,7 @@ for sensor in "${sensors[@]}"; do
     if [ "$verbose" == 1 ]; then
         printf "Shutting down sensor node \033[38;2;255;75;0m%s\033[0m\n" "$name@$ip"
     fi
-    ssh "$(echo "$sensor" | jq -c '.name')" "screen -S sensor -X at \# stuff $'\003'"
+    ssh "$name"@"$ip" "screen -S sensor -X at \# stuff $'\003'"
 done
 
 for headend in "${headends[@]}"; do
@@ -153,7 +149,7 @@ for headend in "${headends[@]}"; do
     if [ "$verbose" == 1 ]; then
         printf "Shutting down headend node \033[38;2;255;75;0m%s\033[0m\n" "$name@$ip"
     fi
-    ssh "$(echo "$headend" | jq -c '.name')" "screen -S headend -X at \# stuff $'\003'"
+    ssh "$name"@"$ip" "screen -S headend -X at \# stuff $'\003'"
 done
 
 for backend in "${backends[@]}"; do
@@ -162,5 +158,5 @@ for backend in "${backends[@]}"; do
     if [ "$verbose" == 1 ]; then
         printf "Shutting down backend node \033[38;2;255;75;0m%s\033[0m\n" "$name@$ip"
     fi
-    ssh "$(echo "$backend" | jq -c '.name')" "screen -S backend -X at \# stuff $'\003'"
+    ssh "$name"@"$ip" "screen -S backend -X at \# stuff $'\003'"
 done
