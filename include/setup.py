@@ -1,7 +1,7 @@
 # General setup for all nodes
 import argparse         # For parsing terminal arguments
 import sys
-from threading import Thread, Condition, Condition, Lock
+from threading import Thread, Condition, Lock
 from time import time, sleep
 import os
 testPath = os.path.abspath("")
@@ -198,3 +198,8 @@ def transposeArray(matrix):
      
     return result
 
+
+# Synchronization setup
+VKT = Clock()
+GT = Clock()
+RTO = Clock()

@@ -156,13 +156,8 @@ class ProcessData:
             data += f'{OFF}{str(self.GT)}'
         if self.piggy:
             data += f'{PB}{str(self.piggy)}'
-            self.piggy:str = None
-            
         data += f'{SEP}{str(self.receivedIP)}'
-        data += f'{EON}{str(self.payload)}'
-        # data += SEP.join([str(self.receivedIP), str(self.payload)])
-        # data += EOP.join([str(self.receivedIP), str(self.payload)])
-        # data += EOP
+        data+= f'{EON}{str(self.payload)}'
 
         return data
     

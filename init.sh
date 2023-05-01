@@ -27,8 +27,3 @@ else
             echo "Error, not running on one of the UP boards..."
     esac
 fi
-
-
-
-
-fucking shit fuck... this work?
