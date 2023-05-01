@@ -1,2 +1,8 @@
+include/ProcessData.py merge=ours
+include/NetTechnology.py merge=ours
+include/Network.py merge=ours
+include/Sync.py merge=ours
+Clienttest.py merge=ours
+init.sh merge=ours
 sensor.py merge=ours
 forwarder.py merge=ours
