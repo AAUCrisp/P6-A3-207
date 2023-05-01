@@ -18,28 +18,36 @@ fi
 # define a table of corresponding names and ip addresses
 mapping='{
     "up0":{
-        "ip":"192.168.1.105"
+        "ip":"192.168.1.105",
+        "port":8888
     },
     "up1":{
-        "ip":"192.168.1.80"
+        "ip":"192.168.1.80",
+        "port":8889
     },
     "up2":{
-        "ip":"192.168.1.107"
+        "ip":"192.168.1.107",
+        "port":8890
     },
     "up3":{
-        "ip":"192.168.1.109"
+        "ip":"192.168.1.109",
+        "port":8891
     },
     "cal":{
-        "ip":"192.168.1.189"
+        "ip":"192.168.1.189",
+        "port":8892
     },
     "ste":{
-        "ip":"192.168.1.76"
+        "ip":"192.168.1.76",
+        "port":8893
     },
     "tho":{
-        "ip":"192.168.1.176"
+        "ip":"192.168.1.176",
+        "port":8894
     },
     "ub8":{
-        "ip":"192.168.1.182"
+        "ip":"192.168.1.182",
+        "port":8895
     }
 }'
 verbose=0
@@ -67,9 +75,36 @@ if [ "$topology" == "" ]; then
     nodes=("$(echo "$config" | jq -r -c '.topology[]')")
 fi
 
+function runNode(){
+    # Extract node name
+    name=$(echo "$node" | jq -r -c .name)
+
+    # Extract ip address 
+    ip=$(echo "$mapping" | jq -r -c ."$name".ip)
+
+    # Set username for ssh
+    if [ "$(echo "$node" | jq -r -c .username)" != "null" ]; then
+        username="$(echo "$node" | jq -r -c .username)"
+    else
+        username="$name"
+    fi
+
+    if [ "$verbose" == 1 ]; then
+        echo "Running Node: $username@$ip"
+    fi
+
+    # get password if any
+    if [ "$(echo "$node" | jq -r -c .password)" != "null" ]; then
+        password="$(echo "$node" | jq -r -c .password)"
+        echo "$(cat scripts/runNode.sh) $cmd" | sshpass -p "$password" ssh "$username@$ip" 'bash -s'
+    else
+        echo "$(cat scripts/runNode.sh) $cmd" | ssh "$username@$ip" 'bash -s'
+    fi
+}
+
 # Main Section
 # Start by extracting each type so they can be run individually
-for node in "${nodes[@]}"; do
+for node in $nodes; do
     case "$(echo "$node" | jq -c '.type')" in
         '"backend"')
             backends+=("$node")
@@ -80,83 +115,104 @@ for node in "${nodes[@]}"; do
         '"sensor"')
             sensors+=("$node")
             ;;
+        *)
+            printf "\033[38;2;255;0;0mError\033[0m: No such type '%s'\n" "$(echo "$node" | jq -c '.type')"
+            ;;
     esac
 done
 if [ "$verbose" == 1 ]; then
-    printf "\033[1mBackends\033[0m: %s\n" "${backends[@]}"
-    printf "\033[1mHeadends\033[0m: %s\n" "${headends[@]}"
-    printf "\033[1mSensors\033[0m: %s\n" "${sensors[@]}"
+    printf "\033[1mBackends\033[0m: %s\n" "${backends[*]}"
+    printf "\033[1mHeadends\033[0m: %s\n" "${headends[*]}"
+    printf "\033[1mSensors\033[0m: %s\n" "${sensors[*]}"
 fi
 
 # run a backend in a screen on each backend node
-for backend in "${backends[@]}"; do
-    name=$(echo "$backend" | jq -c -r .name)
-    ip=$(echo "$mapping" | jq -c -r ."$name".ip)
-    if [ "$verbose" == 1 ]; then
-        printf "Running node \033[38;2;255;75;0m%s\033[0m as a backend\n" "$name@$ip"
-    fi
-    if [ "$(echo "$backend" | jq -c -r .args)" == "null" ]; then
-        ssh "$name"@"$ip" "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS backend python3.10 backend.py"
-    else
-        echo "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS backend python3.10 backend.py $(echo "$backend" | jq -c -r .args[])" | ssh "$name"@"$ip" 'bash -s'
-    fi
+for node in ${backends[*]}; do
+    inPort="$(echo "$mapping" | jq -r -c ."$(echo "$node" | jq -r -c .name)".port)"
+    cmd="python3.11 Servertest.py -portIn $inPort -gtTech wifi"
+    runNode
 done
 
 # run a headend in a screen on each headend node
-for headend in "${headends[@]}"; do
-    name=$(echo "$headend" | jq -c -r .name)
-    ip=$(echo "$mapping" | jq -c -r ."$name".ip)
-    if [ "$verbose" == 1 ]; then
-        printf "Running node \033[38;2;255;75;0m%s\033[0m as a headend\n" "$name@$ip"
-    fi
-    if [ "$(echo "$headend" | jq -c -r .args)" == "null" ]; then
-        ssh "$name"@"$ip" "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS headend python3.10 headend.py"
-    else
-        echo "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS headend python3.10 headend.py $(echo "$headend" | jq -c -r .args[])" | ssh "$name"@"$ip" 'bash -s' 
-    fi
+for node in ${headends[*]}; do
+    target="$(echo "$node" | jq -r -c .target)"
+    inPort="$(echo "$mapping" | jq -r -c ."$(echo "$node" | jq -r -c .name)".port)"
+    outPort="$(echo "$mapping" | jq -r -c ."$target".port)"
+    cmd="python3.11 headend.py -portIn $inPort -portOut $outPort -target $target -gtTech wifi"
+    runNode
 done
 
 # run a sensor in a screen on each sensor node
-for sensor in "${sensors[@]}"; do
-    name=$(echo "$sensor" | jq -c -r .name)
-    ip=$(echo "$mapping" | jq -c -r ."$name".ip)
-    if [ "$verbose" == 1 ]; then
-        printf "Running node \033[38;2;255;75;0m%s\033[0m as a sensor\n" "$name@$ip"
-    fi
-    if [ "$(echo "$sensor" | jq -c -r .args)" == "null" ]; then
-        ssh "$name"@"$ip" "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS sensor python3.10 sensor.py"
-    else
-        echo "cd /tmp && git clone https://github.com/AAUCrisp/P6-A3-207 && cd P6-A3-207 && screen -dmS sensor python3.10 sensor.py $(echo "$sensor" | jq -c -r .args[])" | ssh "$name"@"$ip" 'bash -s'
-    fi
+for node in ${sensors[*]}; do
+    target="$(echo "$node" | jq -r -c .target)"
+    outPort="$(echo "$mapping" | jq -r -c ."$target".port)"
+    cmd="python3.11 sensor.py -portOut $outPort -target $target -gtTech wifi"
+    runNode
 done
 
 # wait for a predetermined period as described in the configuration file
-sleep "$(echo "$config" | jq -c -r .period)"
+period="$(echo "$config" | jq -c -r .period)"
+echo "Sleeping for $period seconds..."
+sleep "$period"
 
 # shutdown each node in the reverse order
-for sensor in "${sensors[@]}"; do
-    name=$(echo "$sensor" | jq -c -r .name)
+for node in ${sensors[*]}; do
+    name=$(echo "$node" | jq -c -r .name)
     ip=$(echo "$mapping" | jq -c -r ."$name".ip)
-    if [ "$verbose" == 1 ]; then
-        printf "Shutting down sensor node \033[38;2;255;75;0m%s\033[0m\n" "$name@$ip"
+    if [ "$(echo "$node" | jq -c -r .username)" != "null" ]; then
+        username="$(echo "$node" | jq -c -r .username)"
+    else
+        username="$name"
     fi
-    ssh "$name"@"$ip" "screen -S sensor -X at \# stuff $'\003'"
+    password="$(echo "$node" | jq -c -r .password)"
+
+    if [ "$verbose" == 1 ]; then
+        printf "Shutting down sensor node \033[38;2;255;75;0m%s\033[0m\n" "$username@$ip"
+    fi
+
+    if [ "$password" == "null" ]; then
+        ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
+    else
+        sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
+    fi
 done
 
-for headend in "${headends[@]}"; do
-    name=$(echo "$headend" | jq -c -r .name)
+for node in ${headends[*]}; do
+    name=$(echo "$node" | jq -c -r .name)
     ip=$(echo "$mapping" | jq -c -r ."$name".ip)
-    if [ "$verbose" == 1 ]; then
-        printf "Shutting down headend node \033[38;2;255;75;0m%s\033[0m\n" "$name@$ip"
+    if [ "$(echo "$node" | jq -c -r .username)" != "null" ]; then
+        username="$(echo "$node" | jq -c -r .username)"
+    else
+        username="$name"
     fi
-    ssh "$name"@"$ip" "screen -S headend -X at \# stuff $'\003'"
+    if [ "$verbose" == 1 ]; then
+        printf "Shutting down headend node \033[38;2;255;75;0m%s\033[0m\n" "$username@$ip"
+    fi
+    password="$(echo "$node" | jq -c -r .password)"
+    if [ "$password" == "null" ]; then
+        ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
+    else
+        sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
+    fi
 done
 
-for backend in "${backends[@]}"; do
-    name=$(echo "$backend" | jq -c -r .name)
+for node in ${backends[*]}; do
+    name=$(echo "$node" | jq -c -r .name)
     ip=$(echo "$mapping" | jq -c -r ."$name".ip)
-    if [ "$verbose" == 1 ]; then
-        printf "Shutting down backend node \033[38;2;255;75;0m%s\033[0m\n" "$name@$ip"
+    if [ "$(echo "$node" | jq -c -r .username)" != "null" ]; then
+        username="$(echo "$node" | jq -c -r .username)"
+    else
+        username="$name"
     fi
-    ssh "$name"@"$ip" "screen -S backend -X at \# stuff $'\003'"
+    if [ "$verbose" == 1 ]; then
+        printf "Shutting down backend node \033[38;2;255;75;0m%s\033[0m\n" "$username@$ip"
+    fi
+    password="$(echo "$node" | jq -c -r .password)"
+    if [ "$password" == "null" ]; then
+        ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
+    else
+        sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
+    fi
 done
+
+exit 0
