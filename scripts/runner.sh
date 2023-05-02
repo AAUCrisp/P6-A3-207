@@ -30,7 +30,7 @@ mapping='{
         "port":8890
     },
     "up3":{
-        "ip":"192.168.1.109",
+        "ip":"192.168.1.251",
         "port":8891
     },
     "cal":{
@@ -88,23 +88,32 @@ function runNode(){
     else
         username="$name"
     fi
+    # extract password
+    password="$(echo "$node" | jq -r -c .password)"
+
+    # extract arguments OR return an empty variable if its null
+    if [ "$(echo "$node" | jq -r -c .args)" != "null" ]; then
+        args=$(echo "$node" | jq -r -c '.args | join(" ")')
+    else
+        args=""
+    fi
 
     if [ "$verbose" == 1 ]; then
-        echo "Running Node: $username@$ip"
+        echo "Running Node: $username@$ip with args [${args[*]}]"
     fi
+    setupCmd="
+        cd /tmp || exit
+        rm -r P6-A3-207 
+        git clone https://github.com/AAUCrisp/P6-A3-207.git
+        cd P6-A3-207 || exit
+        screen -L -dmS node " # VERY IMPORTANT: this string has to end on this line with a space otherwise the parsed command will fail
 
-    # get password if any
-    if [ "$(echo "$node" | jq -r -c .password)" != "null" ]; then
-        password="$(echo "$node" | jq -r -c .password)"
-        echo "$(cat scripts/runNode.sh) $cmd" | sshpass -p "$password" ssh "$username@$ip" 'bash -s'
-    else
-        echo "$(cat scripts/runNode.sh) $cmd" | ssh "$username@$ip" 'bash -s'
-    fi
+    echo "$setupCmd $cmd ${args[*]}" | sshpass -p "$password" ssh "$username@$ip" 'bash -s'
 }
 
 # Main Section
 # Start by extracting each type so they can be run individually
-for node in $nodes; do
+for node in ${nodes[*]}; do
     case "$(echo "$node" | jq -c '.type')" in
         '"backend"')
             backends+=("$node")
@@ -129,7 +138,10 @@ fi
 # run a backend in a screen on each backend node
 for node in ${backends[*]}; do
     inPort="$(echo "$mapping" | jq -r -c ."$(echo "$node" | jq -r -c .name)".port)"
-    cmd="python3.11 Servertest.py -portIn $inPort -gtTech wifi"
+    if [ $verbose == 1 ]; then
+        echo "Backend listening on $inPort"
+    fi
+    cmd="python3.11 Servertest.py -portIn $inPort"
     runNode
 done
 
@@ -138,7 +150,10 @@ for node in ${headends[*]}; do
     target="$(echo "$node" | jq -r -c .target)"
     inPort="$(echo "$mapping" | jq -r -c ."$(echo "$node" | jq -r -c .name)".port)"
     outPort="$(echo "$mapping" | jq -r -c ."$target".port)"
-    cmd="python3.11 headend.py -portIn $inPort -portOut $outPort -target $target -gtTech wifi"
+    if [ $verbose == 1 ]; then
+        echo "Connecting headend to $target on port $outPort. Listening on $inPort"
+    fi
+    cmd="python3.11 headend.py -portIn $inPort -portOut $outPort -target $target"
     runNode
 done
 
@@ -146,7 +161,10 @@ done
 for node in ${sensors[*]}; do
     target="$(echo "$node" | jq -r -c .target)"
     outPort="$(echo "$mapping" | jq -r -c ."$target".port)"
-    cmd="python3.11 sensor.py -portOut $outPort -target $target -gtTech wifi"
+    if [ $verbose == 1 ]; then
+        echo "Connecting sensor to $target on port $outPort."
+    fi
+    cmd="python3.11 sensor.py -portOut $outPort -target $target"
     runNode
 done
 
@@ -174,6 +192,7 @@ for node in ${sensors[*]}; do
         ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
     else
         sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
+        sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/screenlog.0 " > log/"$name".log
     fi
 done
 
@@ -193,6 +212,7 @@ for node in ${headends[*]}; do
         ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
     else
         sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
+        sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/screenlog.0 " > log/"$name".log
     fi
 done
 
@@ -212,6 +232,7 @@ for node in ${backends[*]}; do
         ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
     else
         sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
+        sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/screenlog.0 " > log/"$name".log
     fi
 done
 
