@@ -140,8 +140,63 @@ if verbose:
     print(f"Absolute Path is:     {os.getcwd()}\n")
 
 
+#                End
+#  --   General Thingy Stuff   --
+#######################################
+#######################################
+#  --    Function Creation     --
+#               Start
+
+
+
 def frPrint(payload):
-    print(payload.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")))
+    print(payload.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")).replace(OFF, cyan(" | ")))
+
+
+
+
+def dict_depth(dic, level = 1):
+
+    str_dic = str(dic)
+    counter = 0
+    for i in str_dic:
+        if i == "{" or i == "[":
+            counter += 1
+        elif i == "}" or i == "]":
+            break
+
+    return(counter)
+
+
+
+def transposeArray(matrix):
+    
+    # print(f"Array in Transpose is: {matrix}")
+
+    length = len(matrix)
+
+    for i, key in enumerate(matrix):
+        
+        depth = len(matrix[key])
+        global result
+
+        if i == 0:
+            result = [[None for j in range(length)] for i in range(depth)]
+            # print(f"Empty array has structure {result}")
+
+        for j, value in enumerate(matrix[key]):
+
+            result[j][i] = value
+
+            # print(f"""
+            # In Transpose:
+            #     i is: {i}
+            #     key is: {key}
+            #     j is: {j}
+            #     value is: {value}
+            #     array is now: {array}""")
+     
+    return result
 
 
 # Synchronization setup

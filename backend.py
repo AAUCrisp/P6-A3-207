@@ -2,80 +2,107 @@ from include.setup import *
 from include.Database import *
 
 SERVERADDR = ""
-SERVERPORT= portIn
+SERVERPORT = portIn
+
 
 def unpack(packet, recvIP, recvTime):
 
     layers = packet.count(EON)      # Check the number of headend jumps
+    # layers = packet.count(EON) + 1  # Check the number of headend jumps
     nodes = packet.split(EON)       # Split the frames from each headend
 
+    nodeData = [{key: value for key, value in []} for i in range(layers)]
+
     lastIP = recvIP
+    newRTO = None
+    newGT = None
 
-    if layers > 0:
-        # for i, key in enumerate(nodes):
-        for i in range(layers-1):
-            # frameData = layers[i].split(SEP)
-            frameData = nodes[i].split(SEP)
+    print(f"Frame Layers: {layers}\n")
+
+    for i in range(layers):
+        frameData = nodes[i].split(SEP)
+
+        if verbose:
+            print(f"\nHeadend Frame Number:       {i+1}\n")
+            # print(f" -  Current Frama Data:         {key}")
+            print(f" -  Current Receive IP:         {lastIP}")
+            print(f" -  Current rxTime:             {frameData[0]}")
+            print(f" -  Current txTime:             {frameData[1]}")
+
+        nodeData[i]['nodeIP'] = lastIP
+        nodeData[i]['rxTime'] = frameData[0]
+        nodeData[i]['txTime'] = frameData[1]
+
+
+        optFrame = frameData[2].split(PB)
+
+        # print(f"OptFrame contains:   {optFrame}")
+
+
+
+        #  --  If there's new Offsets  --
+        if optFrame[0].count(OFF) > 0:
+
+            # print(f"Inside Offset Area")
+
+            offsetFrame = optFrame[0].split(OFF)
+            nodeData[i]['postTxTime'] = offsetFrame[0]
+            newRTO = offsetFrame[1]
+            newGT = offsetFrame[2]
+            nodeData[i]['RTO'] = offsetFrame[1]
+            nodeData[i]['GT']= offsetFrame[2]
+
             if verbose:
-                print(f"\nCurrent Frame Number:       {i}")
-                # print(f" -  Current Frama Data:         {key}")
-                print(f" -  Current rxTime:             {frameData[0]}")
-                print(f" -  Current txTime:             {frameData[1]}")
-            if len(frameData.count(PB)) > 0:
-                pigFrame = frameData[2].split(PB)
-                if verbose:
-                    print(f" -  Current prevTxTime:         {pigFrame[0]}")
-                    print(f" -  Current Piggy:              {pigFrame[1]}")
-            else:
-                if verbose:
-                    print(f" -  Current prevTxTime:         {frameData[2]}")
-                
+                print(f" -  Current postTxTime:         {offsetFrame[0]}")
+
+
+        else:
             if verbose:
-                print(f" -  Current Receive IP:         {frameData[3]}")
-                print(f" -  Current Payload:            {frameData[4]}")
+                print(f" -  Current postTxTime:         {optFrame[0]}")
+            nodeData[i]['postTxTime'] = optFrame[0]
+
+        
+        
+        #  --  If there's Piggy Data  --
+        # if optFrame[1]:
+        if len(optFrame) > 1:
+        # if frameData[2].count(PB) > 0:
+            pigFrame = frameData[2].split(PB)
+            # pigFrame = optFrame[1].split(PB)
+
+            # print(f"Inside Piggy Area")
+
+            if verbose:
+                # print(f" -  Current postTxTime:         {optFrame[0].split(OFF)[0]}")
+                print(f" -  Current Piggy:              {optFrame[1]}")
+
+            nodeData[i]['payload'] = pigFrame[1]
+        
+        if i < layers - 1:
             lastIP = frameData[3]
+        
+        else:
+            nodeData[i]['payload'] = nodes[i+1]
+
+
+    # nodeData[layers-1]['payload'] = nodes[layers-1]
+    print(f" -  Sensor Payload:             {nodeData[layers-1]['payload']}")
+
+
+    db.insertData(nodeData, recvTime)
 
 
 
-    frameData = nodes[layers].split(SEP)
-    if verbose:
-        print(f"\nSensor Frame:")
-        print(f" -  Sensor genTime:            {frameData[0]}")
-        print(f" -  Sensor txTime:             {frameData[1]}")
-        print(f" -  Sensor prevTxTime:         {frameData[2]}")
-        print(f" -  Sensor Payload:            {frameData[3]}")
 
-    comDelay = float(recvTime) - float(frameData[0])
 
-    nodeParams = { 
-        'where': {
-            'ip5g': lastIP,
-            'OR': None,
-            'ipWifi': lastIP
-            }, 
-        }
 
-    if verbose:
-        print(f"\nWhere parameters in Backend is: {nodeParams['where']}\n")
-        print(f"Where OR key is: {nodeParams['where']['ip5g']}\n")
+#                End
+#  --   General Thingy Stuff   --
+#######################################
+#######################################
+#  --    Function Creation     --
+#               Start
 
-    nodeData = db.fetch('Node', nodeParams)
-
-    if verbose:
-        print(f"Fetched Node Data is: {nodeData}")
-
-    comTrans = { 
-        'sensorId': nodeData[0]['id'],
-        'combinedDelay': comDelay,
-        'combinedDelayGT': comDelay,
-        'dataTime': frameData[0],
-        'dataTimeGT': frameData[0],
-        'deliveryTime': recvTime,
-        'deliveryTimeGT': recvTime,
-        'technology': interfaceTarget
-        }
-
-    db.insert('CombinedTransfer', comTrans)
 
 # adapt = NetTechnology()
 
@@ -88,22 +115,32 @@ dbPath = str(os.getcwd()) + "/include/db.db3"
 db = Database(dbPath)     # Prepare the database
 try:
     while True:
-        if net.data.qsize() > 0:
-            print(f"\nData Received from Node\n___________")
+        for key in net.data.keys():
+            if len(net.data[key]) > 0:
+                print(f"\nData Received from Node\n___________")
 
-            # Thomas' formating thing...
-            data = net.popData()
-            if verbose:
-                frPrint(data['data'])
-                print(f"\nDataframe using Key is: {data}")
-                # print(f"Dataframe is using Key: {net.data[key][0]['data']}")
-                # print(proc.unpack(net.data[key]['data']))
-            unpack(data['data'], data["id"], data['recvTime'])
-            # net.data[key].pop(0)
-            print(f"______________________________________\n")
+                # Thomas' formating thing...
+                data = net.data[key].pop(0)
+                if verbose:
+                    frPrint(data['data'])
+                    print(f"\nDataframe using Key is: {net.data[key]}")
+                    # print(f"Dataframe is using Key: {net.data[key][0]['data']}")
+                    # print(proc.unpack(net.data[key]['data']))
 
-        else:
-            sleep(1)
+                unpack(data['data'], key, data['recvTime'])
+
+                # process = ProcessData()
+                # unpacked = process.unpack()
+                # unpacked = process.unpack(data['data'])
+                # unpacked = unpack(data['data'])
+
+                # print(f"Unpacked Array is: {unpacked}")
+                
+                # net.data[key].pop(0)
+                print(f"______________________________________\n")
+
+            else:
+                sleep(1)
 except KeyboardInterrupt:
     print("\rClosing network, please don't keyboardinterrupt again...")
 
