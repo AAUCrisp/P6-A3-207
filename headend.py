@@ -23,7 +23,7 @@ class headendlistener:
     
     def run(self):
         #start listener in thread
-        Thread(target=self.net.listener, args=[SERVERPORT], daemon=True).start()
+        Thread(target=self.net.listener, args=[int(portIn)], daemon=True).start()
         print("Headend recv socket is now listening.....")
         print("")
         
