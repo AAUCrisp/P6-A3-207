@@ -115,32 +115,48 @@ dbPath = str(os.getcwd()) + "/include/db.db3"
 db = Database(dbPath)     # Prepare the database
 try:
     while True:
-        for key in net.data.keys():
-            if len(net.data[key]) > 0:
-                print(f"\nData Received from Node\n___________")
-
-                # Thomas' formating thing...
-                data = net.data[key].pop(0)
-                if verbose:
-                    frPrint(data['data'])
-                    print(f"\nDataframe using Key is: {net.data[key]}")
-                    # print(f"Dataframe is using Key: {net.data[key][0]['data']}")
-                    # print(proc.unpack(net.data[key]['data']))
-
-                unpack(data['data'], key, data['recvTime'])
-
-                # process = ProcessData()
-                # unpacked = process.unpack()
-                # unpacked = process.unpack(data['data'])
-                # unpacked = unpack(data['data'])
-
-                # print(f"Unpacked Array is: {unpacked}")
                 
-                # net.data[key].pop(0)
-                print(f"______________________________________\n")
 
-            else:
-                sleep(1)
+        # for key in net.data.keys():
+        #     if len(net.data[key]) > 0:
+        #         print(f"\nData Received from Node\n___________")
+
+        #         # Thomas' formating thing...
+        #         data = net.data[key].pop(0)
+                
+        QueueSize =  net.data.qsize() #get size of packet queue
+        # print("Queue Size: %d"%QueueSize)
+        #if self.net.data.qsize() > 0:
+        if QueueSize > 0: #if quee isn't empty, then pop first item
+            data = net.popData()
+            # ip = data["id"]
+            # rxTime = data["recvTime"]
+            # payload = data["data"]
+
+            # print(f"\nReceived data from node: %s"% ip)
+
+                
+                
+            if verbose:
+                frPrint(data['data'])
+                print(f"\nDataframe using Key is: {data['id']}")
+                # print(f"Dataframe is using Key: {net.data[key][0]['data']}")
+                # print(proc.unpack(net.data[key]['data']))
+
+            unpack(data['data'], data['id'], data['recvTime'])
+
+            # process = ProcessData()
+            # unpacked = process.unpack()
+            # unpacked = process.unpack(data['data'])
+            # unpacked = unpack(data['data'])
+
+            # print(f"Unpacked Array is: {unpacked}")
+            
+            # net.data[key].pop(0)
+            print(f"______________________________________\n")
+
+        else:
+            sleep(1)
 except KeyboardInterrupt:
     print("\rClosing network, please don't keyboardinterrupt again...")
 
