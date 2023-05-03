@@ -18,7 +18,7 @@ fi
 # define a table of corresponding names and ip addresses
 mapping='{
     "up0":{
-        "ip":"192.168.1.105",
+        "ip":"192.168.1.61",
         "port":8888
     },
     "up1":{
@@ -141,7 +141,7 @@ for node in ${backends[*]}; do
     if [ $verbose == 1 ]; then
         echo "Backend listening on $inPort"
     fi
-    cmd="python3.11 Servertest.py -portIn $inPort"
+    cmd="python3.11 backend.py -portIn $inPort"
     runNode
 done
 
