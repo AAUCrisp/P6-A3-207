@@ -1,0 +1,182 @@
+#!/bin/bash
+
+# Write this file into your "$HOME/.bashrc" file, using Nano or whatever
+#
+# Add (not commented) line 5-7 to your ".bashrc", to import this file
+#
+#           if [ -f ~/bash_aliases ]; then
+#               . ~/bash_aliases
+#           fi
+#
+# I know this is usually called ".bashaliases" instead, to hide the file... 
+# I like it better being visible... do and call it whatever you please, just remember to import the right filename in ".bashrc"
+#
+###############################
+#
+# Update the 'p6_path' right below, to your personal path.
+###################################################################
+
+
+############################################
+#  --  P6 Specific Variables & Setup
+p6_path="$HOME/Desktop/p6/P6-A3-207"
+p6_git_path="--git-dir=$p6_path/.git --work-tree=$p6_path"
+
+declare -A ips=( 
+    ["up0"]="192.168.1.105" 
+    ['up1']="192.168.1.80"
+    ['up2']="192.168.1.107"
+    ['up3']="192.168.1.109"
+    ['cal']="192.168.1.189"
+    ['ste']="192.168.1.76"
+    ['tho']="192.168.1.176"
+    ['ub8']="192.168.1.182"
+)
+
+
+
+###############################################
+#  --  General Use Variables & Aliases  --
+explorer="thunar"
+alias py="python"                       # Less keystrokes... stupid keystrokes...
+alias aau="cd $HOME/Desktop/aau/"       # Delete if you don't need it, enters my AAU folder
+alias up="source ~/bash_aliases"        # Update aliases & BASH functions in your terminal
+
+
+
+
+# Function to run in Manjaro startup, to detect display and GPU and load settings accordingly
+display_setup() {
+    # output=$(xrandr --listactivemonitors | grep DP-2)
+    output=$(inxi -G | grep nvidia)
+    if [[ ! $output = "" ]]
+    then 
+        # echo "On Nvidia GPU"
+        # echo "Output is $output"
+        xfce4-panel-profiles load "/home/bamse/.local/share/xfce4-panel-profiles/Home Desktop.tar.bz2"
+        # xfce4-panel-profiles load "Redmond.tar.bz2"
+    else
+        monitor=$(xrandr --listactivemonitors | grep HDMI)
+        # echo "Using Laptop"
+        if [[ $monitor = "" ]]
+        then
+            # echo "Laptop Screen Only"
+            xfce4-panel-profiles load "/home/bamse/.local/share/xfce4-panel-profiles/Laptop Screen Only.tar.bz2"
+        else
+            # echo "Laptop with connected screen"
+            xfce4-panel-profiles load "/home/bamse/.local/share/xfce4-panel-profiles/Laptop Extra Screen.tar.bz2"
+        fi;
+            
+    fi;
+}
+
+
+# ------------------------------- #
+# ----  P5 Oriented Helpers  ---- #
+p6() {
+
+    # ----  Send Help!!  ---- #
+    if [[ $@ = help ]]          # Help argument is entered
+    then
+        echo -e "\n\e[1m\e[4mP6 Help\e[0m\nIf \e[3mp6\e[0m is called without further arguments, it will \e[3mcd\e[0m to your P6 directory.\n"
+        echo -e "Valid preset arguments are: \e[3mgit, exp, dir, sens, head, back, up<0-3>,\e[0m, and finally \e[3mgit\e[0m which has more options.\n"
+        echo -e "If and argument is inserted but not amongst these, it will expect that you're trying to run a Python script with that name from the P6 directory\n"
+        echo -e "\e[3m\e[4msens\e[0m, \e[3m\e[4mhead\e[0m, \e[3m\e[4mback\e[0m arguments will run the called programs from your P6 directory, no matter where you terminal \"sits\".\n"
+        echo -e "\e[3m\e[4mdir\e[0m argument will jump to your P6 directory in your terminal.\n"
+        echo -e "\e[3m\e[4mexp\e[0m argument will open your P6 directory in your explorer.\n"
+        echo -e "\e[3m\e[4mup<0-3>\e[0m argument will connect to inserted \"up number\" via SSH.\n"
+        echo -e "\e[3m\e[4mgit\e[0m argument, if called without further arguments, will go through all the motions of a \e[3mgit commit/push\e[0m, and ask for a message for your commit.\n"
+        echo -e "If entered with more arguments than just \e[3mgit\e[0m, it will just do your normal git commands that gets inserted."
+        echo -e "Example: \e[3mp6 git commit -m \"Deleted the entire repository\"\e[0m will make a commit with that message, as it normally would.\n"
+    
+    # ----  Git Push Macro  ---- #
+    elif [[ $1 = git ]]          # Help argument is entered
+    then
+
+        if [[ ! $# -eq "1" ]]       # If the first argument is "run"
+        then
+            set -- "${@:2}"     # Remove the "run" argument
+
+            if [[ $1 = "help" ]]       # If the first argument is "run"
+            then
+                echo -e "\n\e[1m\e[4mP6 Git Help\e[0m\nIf \e[3mp6 git\e[0m is called without further arguments, it will go through all the motions of a \e[3mgit commit/push\e[0m, and ask for a message for your commit.\n"
+                echo -e "If entered with more arguments than just \e[3mgit\e[0m, it will just do your normal git commands that gets inserted."
+                echo -e "Example: \e[3mp6 git commit -m \"Deleted the entire repository\"\e[0m will make a commit with that message, as it normally would.\n"
+            else
+                # echo "I'm in! Git Argument is: $@"
+                git $p6_git_path $@
+            fi;
+        
+        else
+            echo "Doing full Git Commit motion for P6"
+            git $p6_git_path pull
+            git $p6_git_path add .
+            echo -e "\n \e[4m\e[1mWrite \e[3mcommit\e[23m message, please:\e[0m"
+            read msg
+            echo -e "\n"
+            git $p6_git_path commit -m "$msg"
+            git $p6_git_path push
+
+        fi;
+
+
+    # ----  Show the P5 directory in the Thunar explorer  ---- #
+    elif [[ $@ = exp ]]         # Directory argument is entered
+    then
+        echo -e "Opening P6 Directory in \e[3m$explorer\e[0m"
+        $explorer $p6_path             # Enter P5 directory in your explorer
+    
+    elif [[ $@ = dir ]]         # Directory argument is entered
+    then
+        echo "Entering P6 Directory"
+        cd $p6_path            # Enter P5 directory in terminal
+
+    elif [[ $1 = back ]]         # Run P6 Server Program
+    then
+        # if [[ ! $# -eq "1" ]]       # If the first argument is "run"
+        # then
+            set -- "${@:2}"     # Remove the "run" argument
+        # fi;
+
+        echo "Running the Backend"
+        py $p6_path/backend.py -cwd $p6_path $@
+
+    elif [[ $1 = sens ]]         # Run P6 Sensor Program
+    then
+        set -- "${@:2}"     # Remove the "run" argument
+        echo "Running the Sensor"
+        py $p6_path/sensor.py -cwd $p6_path $@
+
+    elif [[ $1 = head ]]         # Run P6 Headend Program
+    then
+        set -- "${@:2}"     # Remove the "run" argument
+        echo "Running the Headend"
+        py $p6_path/headend.py -cwd $p6_path $@
+
+    elif [[ $1 = up* ]]         # Connect to the UP0 via SSH
+    then
+        echo -e "Connect to the $1 via SSH"
+        ipCon=${ips[$1]}
+        # ipCon=${ips[$@]}
+        # ipCon=${ips[$1]}
+        echo -e "IP Array return is $ipCon"
+        ssh $1@$ipCon
+
+    elif [[ $# -eq "1" ]]       # If the first argument is "run"
+        then
+        $script = $1
+        set -- "${@:2}"     # Remove the "run" argument
+
+        echo -e "Running the \e[3m$@\e[0m Script"
+        py $p6_path/$script.py  -cwd $p6_path $@
+
+
+    else
+    # elif [[ $@ = dir ]]         # Directory argument is entered
+    # then
+        echo "Entering P6 Directory"
+        cd $p6_path            # Enter P5 directory in terminal
+
+    fi;
+}
+
