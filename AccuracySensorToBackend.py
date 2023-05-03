@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib
 
-def getData(fileName = "include/db2.db3", ):
-    db = Database("include/db2.db3")
+def getData(fileName = "include/db.db3", ):
+    db = Database(fileName)
     params = { 
     'select': 'HeadendTransfer.RTO, HeadendTransfer.GT, PayloadTransfer.dataTime, PayloadTransfer.deliveryTime',
     'join':{
@@ -71,7 +71,7 @@ def run():
     ErrorAccuracyMeasure = measureAccuracyError(AccuracyRTO, AccuracyGT)
 
 
-    x = np.linspace(1, 10, 10)
+    x = np.linspace(1, 317, 317)
 
     fig, ax = plt.subplots()
     fig2, error = plt.subplots()
