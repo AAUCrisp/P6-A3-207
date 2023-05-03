@@ -132,3 +132,5 @@ dmypy.json
 .vscode/*
 
 bin
+
+include/db.db3
