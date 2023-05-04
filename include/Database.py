@@ -196,9 +196,11 @@ class Database():
 
         sensorData = self.fetch('Node', sensorParams)
 
-        print(f"\n\n________________\nFetched Sensor Data BEFORE CHECK is: {sensorData}\n________________\n\n")
+        print(f"\n\n________________\nFetched Sensor Data BEFORE CHECK is:\n    {sensorData}\n________________\n")
 
-        if sensorData[0]['sensorId'] == None:
+        # if sensorData[0]['sensorId'] == None:
+        if 'sensorId' in sensorData[0] and sensorData[0]['sensorId'] == None:
+        # if 'sensorId' not in sensorData[0]:
             newNodeParams = {
                 'select': "id AS sensorId",
                 'where': {
@@ -210,7 +212,7 @@ class Database():
 
             sensorData = self.fetch('Node', newNodeParams)
 
-
+        print(f"Fetched Sensor Data AFTER CHECK is:\n    {sensorData}\n________________\n\n")
 
         return sensorData
 

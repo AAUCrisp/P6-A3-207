@@ -22,40 +22,48 @@ from include.Sync import *
 
 ips = {
     'up0': {
-        'wifi': '192.168.1.105',
+        'wifi': '192.168.1.61',
         'gsm': '10.31.0.102',
         'ethernet': '10.0.0.40',
+        'port': '8888',
     },
     'up1': {
         'wifi': '192.168.1.80',
         'gsm': '10.31.0.13',
         'ethernet': '10.0.0.10',
+        'port': '8889',
     },
     'up2': {                        # has the NTP server
         'wifi': '192.168.1.107', 
         'gsm': '10.31.0.102',
         'ethernet': '10.0.0.20',
+        'port': '8890',
     },                              #############################
     'up3': {                        ##  FIND THE ETHERNET IPs  ##
         'wifi': '192.168.1.251',     #############################
         'gsm': '10.31.0.102',
         'ethernet': '10.0.0.30',
+        'port': '8891',
     },
     'cal': {
         'wifi': '192.168.1.189',    # Insert the right one here
-        'ethernet': '192.168.0.1'
+        'ethernet': '192.168.0.1',
+        'port': '8892',
     },
     'ste': {
         'wifi': '192.168.1.76',
-        'ethernet': '127.0.0.1'     # Tricked ya'!!, don't have ethernet
+        'ethernet': '127.0.0.1',     # Tricked ya'!!, don't have ethernet
+        'port': '8893',
     },
     'tho': {
         'wifi': '192.168.1.176',
-        'ethernet': '192.168.0.1'
+        'ethernet': '192.168.0.1',
+        'port': '8894',
     },
     'ub8': {
         'wifi': '192.168.1.182',
-        'ethernet': '192.168.0.1'
+        'ethernet': '192.168.0.1',
+        'port': '8895',
     }
 }
 
@@ -89,6 +97,7 @@ print(argsMsg)
 interfaceTarget = str(args.tech) if args.tech else 'wifi'
 ipOut = ips[str(args.target)][interfaceTarget] if args.target else ips['up2'][interfaceTarget]
 portOut = str(args.portOut) if args.portOut else 8888
+# portOut = str(args.portOut) if args.portOut else ips['up2']['port']
 portIn = str(args.portIn) if args.portIn else 8888
 txInterval = int(args.delay) if args.delay else 3
 

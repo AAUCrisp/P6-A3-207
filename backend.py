@@ -2,7 +2,7 @@ from include.setup import *
 from include.Database import *
 
 SERVERADDR = ""
-SERVERPORT = portIn
+SERVERPORT = int(portIn)
 
 
 def unpack(packet, recvIP, recvTime):
@@ -91,7 +91,18 @@ def unpack(packet, recvIP, recvTime):
 
     db.insertData(nodeData, recvTime)
 
+    print(f"""
+    _____________________________________________________
+    
+                FULL PAYLOAD TRANSFER DONE
+    
+    _____________________________________________________
+    _____________________________________________________
+    _____________________________________________________
+    
 
+
+    """)
 
 
 
@@ -139,7 +150,7 @@ try:
                 
             if verbose:
                 frPrint(data['data'])
-                print(f"\nDataframe using Key is: {data['id']}")
+                print(f"\nDataframe came from: {data['id']}")
                 # print(f"Dataframe is using Key: {net.data[key][0]['data']}")
                 # print(proc.unpack(net.data[key]['data']))
 
