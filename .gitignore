@@ -132,8 +132,11 @@ dmypy.json
 .vscode/*
 
 
-include/db.db3
+db.db3
+
 # Thomas testing stuff <3
 bin
 *.yaml
 *.json
+log/*
+dbs/*

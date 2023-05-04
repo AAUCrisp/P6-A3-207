@@ -53,6 +53,7 @@ mapping='{
 verbose=0
 nodes=()
 configPath="scripts/configuration.json"
+dbName="db$(ls dbs | wc -l).db3"
 
 
 # argument parsing
@@ -64,6 +65,8 @@ for arg in "$@"; do
         configPath=${arg#*"="}
     elif [[ "$arg" == --verbose ]]; then
         verbose=1
+    elif [[ "$arg" == --dbname* ]]; then
+        dbName="${arg#*"="}.db3"
     fi
 done
 
@@ -234,7 +237,7 @@ for node in ${backends[*]}; do
     else
         sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
         sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/screenlog.0 " > log/"$name".log
-        sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/include/db.db3" >> log/"$name"_db"$(ls log | wc -l).db3"
+        sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/include/db.db3" >> dbs/"$dbName"
     fi
 done
 
