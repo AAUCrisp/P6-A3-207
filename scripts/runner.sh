@@ -106,6 +106,7 @@ function runNode(){
         rm -r P6-A3-207 
         git clone https://github.com/AAUCrisp/P6-A3-207.git
         cd P6-A3-207 || exit
+        cp include/db_empty.db3 include/db.db3
         screen -L -dmS node " # VERY IMPORTANT: this string has to end on this line with a space otherwise the parsed command will fail
 
     echo "$setupCmd $cmd ${args[*]}" | sshpass -p "$password" ssh "$username@$ip" 'bash -s'
@@ -233,6 +234,7 @@ for node in ${backends[*]}; do
     else
         sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
         sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/screenlog.0 " > log/"$name".log
+        sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/include/db.db3" >> log/"$name"_db"$(ls log | wc -l).db3"
     fi
 done
 
