@@ -8,8 +8,8 @@ for file in $(ls tests); do
         #sshpass -p 123 ssh root@"$node" ip route flush dev enp3s0
         mkdir -p testdata/"$(basename "$file" .json)"
 
-        sshpass -p 123 sftp root@"$node":/tmp/P6-A3-207/include/db.db3 testdata/"$(basename "$file" .json)"/db.db3
         sshpass -p 123 sftp root@"$node":/tmp/P6-A3-207/screenlog.0 testdata/"$(basename "$file" .json)"/"$node".log
     done
+    sshpass -p 123 sftp root@localhost:/tmp/P6-A3-207/include/db.db3 testdata/"$(basename "$file" .json)"/db.db3
     sleep 120
 done
