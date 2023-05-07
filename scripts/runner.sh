@@ -155,7 +155,7 @@ for node in ${headends[*]}; do
     inPort="$(echo "$mapping" | jq -r -c ."$(echo "$node" | jq -r -c .name)".port)"
     outPort="$(echo "$mapping" | jq -r -c ."$target".port)"
     if [ $verbose == 1 ]; then
-        echo "Connecting headend to -$target on port $outPort. Listening on $inPort"
+        echo "Connecting headend to $target on port $outPort. Listening on $inPort"
     fi
     cmd="python3.11 headend.py -portIn $inPort -portOut $outPort -target $target"
     runNode
