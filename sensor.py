@@ -85,7 +85,7 @@ class Sensor:
                     print(f'{UP}{"_"*50}')
                     for label, field in zip(
                         ["dataTime", "txTime", "postTxTime", "payload", "GT", "RTO"],
-                        [dataframe.rxTime, dataframe.txTime, dataframe.postTxTime, dataframe.payload, dataframe.GT, dataframe.RTO]):
+                        [dataframe.startTime, dataframe.txTime, dataframe.postTxTime, dataframe.payload, dataframe.GT, dataframe.RTO]):
                         print(f'{label}:\r\t\t{green(field)}{CLEAR}')
                     print()
 
