@@ -18,36 +18,20 @@ fi
 # define a table of corresponding names and ip addresses
 mapping='{
     "up0":{
-        "ip":"192.168.1.61",
+        "ip":"10.0.0.12",
         "port":8888
     },
     "up1":{
-        "ip":"192.168.1.80",
+        "ip":"10.0.0.10",
         "port":8889
     },
     "up2":{
-        "ip":"192.168.1.107",
+        "ip":"10.0.0.20",
         "port":8890
     },
     "up3":{
-        "ip":"192.168.1.251",
+        "ip":"10.0.0.30",
         "port":8891
-    },
-    "cal":{
-        "ip":"192.168.1.189",
-        "port":8892
-    },
-    "ste":{
-        "ip":"192.168.1.76",
-        "port":8893
-    },
-    "tho":{
-        "ip":"192.168.1.176",
-        "port":8894
-    },
-    "ub8":{
-        "ip":"192.168.1.182",
-        "port":8895
     }
 }'
 verbose=0
@@ -121,8 +105,11 @@ function runCondition(){
     password="$(echo "$node" | jq -c -r .password)"
     case "$(echo "$condition" | jq -r -c .name)" in
         'limit')
+            datarate="$(echo "$condition" | jq -r -c .value)"
+            interface="$(echo "$condition" | jq -r -c .interface)"
             #echo "$(cat "scripts/conditions.sh") limit --datarate=$(echo "$condition" | jq -r -c .value)" | sshpass -p "$password" ssh "root@$ip" 'bash -s'
-            sshpass -p "$password" ssh "root@$ip" 'screen -L -dmS conditions bash -s' < ./scripts/conditions.sh limit --datarate="$(echo "$condition" | jq -r -c .value)" --iface="$(echo "$condition" | jq -r -c .interface)"
+            #sshpass -p "$password" ssh "root@$ip" 'screen -L -dmS conditions bash -s' < ./scripts/conditions.sh limit --datarate="$(echo "$condition" | jq -r -c .value)" --iface="$(echo "$condition" | jq -r -c .interface)"
+            echo "screen -dmS conditions /tmp/P6-A3-207/scripts/conditions.sh limit --datarate=$datarate --iface=$interface" | sshpass -p "$password" ssh root@"$ip" 'bash -s'
             ;;
     esac
 }
