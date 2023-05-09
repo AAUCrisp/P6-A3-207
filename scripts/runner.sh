@@ -261,10 +261,12 @@ for node in ${nodes[*]}; do
     if [ "$(echo "$node" | jq -r -c .conditions)" == "null" ]; then
         continue
     fi
-    name="$(echo "$node" | jq -r -c .name)"
     ip=$(echo "$mapping" | jq -c -r ."$name".ip)
     password="$(echo "$node" | jq -c -r .password)"
-    sshpass -p "$password" ssh root@"$ip" "screen -S conditions -X at \# stuff $'\003'"
+    for condition in $(echo "$node" | jq -r -c .conditions[]); do
+        screenName=$(echo "$condition" | jq -r -c .name)
+        sshpass -p "$password" ssh root@"$ip" "screen -S $screenName -X at \# stuff $'\003'"
+    done
 done
 
 exit 0
