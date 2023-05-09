@@ -107,7 +107,7 @@ function runCondition(){
         'limit')
             datarate="$(echo "$condition" | jq -r -c .value)"
             interface="$(echo "$condition" | jq -r -c .interface)"
-            echo "screen -L -dmS limit /tmp/P6-A3-207/scripts/conditions.sh limit --datarate=$datarate --iface=$interface" | sshpass -p "$password" ssh "root@$ip" 'bash -s'
+            echo "screen -L -dmS limit echo '123' | sudo -S /tmp/P6-A3-207/scripts/conditions.sh limit --datarate=$datarate --iface=$interface" | sshpass -p "$password" ssh "$name@$ip" 'bash -s'
             ;;
     esac
 }
@@ -258,6 +258,7 @@ done
 
 # shut down any running conditions on nodes
 for node in ${nodes[*]}; do
+    name=$(echo "$node" | jq -c -r .name)
     if [ "$(echo "$node" | jq -r -c .conditions)" == "null" ]; then
         continue
     fi
@@ -268,7 +269,7 @@ for node in ${nodes[*]}; do
         echo "shutting down network conditions on node: $(echo "$node" | jq -r -c .name), on screen with name: $screenName"
         case $screenName in
             "limit")
-                sshpass -p "$password" ssh root@"$ip" "screen -S limit -X \# stuff $'\003'"
+                sshpass -p "$password" ssh "$name@$ip" "screen -S limit -X \# stuff $'\003'"
                 ;;
         esac
     done
