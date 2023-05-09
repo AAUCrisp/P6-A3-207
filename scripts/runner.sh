@@ -107,7 +107,7 @@ function runCondition(){
         'limit')
             datarate="$(echo "$condition" | jq -r -c .value)"
             interface="$(echo "$condition" | jq -r -c .interface)"
-            echo "screen -L -dmS limit '/tmp/P6-A3-207/scripts/conditions.sh limit --datarate=$datarate --iface=$interface'" | sshpass -p "$password" ssh "$name@$ip" 'bash -s'
+            echo "screen -L -dmS limit 'bash /tmp/P6-A3-207/scripts/conditions.sh limit --datarate=$datarate --iface=$interface'" | sshpass -p "$password" ssh "$name@$ip" 'bash -s'
             ;;
     esac
 }
