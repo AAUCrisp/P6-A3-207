@@ -266,7 +266,11 @@ for node in ${nodes[*]}; do
     for condition in $(echo "$node" | jq -r -c .conditions[]); do
         screenName=$(echo "$condition" | jq -r -c .name)
         echo "shutting down network conditions on node: $(echo "$node" | jq -r -c .name), on screen with name: $screenName"
-        printf "screen -S limit -X at \# stuff $'\003'" | sshpass -p "$password" ssh root@"$ip" 'bash -s'
+        case $screenName in
+            "limit")
+                sshpass -p "$password" ssh root@"$ip" "screen -S limit -X \# stuff $'\003'"
+                ;;
+        esac
     done
 done
 
