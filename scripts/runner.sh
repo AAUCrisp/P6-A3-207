@@ -53,7 +53,7 @@ mapping='{
 verbose=0
 nodes=()
 configPath="scripts/configuration.json"
-dbName="db$(ls dbs | wc -l).db3"
+runName="$(ls data | wc -l)"
 
 
 # argument parsing
@@ -65,8 +65,8 @@ for arg in "$@"; do
         configPath=${arg#*"="}
     elif [[ "$arg" == --verbose ]]; then
         verbose=1
-    elif [[ "$arg" == --dbname* ]]; then
-        dbName="${arg#*"="}.db3"
+    elif [[ "$arg" == --runName* ]]; then
+        runName="${arg#*"="}"
     fi
 done
 
@@ -113,6 +113,18 @@ function runNode(){
         screen -L -dmS node " # VERY IMPORTANT: this string has to end on this line with a space otherwise the parsed command will fail
 
     echo "$setupCmd $cmd ${args[*]}" | sshpass -p "$password" ssh "$username@$ip" 'bash -s'
+}
+
+function runCondition(){
+    name=$(echo "$node" | jq -c -r .name)
+    ip=$(echo "$mapping" | jq -c -r ."$name".ip)
+    password="$(echo "$node" | jq -c -r .password)"
+    case "$(echo "$condition" | jq -r -c .name)" in
+        'limit')
+            #echo "$(cat "scripts/conditions.sh") limit --datarate=$(echo "$condition" | jq -r -c .value)" | sshpass -p "$password" ssh "root@$ip" 'bash -s'
+            sshpass -p "$password" ssh "root@$ip" 'screen -L -dmS conditions bash -s' < ./scripts/conditions.sh limit --datarate="$(echo "$condition" | jq -r -c .value)" --iface="$(echo "$condition" | jq -r -c .interface)"
+            ;;
+    esac
 }
 
 # Main Section
@@ -172,10 +184,28 @@ for node in ${sensors[*]}; do
     runNode
 done
 
+# run any conditions for the network connectivity on each node...
+if [ $verbose == 1 ]; then
+    echo "Setting network conditions..."
+fi
+
+for node in ${nodes[*]}; do
+    if [ "$(echo "$node" | jq -r -c .conditions)" == "null" ]; then
+        continue
+    fi
+    ip=$(echo "$mapping" | jq -c -r ."$name".ip)
+    password="$(echo "$node" | jq -c -r .password)"
+    for condition in $(echo "$node" | jq -r -c '.conditions[]'); do
+        runCondition
+    done
+done
+
 # wait for a predetermined period as described in the configuration file
 period="$(echo "$config" | jq -c -r .period)"
 echo "Sleeping for $period seconds..."
 sleep "$period"
+
+mkdir -p data/"$runName"
 
 # shutdown each node in the reverse order
 for node in ${sensors[*]}; do
@@ -196,7 +226,7 @@ for node in ${sensors[*]}; do
         ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
     else
         sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
-        sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/screenlog.0 " > log/"$name".log
+        sshpass -p "$password" sftp "$username@$ip":/tmp/P6-A3-207/screenlog.0 data/"$runName"/"$username".log
     fi
 done
 
@@ -216,7 +246,7 @@ for node in ${headends[*]}; do
         ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
     else
         sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
-        sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/screenlog.0 " > log/"$name".log
+        sshpass -p "$password" sftp "$username@$ip":/tmp/P6-A3-207/screenlog.0 data/"$runName"/"$username".log
     fi
 done
 
@@ -236,9 +266,20 @@ for node in ${backends[*]}; do
         ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
     else
         sshpass -p "$password" ssh "$username@$ip" "screen -S node -X at \# stuff $'\003'"
-        sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/screenlog.0 " > log/"$name".log
-        sshpass -p "$password" ssh "$username@$ip" "cat /tmp/P6-A3-207/include/db.db3" >> dbs/"$dbName"
+        sshpass -p "$password" sftp "$username@$ip":/tmp/P6-A3-207/screenlog.0 data/"$runName"/"$username".log
+        sshpass -p "$password" sftp "$username@$ip":/tmp/P6-A3-207/include/db.db3 data/"$runName"/db.db3
     fi
+done
+
+# shut down any running conditions on nodes
+for node in ${nodes[*]}; do
+    if [ "$(echo "$node" | jq -r -c .conditions)" == "null" ]; then
+        continue
+    fi
+    name="$(echo "$node" | jq -r -c .name)"
+    ip=$(echo "$mapping" | jq -c -r ."$name".ip)
+    password="$(echo "$node" | jq -c -r .password)"
+    sshpass -p "$password" ssh root@"$ip" "screen -S conditions -X at \# stuff $'\003'"
 done
 
 exit 0
