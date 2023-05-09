@@ -265,7 +265,7 @@ for node in ${nodes[*]}; do
     password="$(echo "$node" | jq -c -r .password)"
     for condition in $(echo "$node" | jq -r -c .conditions[]); do
         screenName=$(echo "$condition" | jq -r -c .name)
-        sshpass -p "$password" ssh root@"$ip" "screen -S $screenName -X at \# stuff $'\003'"
+        printf "screen -S %s -X at \# stuff $'\003'" "$screenName" | sshpass -p "$password" ssh root@"$ip" 'bash -s'
     done
 done
 
