@@ -39,7 +39,7 @@ dataframe = ProcessData(dataTime=time.time(), txTime=time.time(), postTxTime=tim
 
 print(ProcessData.unpack(dataframe.buildSensorFrame()))
 
-headendDataframe = ProcessData(rxTime=time.time(), txTime=time.time(), postTxTime=time.time(), piggy="piggyData", payload=dataframe.buildSensorFrame(), receivedIP="localhost")
+headendDataframe = ProcessData(startTime=time.time(), txTime=time.time(), postTxTime=time.time(), piggy="piggyData", payload=dataframe.buildSensorFrame(), receivedIP="localhost")
 
 print(ProcessData.unpack(headendDataframe.buildHeadendFrame()))
 

@@ -26,11 +26,11 @@ def unpack(packet, recvIP, recvTime):
             print(f"\nHeadend Frame Number:       {i+1}\n")
             # print(f" -  Current Frama Data:         {key}")
             print(f" -  Current Receive IP:         {lastIP}")
-            print(f" -  Current rxTime:             {frameData[0]}")
+            print(f" -  Current startTime:             {frameData[0]}")
             print(f" -  Current txTime:             {frameData[1]}")
 
         nodeData[i]['nodeIP'] = lastIP
-        nodeData[i]['rxTime'] = frameData[0]
+        nodeData[i]['startTime'] = frameData[0]
         nodeData[i]['txTime'] = frameData[1]
 
 
@@ -141,7 +141,7 @@ try:
         if QueueSize > 0: #if quee isn't empty, then pop first item
             data = net.popData()
             # ip = data["id"]
-            # rxTime = data["recvTime"]
+            # startTime = data["recvTime"]
             # payload = data["data"]
 
             # print(f"\nReceived data from node: %s"% ip)

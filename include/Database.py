@@ -233,17 +233,17 @@ class Database():
         """    
 
         params = { 
-            'select': 'PayloadToHeadend.jumpId, HeadendTransfer.rxTime, HeadendTransfer.RTO, HeadendTransfer.GT',
+            'select': 'PayloadToHeadend.jumpId, TransferJump.startTime, TransferJump.RTO, TransferJump.GT',
             # 'select': {
             #     "PayloadToHeadend.jumpId",
-            #     "HeadendTransfer.rxTime",
-            #     "HeadendTransfer.rxTimeGT"
+            #     "TransferJump.startTime",
+            #     "TransferJump.startTimeGT"
             # },
             'where': {
                 'PayloadToHeadend.payloadId': txId
                 },
             'join':{
-                'HeadendTransfer': 'PayloadToHeadend.jumpId=HeadendTransfer.id'
+                'TransferJump': 'PayloadToHeadend.jumpId=TransferJump.id'
                 },
             # 'order': {
             #     'PayloadTransfer.id': 'DESC'
@@ -372,7 +372,7 @@ class Database():
 
             newHeadData = {
                 'nodeIP': frame['nodeIP'],
-                'rxTime': frame['rxTime'],
+                'startTime': frame['startTime'],
             }
 
             # if frame['RTO']:
@@ -397,7 +397,7 @@ class Database():
                 newHeadInput[i].__setitem__('payload', frame['payload'])
 
                 sensorFetch = self.fetchSensorInfo(frame['nodeIP'])[0]
-                comDelay = float(deliveryTime) - float(frame['rxTime'])
+                comDelay = float(deliveryTime) - float(frame['startTime'])
 
                 if 'lastTxId' in sensorFetch:
                     oldTransfers.append(sensorFetch['lastTxId'])
@@ -410,8 +410,8 @@ class Database():
                     'sensorId': sensorFetch['sensorId'],
                     'combinedDelay': comDelay,
                     # 'combinedDelayGT': comDelay,
-                    'dataTime': frame['rxTime'],
-                    # 'dataTimeGT': frame['rxTime'],
+                    'dataTime': frame['startTime'],
+                    # 'dataTimeGT': frame['startTime'],
                     'deliveryTime': deliveryTime,
                     # 'deliveryTimeGT': deliveryTime,
                     # 'technology': sensorFetch['technology'],
@@ -430,7 +430,7 @@ class Database():
 
         headendParams = {
             'nodeId': [],
-            'rxTime': [],
+            'startTime': [],
             'piggyData': [],
             'RTO': [],
             'GT': []
@@ -477,7 +477,7 @@ class Database():
                         newHeadInput[i].__setitem__('GT', oldHeadendData[i]['GT'])
 
 
-                    processDelay = float(oldDelays[i]['txTime']) - float(oldHeadendData[i]['rxTime'])
+                    processDelay = float(oldDelays[i]['txTime']) - float(oldHeadendData[i]['startTime'])
                     interfaceDelay = float(oldDelays[i]['postTxTime']) - float(oldDelays[i]['txTime'])
 
                     updateParams = {
@@ -490,7 +490,7 @@ class Database():
                         'where': {'id': oldHeadendData[i]['jumpId']}
                     }
 
-                    self.update('HeadendTransfer', updateParams)
+                    self.update('TransferJump', updateParams)
 
                     oldTransfers.pop
 
@@ -508,7 +508,7 @@ class Database():
             # print(f"NodeInfo Contains: {nodeInfo}")
 
             headendParams['nodeId'].append(nodeInfo[0]['sensorId'])
-            headendParams['rxTime'].append(newFrame['rxTime'])
+            headendParams['startTime'].append(newFrame['startTime'])
             headendParams['piggyData'].append(piggyCount)
             headendParams['RTO'].append(newHeadInput[i]['RTO'])
             headendParams['GT'].append(newHeadInput[i]['GT'])
@@ -522,7 +522,7 @@ class Database():
 
 
         # if len(updateParams['values']['txTime']) > 0:
-        #     self.update('HeadendTransfer', updateParams)
+        #     self.update('TransferJump', updateParams)
 
         # sensorInfo['txId'].pop(0)
 
@@ -539,7 +539,7 @@ class Database():
             'jumpId': []
         }
 
-        headRow = self.insert('HeadendTransfer', headendParams)
+        headRow = self.insert('TransferJump', headendParams)
 
         for i, txId in reversed(list(enumerate(sensorInfo['txId']))):
 

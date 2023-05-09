@@ -43,7 +43,7 @@ class headendlistener:
                 if QueueSize > 0: #if quee isn't empty, then pop first item
                     data = self.net.popData()
                     ip = data["id"]
-                    rxTime = data["recvTime"]
+                    startTime = data["recvTime"]
                     payload = data["data"]
 
                     print(f"\nReceived data from node: %s"% ip)
@@ -54,7 +54,7 @@ class headendlistener:
                     #start creating new frame
                     dataframe = ProcessData()
                     # Capture the time the data has been generated
-                    dataTime = rxTime
+                    dataTime = startTime
 
                     # attach the data time to the dataframe
                     dataframe.setDataTime(dataTime)
