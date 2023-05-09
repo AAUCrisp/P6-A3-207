@@ -28,7 +28,7 @@ EOF
             printf "]: "
             read -r INTERFACE
 	fi
-    tt "$INTERFACE" /tmp/TrafficToll.yaml
+    echo $PASSWORD | sudo -S tt "$INTERFACE" /tmp/TrafficToll.yaml
 
 }
 
@@ -53,10 +53,10 @@ function stressTest(){
 }
 
 ############################## main section #############################
-if [ $EUID != 0 ] && [ "$1" != "help" ]; then
-    printf "\033[38;2;255;0;0mError\033[0m: This script requires root access\n"
-    exit 1
-fi
+#if [ $EUID != 0 ] && [ "$1" != "help" ]; then
+#    printf "\033[38;2;255;0;0mError\033[0m: This script requires root access\n"
+#    exit 1
+#fi
 # Extract arguments
 for arg in "$@"; do
     if [[ "$arg" != --* ]]; then
@@ -71,6 +71,8 @@ for arg in "$@"; do
 	INTERFACE=${arg#*"="}
     elif [[ "$arg" == --type* ]]; then
 	TYPE=${arg#*"="}
+    elif [[ "$arg" == --password* ]]; then
+    	PASSWORD=${arg#*"="}
     elif [[ "$arg" == --modemtype* ]]; then
         val=${arg#*"="}
         if [ "$(mmcli -m any --set-allowed-modes="$val")" ]; then
