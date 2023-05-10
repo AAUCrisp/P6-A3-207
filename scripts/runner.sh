@@ -177,6 +177,9 @@ if [ $verbose == 1 ]; then
     echo "Setting network conditions..."
 fi
 
+# sleep a bit to make sure connection is established
+sleep 5
+
 for node in ${nodes[*]}; do
     if [ "$(echo "$node" | jq -r -c .conditions)" == "null" ]; then
         continue
