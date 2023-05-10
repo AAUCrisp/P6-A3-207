@@ -145,7 +145,7 @@ for node in ${backends[*]}; do
     if [ $verbose == 1 ]; then
         echo "Backend listening on $inPort"
     fi
-    cmd="python3.11 backend.py -portIn $inPort"
+    cmd="python3.11 backend.py -portIn $inPort -v"
     runNode
 done
 
@@ -157,7 +157,7 @@ for node in ${headends[*]}; do
     if [ $verbose == 1 ]; then
         echo "Connecting headend to $target on port $outPort. Listening on $inPort"
     fi
-    cmd="python3.11 headend.py -portIn $inPort -portOut $outPort -target $target"
+    cmd="python3.11 headend.py -portIn $inPort -portOut $outPort -target $target -v"
     runNode
 done
 
@@ -168,7 +168,7 @@ for node in ${sensors[*]}; do
     if [ $verbose == 1 ]; then
         echo "Connecting sensor to $target on port $outPort."
     fi
-    cmd="python3.11 sensor.py -portOut $outPort -target $target"
+    cmd="python3.11 sensor.py -portOut $outPort -target $target -v"
     runNode
 done
 
