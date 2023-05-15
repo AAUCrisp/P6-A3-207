@@ -2,6 +2,7 @@ import socket
 import threading
 from include.NetTechnology import NetTechnology
 from time import time
+from queue import Queue
 
 # The class that will handle all the networking tasks, such that we dont have to 
 # repeat trivial connection commands multiple times throughout the report. 
@@ -13,12 +14,14 @@ Message:str
 
 
 class Network():
-    data:dict[str, list[dict[str, float | str]]] = {}    # A variable to store the thread/sensor id and the data received by each thread
+    data:Queue[dict[str, str]] = Queue()    # A variable to store the thread/sensor id and the data received by each thread
     lock = threading.Lock()                         # A variable for locking data that can cause race conditions
-    threads = list()                                # A list for maintaining the list of threads  
+    threads:list[tuple[threading.Thread, socket.socket]] = []             # A list for maintaining the list of threads  
     # A constructor, whose job is to create a socket, which is connected to the given interface. 
-    receiveSock: socket.socket
-    transmitSock: socket.socket
+    receiveSock: socket.socket = None
+    transmitSock: socket.socket = None
+    isClosed = False
+    running:bool = True
 
 
     def __init__(self, tech="wifi"):
@@ -37,34 +40,33 @@ class Network():
         self.receiveSock.setsockopt(socket.SOL_SOCKET, socket.SO_BINDTODEVICE, interface.encode()) # set the socket to use this interface
         
         self.receiveSock.bind((addr, port))     # Bind the socket
-        self.receiveSock.listen(3)              # Listens and wait for connections
+        self.receiveSock.listen()               # Listens and wait for connections
 
         while True:
-            try:
-                conn, id = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket and an Address   
+            conn, id = self.receiveSock.accept()            # Accept all incoming connections. each connection is associated with a socket and an Address   
 
-            except KeyboardInterrupt:
-                self.receiveSock.close()
-                return
 
             #print("Transmission Received")
 
-            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id[0]))   # Create a thread, handling each connections, by calling the receive method. 
-            self.threads.append(new_thread)
-            self.data[id[0]] = []
+            new_thread = threading.Thread(name="receiving thread", target =self.receive, args=(conn,id[0]), daemon=True)   # Create a thread, handling each connections, by calling the receive method. 
+            self.threads.append((new_thread, conn))
             new_thread.start()
             
     def receive(self, conn:socket.socket, threadID):
         #print("The thread for receiving data has been started ", threading.get_ident())
-        try:
-            while True:    
-                sensorData = conn.recv(2048).decode()           # Receive incoming data. 
-                recvTime = time()
-                if not sensorData == "":
-                    self.lock.acquire(blocking=True)                                            # Lock the following code, such that only one thread can access it. 
-                    self.data[threadID].append({"recvTime":recvTime, "data":sensorData})        # Write the received data from the thread to a variable shared by all the threads in this process. 
-                    self.lock.release()                                                         # Release the lock once the task above is finished. 
-        except KeyboardInterrupt: conn.close()                                                  # catch keyboardinterrupts to shut down socket elegantly
+        while self.running:    
+            sensorData = conn.recv(2048).decode()           # Receive incoming data. 
+            recvTime = time()
+            if not sensorData == "":
+                #self.lock.acquire()                                            # Lock the following code, such that only one thread can access it. 
+                self.data.put({"recvTime":recvTime, "data":sensorData, "id":threadID})        # Write the received data from the thread to a variable shared by all the threads in this process. 
+                #self.lock.release()                                                         # Release the lock once the task above is finished. 
+            else:
+                self.threads.remove((threading.current_thread(), conn))
+                return                                            # catch keyboardinterrupts to shut down socket elegantly
+            
+    def popData(self) -> dict:
+        return self.data.get()
             
                 
                 
@@ -80,17 +82,23 @@ class Network():
         self.addr = addr        # Set the address given as a paramater
         self.transmitSock.connect((self.addr, self.port))   # connect to the socket bounded on the given address and port. 
         #self.message = message  # Set the message for transmission to the one given as a parameter. 
-        
 
         #self.transmit(self.transmitSock, self.message)  # transmit the shit!
 
 
 
     def transmit(self, message:str):
+        try:
+            self.transmitSock.sendall(message.encode("utf8"))
+        except:
+            self.close()
         
-        self.transmitSock.sendall(message.encode("utf8"))
-        
-
+    def close(self):
+        self.running = False
+        if self.receiveSock is not None: 
+            self.receiveSock.close()
+        if self.transmitSock is not None:
+            self.transmitSock.close()
     
 
 

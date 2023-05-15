@@ -131,4 +131,12 @@ dmypy.json
 # VS Code Files
 .vscode/*
 
+
+db.db3
+
+# Thomas testing stuff <3
 bin
+*.yaml
+*.json
+log/*
+dbs/*

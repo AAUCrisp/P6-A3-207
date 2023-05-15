@@ -2,17 +2,18 @@
 
 SEP =   "\uFFFF"
 """Regular field seperator"""
-DSEP =  "\uFFFE"
+PB =  "\uFFFE"
 """Piggyback data field seperator"""
-EOP =   "\uFFFD"
+EON =   "\uFFFD"
 """End Of Packet seperator"""
+OFF = "\uFFFC"
 
 
 class ProcessData:
     """This class will define a data frame and build it, it can also recursively unpack a data frame"""
 
     # This is the received timestamp
-    rxTime:float = None
+    startTime:float = None
 
     # This is the transmitted timestamp of the PREVIOUS frame
     txTime:float = None
@@ -29,12 +30,16 @@ class ProcessData:
     # This is the IP address of the data received
     receivedIP:str = None
 
+    RTO:float = None
+
+    GT:float = None
+
     # This is the constructor, it takes parameters and sets attributes based on the variables
-    def __init__(self, rxTime=None, dataTime=None, txTime=None, postTxTime=None, payload=None, piggy=None, receivedIP=None) -> None:
+    def __init__(self, startTime=None, dataTime=None, txTime=None, postTxTime=None, payload=None, piggy=None, receivedIP=None) -> None:
         """This is the constructor, it takes the following optional parameters: 
         
         ```
-        rxTime:     The timestamp of when the packet was received
+        startTime:     The timestamp of when the packet was received
         dataTime:   The timestamp the data was collected at the sensor
         txTime:     The timestamp of transmission, adding this to the frame means it is the timestamp of the previous transmission
         postTxTime: The timestamp of when the transmission finished at the previous transmission
@@ -45,23 +50,22 @@ class ProcessData:
         
         """
 
-        self.rxTime = rxTime if rxTime else dataTime
-        self.txTime = txTime
+        self.startTime     = startTime if startTime else dataTime
+        self.txTime     = txTime
         self.postTxTime = postTxTime
-        self.payload = payload
-        self.piggy = piggy
+        self.payload    = payload
+        self.piggy      = piggy
         self.receivedIP = receivedIP
 
-    def setRxTime(self, value:float):
-        """Setter for the rxTime attribute"""
-        self.rxTime = value
+    def setstartTime(self, value:float):
+        """Setter for the startTime attribute"""
+        self.startTime = value
         return self
     
     def setDataTime(self, value:float):
-        """Setter for the rxTime attribute to be used for sensor packets"""
-        self.rxTime = value
+        """Setter for the startTime attribute to be used for sensor packets"""
+        self.startTime = value
         return self
-
     
     def setTxTime(self, value:float):
         """Setter for the txTime attribute"""
@@ -71,6 +75,16 @@ class ProcessData:
     def setPostTxTime(self, value:float):
         """Setter for the postTxTime attribute"""
         self.postTxTime = value
+        return self
+    
+    def setRTO(self, value:float):
+        """Setter for the Reference Time Offset"""
+        self.RTO = value
+        return self
+    
+    def setGT(self, value:float):
+        """Setter for the Ground Truth"""
+        self.GT = value
         return self
     
     def setPayload(self, value:str):
@@ -91,23 +105,29 @@ class ProcessData:
     def buildSensorFrame(self):
         """Build a sensor frame that is structured as follows:
 
-        data collection time `R|` transmitted time of previous packet `R|` post transmission time of previous packet `R|` payload `E|`
+        data collection time `R|` transmitted time of previous packet `R|` post transmission time of previous packet `R|` payload
 
         * where;
 
         `R|` is a regular seperator
-
-        `E|` EOP seperator, indicating End Of Packet
         """
-        data = SEP.join([str(self.rxTime), str(self.txTime), str(self.postTxTime), str(self.payload)])
-        data += EOP
+        data = SEP.join([
+            str(self.startTime),
+            str(self.txTime),
+            str(self.postTxTime)
+        ])
+        if self.RTO:
+            data += f'{OFF}{str(self.RTO)}'
+        if self.GT:
+            data += f'{OFF}{str(self.GT)}'
+        data += f'{EON}{str(self.payload)}'
 
         return data
     
     def buildHeadendFrame(self):
         """Build a headend frame that is structured as follows:
 
-        received time `R|` transmitted time of previous packet `R|` post transmission time of previous packet `D|` optional headend data `R|` received data's IP address `R|` payload (sensor or more headend data) `E|`
+        received time `R|` transmitted time of previous packet `R|` post transmission time of previous packet `D|` optional headend data `R|` received data's IP address `E|` payload (sensor or more headend data)
 
         * where;
 
@@ -117,10 +137,18 @@ class ProcessData:
 
         `E|` EOP seperator, indicating End Of Packet
         """
-        data = SEP.join([str(self.rxTime), str(self.txTime), str(self.postTxTime)])
-        data += f'{DSEP}{str(self.piggy)}{SEP}'
-        data += SEP.join([str(self.receivedIP), str(self.payload)])
-        data += EOP
+        data = SEP.join([
+            str(self.startTime), 
+            str(self.txTime),
+            str(self.postTxTime)])
+        if self.RTO:
+            data += f'{OFF}{str(self.RTO)}'
+        if self.GT:
+            data += f'{OFF}{str(self.GT)}'
+        if self.piggy:
+            data += f'{PB}{str(self.piggy)}'
+        data += f'{SEP}{str(self.receivedIP)}'
+        data+= f'{EON}{str(self.payload)}'
 
         return data
     
@@ -131,7 +159,7 @@ class ProcessData:
         ```json 
         {
             "txTime":float,
-            "rxTime":float,
+            "startTime":float,
             "postTxTime":float,
             "piggy":string or Null,
             "receivedIP":string,
@@ -139,32 +167,37 @@ class ProcessData:
                 "dataTime":float,
                 "txTime":float,
                 "postTxTime":float,
-                "payload": str,
-                "numHeaders":int
+                "payload": str
             }
         }
         ```
         
         """
-        isHeadend = False if dataframe.count(SEP) == 3 else True
-
-        seperated = dataframe.split(SEP)
+        isHeadend = not dataframe.count(EON) == 1
+        layer = dataframe.split(EON)[0].split(SEP)
+        nextLayer = dataframe.split(EON)[1]
         if isHeadend:
             return {
-                "rxTime":seperated[0],
-                "txTime":seperated[1],
-                "postTxTime":seperated[2].split(DSEP)[0],
-                "piggy":seperated[2].split(DSEP)[1] if len(seperated[2].split(DSEP)) > 1 else None,
-                "receivedIP":seperated[3],
-                "payload":ProcessData.unpack(dataframe.split(SEP, 4)[4])
+                "txTime":       float(layer[0]),
+                "startTime":       float(layer[1]),
+                "postTxTime":   float(layer[2].split(OFF)[0]),
+                "RTO":          float(layer[2].split(OFF)[1]) if dataframe.count(OFF) > 0 else None,
+                "GT":           float(layer[2].split(OFF)[2]) if dataframe.count(OFF) > 1 else None,
+                "piggy":        layer[2].split(PB)[1] if layer[2].count(PB) == 1 else None,
+                "receivedIP":   layer[3],
+                "payload":      ProcessData.unpack(nextLayer)
             }
         else:
             return {
-                "dataTime":seperated[0],
-                "txTime":seperated[1],
-                "postTxTime":seperated[2],
-                "payload":seperated[3].split(EOP)[0],
-                "numHeaders":dataframe.count(EOP)
+                "dataTime":     float(layer[0]),
+                "txTime":       float(layer[1]),
+                "postTxTime":   float(layer[2].split(OFF)[0]),
+                "RTO":          float(layer[2].split(OFF)[1]) if dataframe.count(OFF) > 0 else None,
+                "GT":           float(layer[2].split(OFF)[2]) if dataframe.count(OFF) > 1 else None,
+                "payload":      nextLayer
             }
+
+
+
             
 
