@@ -66,6 +66,8 @@ if [ "$topology" == "" ]; then
     nodes=("$(echo "$config" | jq -r -c '.topology[]')")
 fi
 
+syncInterval="$(echo "$config" | jq -r -c .syncInterval)"
+
 function runNode(){
     # Extract node name
     name=$(echo "$node" | jq -r -c .name)
@@ -100,7 +102,7 @@ function runNode(){
         cp include/db_empty.db3 include/db.db3
         screen -L -dmS node " # VERY IMPORTANT: this string has to end on this line with a space otherwise the parsed command will fail
 
-    echo "$setupCmd $cmd ${args[*]}" | sshpass -p "$password" ssh "$username@$ip" 'bash -s'
+    echo "$setupCmd $cmd ${args[*]} -RTOint $syncInterval" | sshpass -p "$password" ssh "$username@$ip" 'bash -s'
 }
 
 function runCondition(){
@@ -120,8 +122,7 @@ function runCondition(){
         'ping')
             target=$(echo "$node" | jq -c -r .target)
             targetIp="$(echo "$mapping" | jq -c -r ."$target".pingIp)"
-            period="$(echo "$condition" | jq -r -c .period)"
-            echo "$period"
+            period="$(echo "$config" | jq -r -c .transferInterval)"
             echo "screen -L -dmS ping ping $targetIp -I wlp4s0 -i $period" | sshpass -p "$password" ssh "root@$ip" 'bash -s'
             ;;
     esac
@@ -180,7 +181,8 @@ for node in ${sensors[*]}; do
     if [ $verbose == 1 ]; then
         echo "Connecting sensor to $target on port $outPort."
     fi
-    cmd="python3.11 sensor.py -portOut $outPort -target $target -v"
+    delay="$(echo "$config" | jq -r -c .transferInterval)"
+    cmd="python3.11 sensor.py -portOut $outPort -target $target -v -delay $delay"
     runNode
 done
 
@@ -288,6 +290,14 @@ for node in ${nodes[*]}; do
         case $screenName in
             "limit")
                 sshpass -p "$password" ssh "$name@$ip" "screen -S limit -X \# stuff $'\003'"
+                ;;
+            "ping")
+                sshpass -p "$password" ssh "$name@$ip" "screen -S ping -X \# stuff $'\003'"
+                sshpass -p "$password" sftp "$username@$ip":/root/screenlog.0 data/"$runName"/"$username"_ping.log
+                ;;
+            "stress")
+                sshpass -p "$password" ssh "$name@$ip" "screen -S stress -X \# stuff $'\003'"
+                sshpass -p "$password" ssh "$name@$ip" "screen -S nc -X \# stuff $'\003'"
                 ;;
         esac
     done
