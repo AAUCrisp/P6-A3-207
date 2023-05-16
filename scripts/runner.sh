@@ -121,7 +121,7 @@ function runCondition(){
             target=$(echo "$node" | jq -c -r .target)
             targetIp="$(echo "$mapping" | jq -c -r ."$target".pingIp)"
             period="$(echo "$condition" | jq -r -c .value)"
-            echo "screen -L -dmS ping ping $targetIp -I wlp4s0 -i $period" | sshpass -p "$password" ssh "root@$ip" 'bash -s'
+            echo "screen -L -dmS ping ping $targetIp -I wlp4s0 -i '$period'000" | sshpass -p "$password" ssh "root@$ip" 'bash -s'
             ;;
     esac
 }
