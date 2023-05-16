@@ -50,8 +50,11 @@ class Sync(threading.Thread):
         """This method synchronizes the "System Virtual Time", this is interpreted as NTP synchronization, here a method of ntplib has been modified as shown below to use a specific interface."""
         # get the NTP timestamp
         medium = NetTechnology(self.interface)
-
-        return requestNTP(self.address, interface=medium.getInterface())
+        try:
+            return requestNTP(self.address, self.clock, interface=medium.getInterface())
+        except NTPException as e:
+            print("NTP DIED, retrying")
+            return self.sync()
         # set the NTP timestamp on the system, this will only be changed for the running process if NTP synchronization is automatic on the system its running on.
         #os.system(f'date -s @{NTP}') <- deprecated functionality
 
@@ -72,7 +75,7 @@ class Sync(threading.Thread):
 
 
 # This function is a modified version of the one found at: https://github.com/cf-natali/ntplib/blob/08d0f7ef766715a52f472901de5e382c8f773855/ntplib.py#L286
-def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_UNSPEC, interface:str = "lo"):  # pylint: disable=no-self-use,too-many-arguments
+def requestNTP(host, clock:Clock, version=2, port="ntp", timeout=5, address_family=socket.AF_UNSPEC, interface:str = "lo"):  # pylint: disable=no-self-use,too-many-arguments
         """Query a NTP server.
         Parameters:
         host           -- server name/address
@@ -99,7 +102,7 @@ def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_
             query_packet = NTPPacket(
                 mode=3,
                 version=version,
-                tx_timestamp=system_to_ntp_time(time.time())
+                tx_timestamp=system_to_ntp_time(clock.get())
             )
 
             # send the request
@@ -111,7 +114,7 @@ def requestNTP(host, version=2, port="ntp", timeout=5, address_family=socket.AF_
                 response_packet, src_addr = sock.recvfrom(256)
 
             # build the destination timestamp
-            dest_timestamp = system_to_ntp_time(time.time())
+            dest_timestamp = system_to_ntp_time(clock.get())
         except socket.timeout:
             raise NTPException("No response received from %s." % host)
         finally:
