@@ -292,7 +292,7 @@ for node in ${nodes[*]}; do
                 sshpass -p "$password" ssh "$name@$ip" "screen -S limit -X \# stuff $'\003'"
                 ;;
             "ping")
-                sshpass -p "$password" ssh "$name@$ip" "screen -S ping -X \# stuff $'\003'"
+                sshpass -p "$password" ssh "root@$ip" "screen -S ping -X \# stuff $'\003'"
                 sshpass -p "$password" sftp "root@$ip":/root/screenlog.0 data/"$runName"/"$username"_ping.log
                 ;;
             "stress")
