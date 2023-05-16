@@ -103,6 +103,7 @@ function runCondition(){
     name=$(echo "$node" | jq -c -r .name)
     ip=$(echo "$mapping" | jq -c -r ."$name".ip)
     password="$(echo "$node" | jq -c -r .password)"
+    target=$(echo "$node" | jq -c -r .target)
     case "$(echo "$condition" | jq -r -c .name)" in
         'limit')
             datarate="$(echo "$condition" | jq -r -c .value)"
@@ -111,6 +112,12 @@ function runCondition(){
             ;;
         'stress')
             echo "screen -L -dmS stress /tmp/P6-A3-207/scripts/conditions.sh stress --type=both" | sshpass -p "$password" ssh "root@$ip" 'bash -s'
+            ;;
+        'ping')
+            target=$(echo "$node" | jq -c -r .target)
+            targetIp="$(echo "$mapping" | jq -c -r ."$target".ip)"
+            period="$(echo "$condition" | jq -r -c .value)"
+            echo "screen -L -dmS ping ping $targetIp -I wlp4s0 -i $period" | sshpass -p "$password" ssh "root@$ip" 'bash -s'
             ;;
     esac
 }
