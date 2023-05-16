@@ -32,6 +32,10 @@ Options marked with an astrisk (*) is the default value, and **all** options are
 
 - `-delay <int>` - Sets the delay between data transfers.   
 
+- `-RTOint <int>` - Sets the delay between syncronization for RTO.   
+
+- `-VKTint <int>` - Sets the delay between syncronization for VKT.   
+
 - `-cwd <string>` - Sets the *Python working directory*, to whatever you've inserted.
    
 
@@ -50,6 +54,8 @@ Options marked with an astrisk (*) is the default value, and **all** options are
   - `wifi` *
   - `5g` 
   - `ethernet`  
+
+- `-GTint <int>` - Sets the delay between syncronization for GT.   
 
 
 ## INSTALL

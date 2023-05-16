@@ -84,6 +84,9 @@ parser.add_argument('-loop', action=argparse.BooleanOptionalAction)
 parser.add_argument('-dev', action=argparse.BooleanOptionalAction)
 parser.add_argument('-v', action=argparse.BooleanOptionalAction)
 parser.add_argument('-delay', type=int, required=False)
+parser.add_argument('-RTOint', type=int, required=False)
+parser.add_argument('-GTint', type=int, required=False)
+parser.add_argument('-VKTint', type=int, required=False)
 parser.add_argument('-cwd', type=str, required=False)
 parser.add_argument('-sync', type=int, required=False, default=0)
 
@@ -100,14 +103,17 @@ portOut = str(args.portOut) if args.portOut else 8888
 # portOut = str(args.portOut) if args.portOut else ips['up2']['port']
 portIn = str(args.portIn) if args.portIn else 8888
 txInterval = int(args.delay) if args.delay else 3
+intervalRTO = int(args.RTOint) if args.RTOint else 30
+intervalGT = int(args.GTint) if args.GTint else 5
+intervalVKT = int(args.VKTint) if args.VKTint else 30
 
 # GT Arguments
 interfaceGT = str(args.gtTech) if args.gtTech else "ethernet"
 ipGT = ips[str(args.gt)][interfaceGT] if args.gt else ips['up2'][interfaceGT]
 
 # SVT Variables
-interfaceSVT = interfaceTarget
-ipSVT = ips['up2'][interfaceSVT]
+interfaceRTO = interfaceTarget
+ipRTO = ips['up2'][interfaceRTO]
 
 # Synchronization mode
 modes = {
@@ -129,8 +135,8 @@ if args.dev:
 if args.loop or args.dev: 
     ipOut = '127.0.0.1'
     interfaceTarget = 'loopback'
-    interfaceSVT = 'wifi'
-    ipSVT = ips['up2'][interfaceSVT]
+    interfaceRTO = 'wifi'
+    ipRTO = ips['up2'][interfaceRTO]
 
 #                End
 #  --  Argument Parsing Setup  --
@@ -146,7 +152,9 @@ if verbose:
     print(f"Set Forward-Node is:  {interfaceTarget}")
     print(f"Set Forward IP is:    {ipOut}")
     print(f"Set Forward Port is:  {portIn}")
-    print(f"Absolute Path is:     {os.getcwd()}\n")
+    print(f"Absolute Path is:     {os.getcwd()}")
+    print(f"GT Sync Interval is:  {intervalGT}")
+    print(f"RTO Sync Interval is: {intervalRTO}\n")
 
 
 #                End

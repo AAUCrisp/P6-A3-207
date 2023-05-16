@@ -114,28 +114,32 @@ class Sensor:
 
 # The main of this program
 if "main" in __name__:
+
     #define a synchronization object for the clock GT
     syncGT = Sync(
         address=ipGT,
         interface=interfaceGT,
-        clock=GT
+        clock=GT,
+        interval = intervalGT
     )
     #start the synchronization thread
     syncGT.start()
 
     syncRTO = Sync(
-        address=ipSVT,
-        interface=interfaceSVT,
-        clock=RTO
+        address=ipRTO,
+        interface=interfaceRTO,
+        clock=RTO,
+        interval = intervalRTO
     )
     syncRTO.start()
 
     #if NTP is desired, then also define and start a VKT synchronization object
     if syncMode == "ntp":
         syncVKT = Sync(
-            address=ipSVT,
-            interface=interfaceSVT,
-            clock=VKT
+            address=ipRTO,
+            interface=interfaceRTO,
+            clock=VKT,
+            interval = intervalVKT
         )
         syncVKT.start()
 

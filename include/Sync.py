@@ -33,7 +33,7 @@ class Sync(threading.Thread):
     ```"""
     lock = threading.Lock()
 
-    def __init__(self, clock:Clock, address = '192.168.1.107', interface='wifi') -> None:
+    def __init__(self, clock:Clock, address = '192.168.1.107', interface='wifi', interval = 30) -> None:
         """```markdown
         
         This is the constructor of this class, it takes 2 parameters
@@ -44,6 +44,7 @@ class Sync(threading.Thread):
         self.address = address
         self.interface = interface
         self.clock = clock
+        self.interval = interval
         super().__init__(daemon=True)
 
     def sync(self):
@@ -65,11 +66,12 @@ class Sync(threading.Thread):
         time.sleep(.1)
 
     def run(self) -> None:
+        print(f"\n\nSync Interval is: {self.interval}\n\n")
         while True:
             Sync.lock.acquire()
             self.clock.set(self.sync())
             Sync.lock.release()
-            time.sleep(30)
+            time.sleep(self.interval)
 
     
 
