@@ -13,5 +13,5 @@ for file in $(ls tests); do
         sshpass -p 123 sftp "$name"@"$ip":/tmp/P6-A3-207/screenlog.0 testdata/"$(basename "$file" .json)"/"$name".log
     done
     cp /tmp/P6-A3-207/include/db.db3 testdata/"$(basename "$file" .json)"/db.db3
-    sleep 120
+    sleep 240
 done
