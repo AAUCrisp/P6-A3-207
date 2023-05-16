@@ -19,18 +19,22 @@ fi
 mapping='{
     "up0":{
         "ip":"10.0.0.12",
+        "pingIp":"192.168.1.61",
         "port":8888
     },
     "up1":{
         "ip":"10.0.0.10",
+        "pingIp":"192.168.1.80",
         "port":8889
     },
     "up2":{
         "ip":"10.0.0.20",
+        "pingIp":"192.168.1.107",
         "port":8890
     },
     "up3":{
         "ip":"10.0.0.30",
+        "pingIp":"192.168.1.251",
         "port":8891
     }
 }'
@@ -115,7 +119,7 @@ function runCondition(){
             ;;
         'ping')
             target=$(echo "$node" | jq -c -r .target)
-            targetIp="$(echo "$mapping" | jq -c -r ."$target".ip)"
+            targetIp="$(echo "$mapping" | jq -c -r ."$target".pingIp)"
             period="$(echo "$condition" | jq -r -c .value)"
             echo "screen -L -dmS ping ping $targetIp -I wlp4s0 -i $period" | sshpass -p "$password" ssh "root@$ip" 'bash -s'
             ;;
