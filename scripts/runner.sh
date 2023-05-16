@@ -207,10 +207,9 @@ done
 
 # wait for a predetermined period as described in the configuration file
 period="$(echo "$config" | jq -c -r .period)"
-printf "Time elapsed: %s\r" "$period"
 
 for i in $(seq -s " " "$period"); do
-    printf "%s\033[14C" "$i"
+    printf "Time elapsed: %s\r" "$i"
     sleep 1
 done
 
