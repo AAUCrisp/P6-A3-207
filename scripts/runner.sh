@@ -207,10 +207,10 @@ done
 
 # wait for a predetermined period as described in the configuration file
 period="$(echo "$config" | jq -c -r .period)"
-printf "Sleeping for %s seconds...\033[12D" "$period"
+printf "Time elapsed: %s\r" "$period"
 
 for i in $(seq -s " " "$period"); do
-    printf "%s\033[D" "$i"
+    printf "%s\033[14C" "$i"
     sleep 1
 done
 
@@ -296,7 +296,7 @@ for node in ${nodes[*]}; do
                 sshpass -p "$password" ssh "$name@$ip" "screen -S limit -X \# stuff $'\003'"
                 ;;
             "ping")
-                sshpass -p "$password" sftp "root@$ip":/root/screenlog.0 data/"$runName"/"$username"_ping.log
+                sshpass -p "$password" sftp "root@$ip":/root/screenlog.0 data/"$runName"/"$name"_ping.log
                 sshpass -p "$password" ssh "root@$ip" "screen -S ping -X \# stuff $'\003'"
                 ;;
             "stress")
