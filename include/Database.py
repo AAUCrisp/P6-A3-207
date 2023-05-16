@@ -143,7 +143,8 @@ class Database():
             LIMIT {config['limit']}"""
 
 
-        print(f"\nSQL Statement is:{sql}\n\n")
+        if verbose:
+            print(f"\nSQL Statement is:{sql}\n\n")
         self.cur.execute(sql)
         # print("Efter Execute")
         rows = self.cur.fetchall()
@@ -195,8 +196,8 @@ class Database():
 
 
         sensorData = self.fetch('Node', sensorParams)
-
-        print(f"\n\n________________\nFetched Sensor Data BEFORE CHECK is:\n    {sensorData}\n________________\n")
+        if verbose:
+            print(f"\n\n________________\nFetched Sensor Data BEFORE CHECK is:\n    {sensorData}\n________________\n")
 
         # if sensorData[0]['sensorId'] == None:
         if 'sensorId' in sensorData[0] and sensorData[0]['sensorId'] == None:
@@ -212,7 +213,8 @@ class Database():
 
             sensorData = self.fetch('Node', newNodeParams)
 
-        print(f"Fetched Sensor Data AFTER CHECK is:\n    {sensorData}\n________________\n\n")
+        if verbose:
+            print(f"Fetched Sensor Data AFTER CHECK is:\n    {sensorData}\n________________\n\n")
 
         return sensorData
 
@@ -266,7 +268,8 @@ class Database():
     ######################################
     #  --  General Insert function  --
     def insert(self, table, params):
-        print("\n\n  NEW INSERT  \nInside DB Insert\n")
+        if verbose:
+            print("\n\n  NEW INSERT  \nInside DB Insert\n")
         # print("Inside DB Insert")
 
         self.con = sqlite3.connect(self.filePath, detect_types=sqlite3.PARSE_COLNAMES | sqlite3.PARSE_DECLTYPES)    # Create connection to DB file
@@ -296,8 +299,9 @@ class Database():
 
 
 
-        print(f"\n\nParams in Insert is: {params}\n")
-        # print(f"Param Array Depth is: {depth}")
+        if verbose:
+            print(f"\n\nParams in Insert is: {params}\n")
+            # print(f"Param Array Depth is: {depth}")
 
 
         for i, key in enumerate(params):
@@ -326,14 +330,16 @@ class Database():
             # RETURNING 'id'"""
 
 
-        print(f"\nSQL Statement is:{sql}\n\n")
+        if verbose:
+            print(f"\nSQL Statement is:{sql}\n\n")
         self.cur.execute(sql)
         self.con.commit()
 
         # lastRow = self.cur.lastrowid()
 
-        print(f"Inserted at row in {table} table: {self.cur.lastrowid}")
-        # print(f"Inserted at row in {table} table: {lastRow}")
+        if verbose:
+            (f"Inserted at row in {table} table: {self.cur.lastrowid}")
+            # print(f"Inserted at row in {table} table: {lastRow}")
 
         return self.cur.lastrowid
         return lastRow
@@ -354,9 +360,10 @@ class Database():
         newGT = False
 
 
-        print("Full NodeData is:")
-        for i in range(len(nodeData)):
-            print(nodeData[i])
+        if verbose:
+            print("Full NodeData is:")
+            for i in range(len(nodeData)):
+                print(nodeData[i])
 
 
         for i, frame in enumerate(nodeData):
@@ -402,7 +409,8 @@ class Database():
                 if 'lastTxId' in sensorFetch:
                     oldTransfers.append(sensorFetch['lastTxId'])
 
-                print(f"Fetched Node-info is:\n    {sensorFetch}")
+                if verbose:
+                    print(f"Fetched Node-info is:\n    {sensorFetch}")
 
                 # global interfaceTarget
 
@@ -426,7 +434,8 @@ class Database():
 
 
         piggyCount = len(payloadFrames) - 1
-        print(f"Piggy count is: {piggyCount}")
+        if verbose:
+            print(f"Piggy count is: {piggyCount}")
 
         headendParams = {
             'nodeId': [],
@@ -448,7 +457,8 @@ class Database():
         ##  --  Run over each node-jump
         for i, newFrame in enumerate(newHeadInput):            
 
-            print(f"New Frame in Second Insert Loop is:\n    {newFrame}")
+            if verbose:
+                print(f"New Frame in Second Insert Loop is:\n    {newFrame}")
             ##  -- Start by updating the last transfer with the new delays
             if len(oldTransfers) > 0:
 
@@ -456,24 +466,28 @@ class Database():
 
                 if len(oldHeadendData) > 0:
                     oldHeadendData.reverse()
-                    print(f"""\n\nOld Headend Data is Found\n    Update Data (oldDelays) is:""")
-                    for j in range(len(oldDelays)):
-                        print(oldDelays[j])
+                    if verbose:
+                        print(f"""\n\nOld Headend Data is Found\n    Update Data (oldDelays) is:""")
+                        for j in range(len(oldDelays)):
+                            print(oldDelays[j])
 
-                    print(f"""\n    Old Headend Data (oldHeadendData) is:""")
-                    for j in range(len(oldHeadendData)):
-                        print(oldHeadendData[j])
+                        print(f"""\n    Old Headend Data (oldHeadendData) is:""")
+                        for j in range(len(oldHeadendData)):
+                            print(oldHeadendData[j])
 
-                    print(f"""\n\n    New Headend Input Data is:""")
-                    for j in range(len(newHeadInput)):
-                        print(newHeadInput[j])
+                        print(f"""\n\n    New Headend Input Data is:""")
+                    
+                        for j in range(len(newHeadInput)):
+                            print(newHeadInput[j])
 
                     if 'RTO' not in newFrame:
-                        print(f"\n\nAdding old Offset, as there isn't a new one\n\n")
+                        if verbose:
+                            print(f"\n\nAdding old Offset, as there isn't a new one\n\n")
                         newHeadInput[i].__setitem__('RTO', oldHeadendData[i]['RTO'])
 
                     if 'GT' not in newFrame:
-                        print(f"\n\nAdding old Offset, as there isn't a new one\n\n")
+                        if verbose:
+                            print(f"\n\nAdding old Offset, as there isn't a new one\n\n")
                         newHeadInput[i].__setitem__('GT', oldHeadendData[i]['GT'])
 
 
@@ -495,11 +509,13 @@ class Database():
                     oldTransfers.pop
 
                 else:
-                    print(f"No old Headend data found.\n")
+                    if verbose:
+                        print(f"No old Headend data found.\n")
                     newHeadInput[i].__setitem__('RTO', 0)
                     newHeadInput[i].__setitem__('GT', 0)
 
-            print(f"Payload Frames are: {payloadFrames}")
+            if verbose:
+                print(f"Payload Frames are: {payloadFrames}")
 
 
 
@@ -526,11 +542,12 @@ class Database():
 
         # sensorInfo['txId'].pop(0)
 
-        if dict_depth(sensorInfo['txId']) > 1:
+        if dict_depth(sensorInfo['txId']) > 1 and verbose:
             print(f"Insert the piggyback ones also")
 
-        print(f"\n__________________________\nNewTxId is: {sensorInfo['txId']}")
-        print(f"Headend Parameters is: {headendParams}")
+        if verbose:
+            print(f"\n__________________________\nNewTxId is: {sensorInfo['txId']}")
+            print(f"Headend Parameters is: {headendParams}")
 
 
 
@@ -570,11 +587,11 @@ class Database():
         self.con.row_factory = self.dict_factory
         self.cur = self.con.cursor()
 
-        print(f"Params in Update is:")
+        if verbose:
+            print(f"Params in Update is:")
 
-        for i, key in enumerate(params):
-
-            print(f"{params[key]}")
+            for i, key in enumerate(params):
+                print(f"{params[key]}")
 
         sql = f"""
             UPDATE '{table}'
@@ -604,7 +621,8 @@ class Database():
 
 
 
-        print(f"\nSQL Statement is:{sql}\n\n")
+        if verbose:
+            print(f"\nSQL Statement is:{sql}\n\n")
         self.cur.execute(sql)
         self.con.commit()
 
