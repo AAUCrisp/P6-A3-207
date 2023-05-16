@@ -66,7 +66,6 @@ class Sync(threading.Thread):
         time.sleep(.1)
 
     def run(self) -> None:
-        print(f"\n\nSync Interval is: {self.interval}\n\n")
         while True:
             Sync.lock.acquire()
             self.clock.set(self.sync())

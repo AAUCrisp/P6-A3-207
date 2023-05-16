@@ -144,7 +144,7 @@ if "main" in __name__:
         syncVKT.start()
 
     # create a sensor object with the headend address as an argument
-    sensor = Sensor(interfaceTarget)
+    sensor = Sensor(interfaceTarget, lambda: payload)
     # run the sensor
     sensor.run()
     

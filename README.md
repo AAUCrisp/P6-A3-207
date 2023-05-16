@@ -5,6 +5,7 @@
 Arguments able to call when running the programs.  
 Options marked with an astrisk (*) is the default value, and **all** options are non-mandatory.
 
+- `-payload <string>` - Payload you want to be the sensor data.  
 - `-target <string>` - Enter the name of the node to transfer to, options are:
   - `up0`
   - `up1`

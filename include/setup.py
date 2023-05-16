@@ -74,6 +74,7 @@ ips = {
 #               Start
 
 parser = argparse.ArgumentParser()
+parser.add_argument('-payload', type=str, required=False)
 parser.add_argument('-target', type=str, required=False)
 parser.add_argument('-tech', type=str, required=False)
 parser.add_argument('-portOut', type=int, required=False)
@@ -97,6 +98,7 @@ argsMsg = ' - Arguments Inserted' if len(sys.argv) > 1 else " - Program running 
 print(argsMsg)
 
 # General System Arguments
+payload = str(args.payload) if args.payload else 'some data2'
 interfaceTarget = str(args.tech) if args.tech else 'wifi'
 ipOut = ips[str(args.target)][interfaceTarget] if args.target else ips['up2'][interfaceTarget]
 portOut = str(args.portOut) if args.portOut else 8888
@@ -147,6 +149,7 @@ if args.loop or args.dev:
 
 
 if verbose:
+    print(f"Set Payload is:       {payload}")
     print(f"Set GT Interface is:  {interfaceGT}")
     print(f"Set GT IP is:         {ipGT}")
     print(f"Set Forward-Node is:  {interfaceTarget}")
