@@ -257,6 +257,33 @@ class Database():
         result = self.fetch('PayloadToHeadend', params)
 
         return result
+    
+
+    def fetchPlotDelays(self, nodeId):
+
+        params = { 
+            'select': 'PayloadTransfer.combinedDelay, TransferJump.RTO, TransferJump.GT',
+            # 'select': {
+            #     "PayloadToHeadend.jumpId",
+            #     "TransferJump.startTime",
+            #     "TransferJump.startTimeGT"
+            # },
+            'where': {
+                'PayloadTransfer.sensorId': nodeId
+                },
+            'join':{
+                'PayloadTransfer': 'PayloadToHeadend.payloadId=PayloadTransfer.id',
+                'TransferJump': 'PayloadToHeadend.jumpId=TransferJump.id'
+                },
+            # 'order': {
+            #     'PayloadTransfer.id': 'DESC'
+            #     },
+            # 'limit': 1
+            }
+        
+        result = self.fetch('PayloadToHeadend', params)
+
+        return result
 
 
 
@@ -639,55 +666,58 @@ if __name__ == "__main__":
     db = Database("db.db3")
 
 
+    db.fetchPlotDelays(6)
+
+
     ################################
     ##  --  Frame Building  --
 
     ############################
     ##  Sensor Frame (IP0)
 
-    frame = "12.34" + SEP + "23.45" + SEP + "34.56" + OFF + "-98.76" + OFF + "-87.65" +  SEP + "Random Sensor Data"
-    frame = "12.34" + SEP + "23.45" + SEP + "34.56" + OFF + "-98.76" + OFF + "-87.65" +  EON + "Random Sensor Data"
-    # - This from UP0
-    ############################
+    # frame = "12.34" + SEP + "23.45" + SEP + "34.56" + OFF + "-98.76" + OFF + "-87.65" +  SEP + "Random Sensor Data"
+    # frame = "12.34" + SEP + "23.45" + SEP + "34.56" + OFF + "-98.76" + OFF + "-87.65" +  EON + "Random Sensor Data"
+    # # - This from UP0
+    # ############################
 
-    dataframe = ProcessData()
-
-
-    ##  First Headend Frame (UP1)
-    dataframe.setDataTime("45.67")
-    dataframe.setTxTime("56.78")
-    dataframe.setPostTxTime("67.89")
-    dataframe.setPayload(frame)
-    dataframe.setReceivedIP("10.31.0.102")  # UP0 IP
-    dataframe.setPiggy("Piglet?")
-    # - This from UP1
-
-    packet = dataframe.buildHeadendFrame()
+    # dataframe = ProcessData()
 
 
-    # print(f"Simulated Headend Packet is: ")
-    # frPrint(packet)
+    # ##  First Headend Frame (UP1)
+    # dataframe.setDataTime("45.67")
+    # dataframe.setTxTime("56.78")
+    # dataframe.setPostTxTime("67.89")
+    # dataframe.setPayload(frame)
+    # dataframe.setReceivedIP("10.31.0.102")  # UP0 IP
+    # dataframe.setPiggy("Piglet?")
+    # # - This from UP1
+
+    # packet = dataframe.buildHeadendFrame()
+
+
+    # # print(f"Simulated Headend Packet is: ")
+    # # frPrint(packet)
 
    
-    ##  Second Headend Frame (Localhost)
-    dataframe.setDataTime("78.90")
-    dataframe.setTxTime("89.01")
-    dataframe.setPostTxTime("90.12")
-    dataframe.setPayload(packet)
-    dataframe.setReceivedIP("10.31.0.13")
-    dataframe.setPiggy("Ms.Piggy?")
+    # ##  Second Headend Frame (Localhost)
+    # dataframe.setDataTime("78.90")
+    # dataframe.setTxTime("89.01")
+    # dataframe.setPostTxTime("90.12")
+    # dataframe.setPayload(packet)
+    # dataframe.setReceivedIP("10.31.0.13")
+    # dataframe.setPiggy("Ms.Piggy?")
 
-    doubet = dataframe.buildHeadendFrame()
+    # doubet = dataframe.buildHeadendFrame()
 
-    print(f"Simulated Headend Packet is: ")
-    frPrint(doubet)
-    # print(doubet.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")))
+    # print(f"Simulated Headend Packet is: ")
+    # frPrint(doubet)
+    # # print(doubet.replace(SEP, green(" | ")).replace(PB, blue(" | ")).replace(EON, magenta(" | ")))
 
-    recvIP = "127.0.0.1"
-    recvTime = "109.87"
+    # recvIP = "127.0.0.1"
+    # recvTime = "109.87"
 
 
-    # unpack(packet, recvIP, recvTime)
-    # unpack(doubet, recvIP, recvTime)
+    # # unpack(packet, recvIP, recvTime)
+    # # unpack(doubet, recvIP, recvTime)
 
 
