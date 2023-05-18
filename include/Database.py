@@ -260,7 +260,6 @@ class Database():
     
 
     def fetchPlotDelays(self, nodeId):
-        print(self.filePath)
 
         params = { 
             'select': 'PayloadTransfer.combinedDelay, TransferJump.RTO, TransferJump.GT',
