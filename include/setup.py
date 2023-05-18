@@ -104,10 +104,10 @@ ipOut = ips[str(args.target)][interfaceTarget] if args.target else ips['up2'][in
 portOut = str(args.portOut) if args.portOut else 8888
 # portOut = str(args.portOut) if args.portOut else ips['up2']['port']
 portIn = str(args.portIn) if args.portIn else 8888
-txInterval = int(args.delay) if args.delay else 3
-intervalRTO = int(args.RTOint) if args.RTOint else 30
-intervalGT = int(args.GTint) if args.GTint else 5
-intervalVKT = int(args.VKTint) if args.VKTint else 30
+txInterval = int(args.delay) if not args.delay == None  else 3
+intervalRTO = int(args.RTOint) if not args.RTOint == None else 30
+intervalGT = int(args.GTint) if not args.GTint == None else 5
+intervalVKT = int(args.VKTint) if not args.VKTint == None else 30
 
 # GT Arguments
 interfaceGT = str(args.gtTech) if args.gtTech else "ethernet"
