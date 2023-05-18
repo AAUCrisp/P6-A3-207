@@ -98,7 +98,7 @@ class Sensor:
 
                     if not self.network.running: return unhide()
                     # Sleep to preserve system resources
-                    sleep(1)
+                    #sleep(1)
                 if verbose:
                     print(f'{UP*7}', end="")
                 # Let synhronization have a chance to take the lock

@@ -99,8 +99,8 @@ class headendlistener:
                     print(f"______________________________________\n")
 
 
-                else:
-                    sleep(1)
+                #else:
+                    #sleep(1)
         except KeyboardInterrupt:
             print("\rClosing network, please don't keyboardinterrupt again...")
 
