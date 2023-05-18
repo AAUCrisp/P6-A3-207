@@ -269,7 +269,7 @@ class Database():
             #     "TransferJump.startTimeGT"
             # },
             'where': {
-                'PayloadTransfer.sensorId': nodeId
+                'TransferJump.nodeId': nodeId
                 },
             'join':{
                 'PayloadTransfer': 'PayloadToHeadend.payloadId=PayloadTransfer.id',
