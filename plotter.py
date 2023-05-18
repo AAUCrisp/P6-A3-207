@@ -31,32 +31,42 @@ datarate2kb_s2pings = "data/datarate2kbps/up3_ping.log"
 datarate2kb_hpings = "data/datarate2kbps/up0_ping.log"
 
 transferInterval3_db = "data/syncInterval_30/database.db3"
-transferInterval10_db = "data/datarate1kbps/database.db3"
-transferInterval30_db = "data/datarate2kbps/database.db3"
+transferInterval10_db = "data/transferInterval10/database.db3"
+transferInterval30_db = "data/transferInterval30/database.db3"
 transferInterval3_s1pings = "data/syncInterval_30/up1_ping.log"
 transferInterval3_s2pings = "data/syncInterval_30/up3_ping.log"
 transferInterval3_hpings = "data/syncInterval_30/up0_ping.log"
-transferInterval10_s1pings = "data/datarate1kbps/up1_ping.log"
-transferInterval10_s2pings = "data/datarate1kbps/up3_ping.log"
-transferInterval10_hpings = "data/datarate1kbps/up0_ping.log"
-transferInterval30_s1pings = "data/datarate2kbps/up1_ping.log"
-transferInterval30_s2pings = "data/datarate2kbps/up3_ping.log"
-transferInterval30_hpings = "data/datarate2kbps/up0_ping.log"
+transferInterval10_s1pings = "data/transferInterval10/up1_ping.log"
+transferInterval10_s2pings = "data/transferInterval10/up3_ping.log"
+transferInterval10_hpings = "data/transferInterval10/up0_ping.log"
+transferInterval30_s1pings = "data/transferInterval30/up1_ping.log"
+transferInterval30_s2pings = "data/transferInterval30/up3_ping.log"
+transferInterval30_hpings = "data/transferInterval30/up0_ping.log"
 
-syncInterval3_db = "data/syncInterval_30/database.db3"
-syncInterval10_db = "data/datarate1kbps/database.db3"
-syncInterval30_db = "data/datarate2kbps/database.db3"
-syncInterval3_s1pings = "data/syncInterval_30/up1_ping.log"
-syncInterval3_s2pings = "data/syncInterval_30/up3_ping.log"
-syncInterval3_hpings = "data/syncInterval_30/up0_ping.log"
-syncInterval10_s1pings = "data/datarate1kbps/up1_ping.log"
-syncInterval10_s2pings = "data/datarate1kbps/up3_ping.log"
-syncInterval10_hpings = "data/datarate1kbps/up0_ping.log"
-syncInterval30_s1pings = "data/datarate2kbps/up1_ping.log"
-syncInterval30_s2pings = "data/datarate2kbps/up3_ping.log"
-syncInterval30_hpings = "data/datarate2kbps/up0_ping.log"
+syncInterval30_db = "data/syncInterval_30/database.db3"
+syncInterval15_db = "data/syncInterval_15/database.db3"
+syncInterval3_db = "data/syncInterval_3/database.db3"
+syncInterval30_s1pings = "data/syncInterval_30/up1_ping.log"
+syncInterval30_s2pings = "data/syncInterval_30/up3_ping.log"
+syncInterval30_hpings = "data/syncInterval_30/up0_ping.log"
+syncInterval15_s1pings = "data/syncInterval_15/up1_ping.log"
+syncInterval15_s2pings = "data/syncInterval_15/up3_ping.log"
+syncInterval15_hpings = "data/syncInterval_15/up0_ping.log"
+syncInterval3_s1pings = "data/syncInterval_3/up1_ping.log"
+syncInterval3_s2pings = "data/syncInterval_3/up3_ping.log"
+syncInterval3_hpings = "data/syncInterval_3/up0_ping.log"
 
-def plotSensorDelay(dbs:list[str], pings:list[list[str]], xvalues:list[int], sensorId:int, title):
+payload10 = "data/syncInterval_30"
+payload100 = "data/payload100"
+payload1000 = "data/payload1000"
+datarateU = "data/syncInterval"
+datarate1kb = "data/datarate1kbps"
+datarate2kb = "data/datarate2kbps"
+transferInterval3 = "data/syncInterval_30"
+transferInterval10 = "data/transferInterval"
+
+
+def plotSensorDelay(dbs:list[str], pings:list[list[str]], xvalues:list[int], sensorId:int, title, xlabel):
     #delays = {x:[obj["combinedDelay"] for obj in loads(co(f"sqlite3 {db} 'select combinedDelay from PayloadTransfer where sensorId = {sensorId}' -json", shell=True).decode())] for db, x in zip(dbs, xvalues)}
     #rtos = {x:[obj["RTO"] for obj in loads(co(f"sqlite3 {db} 'select RTO from TransferJump where nodeId = {sensorId}' -json", shell=True).decode())] for db, x in zip(dbs, xvalues)}
     #gts = {x:[obj["GT"] for obj in loads(co(f"sqlite3 {db} 'select GT from TransferJump where nodeId = {sensorId}' -json", shell=True).decode())] for db, x in zip(dbs, xvalues)}
@@ -100,23 +110,24 @@ def plotSensorDelay(dbs:list[str], pings:list[list[str]], xvalues:list[int], sen
 
     # do plots
     fig, ax = plt.subplots()
-    ax.plot(xvalues, avgRTODelays, 'b', label=f"avg RTO delay")
-    ax.plot(xvalues, avgGTDelays, 'r', label=f"avg GT delay")
-    ax.plot(xvalues, pingValues, 'y', label="Ping delay")
+    ax.plot(xvalues, avgRTODelays, 'b', label=f"avg RTO delay", marker="o")
+    ax.plot(xvalues, avgGTDelays, 'r', label=f"avg GT delay", marker="o")
+    ax.plot(xvalues, pingValues, 'y', label="Ping delay", marker="o")
     fig.suptitle(f"{title}: sensor {1 if sensorId == 2 else 2}")
     ax.set_ylabel("ms")
+    ax.set_xlabel(xlabel)
     ax.legend(loc="best")
 
 
-plotSensorDelay([payload10_db, payload100_db, payload1000_db], [[payload10_s1pings, payload10_hpings], [payload100_s1pings, payload100_hpings], [payload1000_s1pings, payload1000_hpings]], [10,100,1000], 2, "payload")
-plotSensorDelay([payload10_db, payload100_db, payload1000_db], [[payload10_s2pings], [payload100_s2pings], [payload1000_s2pings]], [10,100,1000], 4, "payload")
+plotSensorDelay([payload10_db, payload100_db, payload1000_db], [[payload10_s1pings, payload10_hpings], [payload100_s1pings, payload100_hpings], [payload1000_s1pings, payload1000_hpings]], [10,100,1000], 2, "payload", "Payload Size")
+plotSensorDelay([payload10_db, payload100_db, payload1000_db], [[payload10_s2pings], [payload100_s2pings], [payload1000_s2pings]], [10,100,1000], 4, "payload", "Payload Size")
 
-plotSensorDelay([datarateU_db, datarate1kb_db, datarate2kb_db], [[datarateU_s1pings, datarateU_hpings], [datarate1kb_s1pings, datarate1kb_hpings], [datarate1kb_s2pings, datarate1kb_hpings]], [0, 1, 2], 2, "datarate")
-plotSensorDelay([datarateU_db, datarate1kb_db, datarate2kb_db], [[datarateU_s2pings], [datarate1kb_s2pings], [datarate2kb_s2pings]], [0, 1, 2], 4, "datarate")
+plotSensorDelay([datarateU_db, datarate1kb_db, datarate2kb_db], [[datarateU_s1pings, datarateU_hpings], [datarate1kb_s1pings, datarate1kb_hpings], [datarate1kb_s2pings, datarate1kb_hpings]], [0, 1, 2], 2, "datarate", "kbps")
+plotSensorDelay([datarateU_db, datarate1kb_db, datarate2kb_db], [[datarateU_s2pings], [datarate1kb_s2pings], [datarate2kb_s2pings]], [0, 1, 2], 4, "datarate", "kbps")
 
-plotSensorDelay([syncInterval3_db, syncInterval10_db, syncInterval30_db], [[syncInterval3_s1pings, syncInterval3_hpings], [syncInterval10_s1pings, syncInterval10_hpings], [syncInterval30_s1pings, syncInterval30_hpings]], [3, 10, 30], 2, "transferInterval")
-plotSensorDelay([syncInterval3_db, syncInterval10_db, syncInterval30_db], [[syncInterval3_s2pings], [syncInterval10_s2pings], [syncInterval30_s2pings]], [3, 10, 30], 4, "syncInterval")
+plotSensorDelay([syncInterval3_db, syncInterval15_db, syncInterval30_db], [[syncInterval3_s1pings, syncInterval3_hpings], [syncInterval15_s1pings, syncInterval15_hpings], [syncInterval30_s1pings, syncInterval30_hpings]], [3, 15, 30], 2, "syncInterval", "RTO Sync interval (s)")
+plotSensorDelay([syncInterval3_db, syncInterval15_db, syncInterval30_db], [[syncInterval3_s2pings], [syncInterval15_s2pings], [syncInterval30_s2pings]], [3, 15, 30], 4, "syncInterval", "RTO Sync interval (s)")
 
-plotSensorDelay([transferInterval3_db, transferInterval10_db, transferInterval30_db], [[transferInterval3_s1pings, transferInterval3_hpings], [transferInterval10_s1pings, transferInterval10_hpings], [transferInterval30_s1pings, transferInterval30_hpings]], [3, 10, 30], 2, "transferInterval")
-plotSensorDelay([transferInterval3_db, transferInterval10_db, transferInterval30_db], [[transferInterval3_s2pings], [transferInterval10_s2pings], [transferInterval30_s2pings]], [3, 10, 30], 4, "transferInterval")
+plotSensorDelay([transferInterval3_db, transferInterval10_db, transferInterval30_db], [[transferInterval3_s1pings, transferInterval3_hpings], [transferInterval10_s1pings, transferInterval10_hpings], [transferInterval30_s1pings, transferInterval30_hpings]], [3, 10, 30], 2, "transferInterval", "sensor transfer interval (s)")
+plotSensorDelay([transferInterval3_db, transferInterval10_db, transferInterval30_db], [[transferInterval3_s2pings], [transferInterval10_s2pings], [transferInterval30_s2pings]], [3, 10, 30], 4, "transferInterval", "sensor transfer interval (s)")
 plt.show()
