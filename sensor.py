@@ -27,6 +27,7 @@ class Sensor:
         # Connect to the address passed to the constructor
         # self.network.connect(addr[0], addr[1])
         self.network.connect(ipOut, int(portOut))
+        Thread(target=self.printThread, daemon=True).start()
     
     def run(self):
         """This method runs the sensor program, it will send data using the network every <txInterval> seconds"""
@@ -38,7 +39,7 @@ class Sensor:
             # set default values for some post processing data
             txTime = -1
             postTxTime = -1
-            sent = 0
+            self.sent = 0
             RTOdifference = None
             GTdifference = None
 
@@ -76,34 +77,14 @@ class Sensor:
                 postTxTime = VKT.get()
 
                 # Define when the next packet should be transmitted
-                sleepEnd = VKT.get() + txInterval
+                self.sleepEnd = VKT.get() + txInterval
                 # Increment a value to keep track of time
-                sent = sent+1
-
-                # A while loop that runs while the sensor should not be transmitting
-                if verbose:
-                    print(f'{UP}{"_"*50}')
-                    for label, field in zip(
-                        ["dataTime", "txTime", "postTxTime", "payload", "GT", "RTO"],
-                        [dataframe.startTime, dataframe.txTime, dataframe.postTxTime, dataframe.payload, dataframe.GT, dataframe.RTO]):
-                        print(f'{label}:\r\t\t{green(field)}{CLEAR}')
-                    print()
+                self.sent += 1
+                self.lastDataframe = dataframe
+                sleep(txInterval)
                     
                 if not self.network.running: return unhide()
 
-                while sleepEnd > VKT.get():
-                    # Define a countdown until this while loop should end
-                    countdown = int(sleepEnd-VKT.get()+1)
-                    # Print a formatted string with the aforementioned count of sent data, and a countdown to the next transmission
-
-                    print(f"{UP}Transfers: {green(sent)}   Next transfer in: {green(countdown)}")
-
-                    if not self.network.running: return unhide()
-                    # Sleep to preserve system resources
-                    #sleep(1)
-                if verbose:
-                    print(f'{UP*7}', end="")
-                # Let synhronization have a chance to take the lock
                 Sync.resume()
 
         # Catch keyboardinterrupts to exit the program
@@ -111,6 +92,19 @@ class Sensor:
             # show the cursor again
             unhide()
             self.network.close()
+
+    def printThread(self):
+        while self.network.running:
+            sleep(1)
+            if verbose:
+                print(f'{UP}{"_"*50}')
+                for label, field in zip(
+                    ["dataTime", "txTime", "postTxTime", "payload", "GT", "RTO"],
+                    [self.lastDataframe.startTime, self.lastDataframe.txTime, self.lastDataframe.postTxTime, self.lastDataframe.payload, self.lastDataframe.GT, self.lastDataframe.RTO]):
+                    print(f'{label}:\r\t\t{green(field)}{CLEAR}')
+                print()
+            countdown = int(self.sleepEnd-VKT.get()+1)
+            print(f"{UP}Transfers: {green(self.sent)}   Next transfer in: {green(countdown)}")
 
 
 

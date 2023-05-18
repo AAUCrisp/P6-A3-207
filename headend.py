@@ -38,7 +38,6 @@ class headendlistener:
         try:
             while True:
                 QueueSize =  self.net.data.qsize() #get size of packet queue
-                print("Queue Size: %d"%QueueSize)
                 #if self.net.data.qsize() > 0:
                 if QueueSize > 0: #if quee isn't empty, then pop first item
                     data = self.net.popData()
