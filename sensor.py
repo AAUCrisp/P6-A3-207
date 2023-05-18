@@ -97,6 +97,7 @@ class Sensor:
         lastPrintedDataframe = None
         while self.network.running:
             sleep(1)
+            countdown = int(self.sleepEnd-VKT.get()+1)
             print(f"{UP}Transfers: {green(self.sent)}   Next transfer in: {green(countdown)}")
             if verbose:
                 if not self.lastDataframe == lastPrintedDataframe:
@@ -108,7 +109,6 @@ class Sensor:
                         [self.lastDataframe.startTime, self.lastDataframe.txTime, self.lastDataframe.postTxTime, self.lastDataframe.payload, self.lastDataframe.GT, self.lastDataframe.RTO]):
                         print(f'{label}:\r\t\t{green(field)}{CLEAR}')
                     print()
-            countdown = int(self.sleepEnd-VKT.get()+1)
 
 
 

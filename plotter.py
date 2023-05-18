@@ -56,6 +56,8 @@ syncInterval3_s1pings = "data/syncInterval_3/up1_ping.log"
 syncInterval3_s2pings = "data/syncInterval_3/up3_ping.log"
 syncInterval3_hpings = "data/syncInterval_3/up0_ping.log"
 
+basedb = "data/baseCase60/database.db3"
+
 payload10 = "data/syncInterval_30"
 payload100 = "data/payload100"
 payload1000 = "data/payload1000"
@@ -112,7 +114,8 @@ def plotSensorDelay(dbs:list[str], pings:list[list[str]], xvalues:list[int], sen
     fig, ax = plt.subplots()
     ax.plot(xvalues, avgRTODelays, 'b', label=f"avg RTO delay", marker="o")
     ax.plot(xvalues, avgGTDelays, 'r', label=f"avg GT delay", marker="o")
-    ax.plot(xvalues, pingValues, 'y', label="Ping delay", marker="o")
+    if pingValues:
+        ax.plot(xvalues, pingValues, 'y', label="Ping delay", marker="o")
     fig.suptitle(f"{title}: sensor {1 if sensorId == 2 else 2}")
     ax.set_ylabel("ms")
     ax.set_xlabel(xlabel)
@@ -130,4 +133,7 @@ plotSensorDelay([syncInterval3_db, syncInterval15_db, syncInterval30_db], [[sync
 
 plotSensorDelay([transferInterval3_db, transferInterval10_db, transferInterval30_db], [[transferInterval3_s1pings, transferInterval3_hpings], [transferInterval10_s1pings, transferInterval10_hpings], [transferInterval30_s1pings, transferInterval30_hpings]], [3, 10, 30], 2, "transferInterval", "sensor transfer interval (s)")
 plotSensorDelay([transferInterval3_db, transferInterval10_db, transferInterval30_db], [[transferInterval3_s2pings], [transferInterval10_s2pings], [transferInterval30_s2pings]], [3, 10, 30], 4, "transferInterval", "sensor transfer interval (s)")
+
+plotSensorDelay([basedb], [], [1], 2, "base case", "")
+plotSensorDelay([basedb], [], [1], 4, "base case", "")
 plt.show()
