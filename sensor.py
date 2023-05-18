@@ -100,6 +100,7 @@ class Sensor:
             if verbose:
                 if not self.lastDataframe == lastPrintedDataframe:
                     lastPrintedDataframe = self.lastDataframe
+                    print(f'{UP*7}', end="")
                     print(f'{UP}{"_"*50}')
                     for label, field in zip(
                         ["dataTime", "txTime", "postTxTime", "payload", "GT", "RTO"],
