@@ -67,6 +67,7 @@ if [ "$topology" == "" ]; then
 fi
 
 syncInterval="$(echo "$config" | jq -r -c .syncInterval)"
+transferInterval="$(echo "$config" | jq -r -c .transferInterval)"
 
 function runNode(){
     # Extract node name
@@ -102,7 +103,7 @@ function runNode(){
         cp include/db_empty.db3 include/db.db3
         screen -L -dmS node " # VERY IMPORTANT: this string has to end on this line with a space otherwise the parsed command will fail
 
-    echo "$setupCmd $cmd ${args[*]} -RTOint $syncInterval" | sshpass -p "$password" ssh "$username@$ip" 'bash -s'
+    echo "$setupCmd $cmd ${args[*]} -RTOint $syncInterval -delay $transferInterval" | sshpass -p "$password" ssh "$username@$ip" 'bash -s'
 }
 
 function runCondition(){
