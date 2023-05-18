@@ -97,12 +97,14 @@ class Sensor:
         while self.network.running:
             sleep(1)
             if verbose:
-                print(f'{UP}{"_"*50}')
-                for label, field in zip(
-                    ["dataTime", "txTime", "postTxTime", "payload", "GT", "RTO"],
-                    [self.lastDataframe.startTime, self.lastDataframe.txTime, self.lastDataframe.postTxTime, self.lastDataframe.payload, self.lastDataframe.GT, self.lastDataframe.RTO]):
-                    print(f'{label}:\r\t\t{green(field)}{CLEAR}')
-                print()
+                if not self.lastDataframe == lastPrintedDataframe:
+                    lastPrintedDataframe = self.lastDataframe
+                    print(f'{UP}{"_"*50}')
+                    for label, field in zip(
+                        ["dataTime", "txTime", "postTxTime", "payload", "GT", "RTO"],
+                        [self.lastDataframe.startTime, self.lastDataframe.txTime, self.lastDataframe.postTxTime, self.lastDataframe.payload, self.lastDataframe.GT, self.lastDataframe.RTO]):
+                        print(f'{label}:\r\t\t{green(field)}{CLEAR}')
+                    print()
             countdown = int(self.sleepEnd-VKT.get()+1)
             print(f"{UP}Transfers: {green(self.sent)}   Next transfer in: {green(countdown)}")
 
