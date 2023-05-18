@@ -95,6 +95,7 @@ class Sensor:
 
     def printThread(self):
         lastPrintedDataframe = None
+        print("\n"*6)
         while self.network.running:
             sleep(1)
             countdown = int(self.sleepEnd-VKT.get()+1)
