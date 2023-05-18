@@ -94,6 +94,7 @@ class Sensor:
             self.network.close()
 
     def printThread(self):
+        lastPrintedDataframe = None
         while self.network.running:
             sleep(1)
             if verbose:
