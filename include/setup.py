@@ -91,7 +91,7 @@ parser.add_argument('-VKTint', type=int, required=False)
 parser.add_argument('-cwd', type=str, required=False)
 parser.add_argument('-sync', type=int, required=False, default=0)
 
-args = parser.parse_args()    # The array containing our arguments
+args, _ = parser.parse_known_args()    # The array containing our arguments
 
 # print(args)
 argsMsg = ' - Arguments Inserted' if len(sys.argv) > 1 else " - Program running without arguments"

@@ -1,0 +1,1997 @@
+^C[32m2023-05-09 15:55:00.105[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-09 15:55:00.106[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-09 15:55:00.128[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-09 15:58:48.544[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-09 15:58:48.545[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+^C[32m2023-05-09 16:09:18.393[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-09 16:09:18.393[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-09 16:09:18.414[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Initializing server...
+Initializing client...
+/tmp/P6-A3-207/scripts/conditions.sh: line 50: echo: write error: Connection reset by peer
+Cannot exec '/tmp/P6-A3-207/scripts/conditions.sh limit --datarate=100bps --iface=wlp4s0': No such file or directory
+Cannot exec 'htop': No such file or directory
+anaconda-ks.cfg  initial-setup-ks.cfg  screenlog.0
+Setting datarate of the specified interface to: 100kbps
+[32m2023-05-10 09:46:22.832[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100kbps (minimum: 100kbps) and priority: 0[0m
+[32m2023-05-10 09:46:22.832[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100kbps (minimum: 100kbps) and priority: 0[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 09:47:51.847[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 09:47:51.847[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+Error: Exclusivity flag on, cannot modify.
+Error: NLM_F_REPLACE needed to override.
+RTNETLINK answers: No such file or directory
+RTNETLINK answers: No such file or directory
+Error: Parent Qdisc doesn't exists.
+We have an error talking to the kernel
+Error: NLM_F_REPLACE needed to override.
+RTNETLINK answers: No such file or directory
+RTNETLINK answers: No such file or directory
+Error: Parent Qdisc doesn't exists.
+We have an error talking to the kernel
+^C[32m2023-05-10 09:48:53.183[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 09:48:53.184[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+^C[32m2023-05-10 09:48:56.089[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 09:48:56.090[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+Error: Cannot delete qdisc with handle of zero.
+Error: Cannot delete qdisc with handle of zero.
+Error: Cannot delete qdisc with handle of zero.
+[32m2023-05-10 09:48:56.112[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 09:50:15.654[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 09:50:15.654[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+^C[32m2023-05-10 11:07:24.887[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 11:07:24.887[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 11:07:24.910[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 11:15:37.727[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 11:15:37.727[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+^C[32m2023-05-10 11:20:39.170[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 11:20:39.171[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 11:20:39.192[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 11:29:09.322[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 11:29:09.322[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+^C[32m2023-05-10 11:42:20.098[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 11:42:20.099[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 11:42:20.123[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 11:49:10.757[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 11:49:10.757[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+^C[32m2023-05-10 11:58:01.778[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 11:58:01.779[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 11:58:01.801[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 12:01:24.101[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 12:01:24.102[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+^C[32m2023-05-10 12:18:21.565[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 12:18:21.566[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 12:18:21.589[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 12:19:11.948[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 12:19:11.949[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+^C[32m2023-05-10 12:47:27.257[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 12:47:27.258[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 12:47:27.278[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 12:48:13.048[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 12:48:13.049[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+^C[32m2023-05-10 12:49:48.711[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 12:49:48.712[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 12:49:48.735[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 12:54:13.973[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 12:54:13.974[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+^C[32m2023-05-10 13:00:11.389[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 13:00:11.389[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 13:00:11.411[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 13:02:19.703[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 13:02:19.704[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 100bps (minimum: 100bps) and priority: 0[0m
+^C[32m2023-05-10 13:03:51.622[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 13:03:51.623[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 13:03:51.646[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 1kbps
+[32m2023-05-10 13:05:29.497[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1kbps (minimum: 1kbps) and priority: 0[0m
+[32m2023-05-10 13:05:29.498[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m168[0m - [1mSetting up global class with max upload rate: 1kbps (minimum: 1kbps) and priority: 0[0m
+^C[32m2023-05-10 17:09:57.074[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 17:09:57.075[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 17:09:57.094[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 17:10:56.152[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-10 17:10:56.152[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 17:10:56.152[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+^C[32m2023-05-10 17:12:34.747[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-10 17:12:34.748[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-10 17:12:34.767[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 100bps
+[32m2023-05-10 17:16:37.977[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-10 17:16:37.978[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 100bps (minimum: 100bps) and priority: 0[0m
+[32m2023-05-10 17:16:37.978[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+^C[32m2023-05-11 10:26:11.707[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-11 10:26:11.708[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-11 10:26:11.729[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 500bps
+[32m2023-05-11 11:12:53.980[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-11 11:12:53.980[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 500bps (minimum: 500bps) and priority: 0[0m
+[32m2023-05-11 11:12:53.981[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+^C[32m2023-05-11 11:13:50.706[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-11 11:13:50.707[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-11 11:13:50.728[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 500bps
+[32m2023-05-11 11:19:41.441[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-11 11:19:41.442[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 500bps (minimum: 500bps) and priority: 0[0m
+[32m2023-05-11 11:19:41.442[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+^C[32m2023-05-11 15:27:45.280[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-11 15:27:45.281[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-11 15:27:45.305[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 2bps
+[32m2023-05-12 15:11:21.144[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-12 15:11:21.144[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 2bps (minimum: 2bps) and priority: 0[0m
+[32m2023-05-12 15:11:21.144[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+'^C[32m2023-05-12 15:12:26.323[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-12 15:12:26.324[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-12 15:12:26.344[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 2kbps
+[32m2023-05-12 15:14:18.098[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-12 15:14:18.098[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 2kbps (minimum: 2kbps) and priority: 0[0m
+[32m2023-05-12 15:14:18.098[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+^C[32m2023-05-15 09:54:45.802[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-15 09:54:45.803[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-15 09:54:45.825[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 2kbps
+[32m2023-05-15 09:58:43.410[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-15 09:58:43.411[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 2kbps (minimum: 2kbps) and priority: 0[0m
+[32m2023-05-15 09:58:43.411[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+^C[32m2023-05-15 11:02:16.197[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-15 11:02:16.198[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-15 11:02:16.216[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 1.5kbps
+[32m2023-05-15 11:02:44.296[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-15 11:02:44.297[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1.5kbps (minimum: 1.5kbps) and priority: 0[0m
+[32m2023-05-15 11:02:44.297[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+^C[32m2023-05-15 11:03:16.403[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-15 11:03:16.403[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-15 11:03:16.424[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 1.5kbps
+[32m2023-05-15 11:11:58.313[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-15 11:11:58.314[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1.5kbps (minimum: 1.5kbps) and priority: 0[0m
+[32m2023-05-15 11:11:58.314[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+^C[32m2023-05-15 12:15:19.609[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-15 12:15:19.609[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-15 12:15:19.628[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 1kbps
+[32m2023-05-15 12:17:43.829[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-15 12:17:43.830[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1kbps (minimum: 1kbps) and priority: 0[0m
+[32m2023-05-15 12:17:43.830[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+^C[32m2023-05-15 12:18:11.483[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-15 12:18:11.484[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-15 12:18:11.503[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 1kbps
+[32m2023-05-15 12:19:02.733[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-15 12:19:02.733[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1kbps (minimum: 1kbps) and priority: 0[0m
+[32m2023-05-15 12:19:02.733[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+^C[32m2023-05-16 11:20:27.055[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-16 11:20:27.056[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-16 11:20:27.078[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Initializing server...
+Initializing client...
+/tmp/P6-A3-207/scripts/conditions.sh: line 50: echo: write error: Connection reset by peer
+Setting datarate of the specified interface to: 1kbps
+[32m2023-05-16 16:34:45.855[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-16 16:34:45.855[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1kbps (minimum: 1kbps) and priority: 0[0m
+[32m2023-05-16 16:34:45.856[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+Cannot find device "wlp40s"
+Cannot find device "wlp40s"
+Cannot find device "wlp40s"
+Cannot find device "wlp40s"
+Cannot find device "wlp40s"
+Cannot find device "wlp40s"
+Cannot find device "wlp40s"
+Cannot find device "wlp40s"
+Cannot find device "wlp40s"
+PING 192.168.1.107 (192.168.1.107) from 192.168.1.61 wlp4s0: 56(84) bytes of data.
+64 bytes from 192.168.1.107: icmp_seq=1 ttl=64 time=2.22 ms
+64 bytes from 192.168.1.107: icmp_seq=2 ttl=64 time=3.33 ms
+64 bytes from 192.168.1.107: icmp_seq=3 ttl=64 time=10.2 ms
+64 bytes from 192.168.1.107: icmp_seq=4 ttl=64 time=5.41 ms
+64 bytes from 192.168.1.107: icmp_seq=5 ttl=64 time=4.56 ms
+64 bytes from 192.168.1.107: icmp_seq=6 ttl=64 time=12.0 ms
+64 bytes from 192.168.1.107: icmp_seq=7 ttl=64 time=2.90 ms
+64 bytes from 192.168.1.107: icmp_seq=8 ttl=64 time=4.98 ms
+64 bytes from 192.168.1.107: icmp_seq=9 ttl=64 time=4.15 ms
+64 bytes from 192.168.1.107: icmp_seq=10 ttl=64 time=15.9 ms
+64 bytes from 192.168.1.107: icmp_seq=11 ttl=64 time=3.39 ms
+64 bytes from 192.168.1.107: icmp_seq=12 ttl=64 time=4.06 ms
+64 bytes from 192.168.1.107: icmp_seq=13 ttl=64 time=9.97 ms
+64 bytes from 192.168.1.107: icmp_seq=14 ttl=64 time=4.37 ms
+64 bytes from 192.168.1.107: icmp_seq=15 ttl=64 time=7.75 ms
+64 bytes from 192.168.1.107: icmp_seq=16 ttl=64 time=2.97 ms
+64 bytes from 192.168.1.107: icmp_seq=17 ttl=64 time=7.12 ms
+64 bytes from 192.168.1.107: icmp_seq=18 ttl=64 time=3.16 ms
+64 bytes from 192.168.1.107: icmp_seq=19 ttl=64 time=7.84 ms
+64 bytes from 192.168.1.107: icmp_seq=20 ttl=64 time=9.97 ms
+64 bytes from 192.168.1.107: icmp_seq=21 ttl=64 time=5.47 ms
+64 bytes from 192.168.1.107: icmp_seq=22 ttl=64 time=48.2 ms
+64 bytes from 192.168.1.107: icmp_seq=23 ttl=64 time=4.52 ms
+64 bytes from 192.168.1.107: icmp_seq=24 ttl=64 time=83.5 ms
+64 bytes from 192.168.1.107: icmp_seq=25 ttl=64 time=4.97 ms
+64 bytes from 192.168.1.107: icmp_seq=26 ttl=64 time=3.62 ms
+64 bytes from 192.168.1.107: icmp_seq=27 ttl=64 time=8.33 ms
+64 bytes from 192.168.1.107: icmp_seq=28 ttl=64 time=6.79 ms
+64 bytes from 192.168.1.107: icmp_seq=29 ttl=64 time=11.2 ms
+64 bytes from 192.168.1.107: icmp_seq=30 ttl=64 time=3.10 ms
+64 bytes from 192.168.1.107: icmp_seq=31 ttl=64 time=4.94 ms
+64 bytes from 192.168.1.107: icmp_seq=32 ttl=64 time=15.3 ms
+64 bytes from 192.168.1.107: icmp_seq=33 ttl=64 time=3.05 ms
+64 bytes from 192.168.1.107: icmp_seq=34 ttl=64 time=6.81 ms
+64 bytes from 192.168.1.107: icmp_seq=35 ttl=64 time=2.98 ms
+64 bytes from 192.168.1.107: icmp_seq=36 ttl=64 time=3.72 ms
+64 bytes from 192.168.1.107: icmp_seq=37 ttl=64 time=6.32 ms
+64 bytes from 192.168.1.107: icmp_seq=38 ttl=64 time=5.44 ms
+64 bytes from 192.168.1.107: icmp_seq=39 ttl=64 time=7.95 ms
+64 bytes from 192.168.1.107: icmp_seq=40 ttl=64 time=4.81 ms
+64 bytes from 192.168.1.107: icmp_seq=41 ttl=64 time=3.32 ms
+64 bytes from 192.168.1.107: icmp_seq=42 ttl=64 time=3.27 ms
+64 bytes from 192.168.1.107: icmp_seq=43 ttl=64 time=7.24 ms
+64 bytes from 192.168.1.107: icmp_seq=44 ttl=64 time=3.16 ms
+64 bytes from 192.168.1.107: icmp_seq=45 ttl=64 time=15.2 ms
+64 bytes from 192.168.1.107: icmp_seq=46 ttl=64 time=8.35 ms
+64 bytes from 192.168.1.107: icmp_seq=47 ttl=64 time=3.11 ms
+64 bytes from 192.168.1.107: icmp_seq=48 ttl=64 time=3.26 ms
+64 bytes from 192.168.1.107: icmp_seq=49 ttl=64 time=5.32 ms
+64 bytes from 192.168.1.107: icmp_seq=50 ttl=64 time=6.75 ms
+64 bytes from 192.168.1.107: icmp_seq=51 ttl=64 time=3.29 ms
+64 bytes from 192.168.1.107: icmp_seq=52 ttl=64 time=4.01 ms
+64 bytes from 192.168.1.107: icmp_seq=53 ttl=64 time=5.68 ms
+64 bytes from 192.168.1.107: icmp_seq=54 ttl=64 time=6.95 ms
+64 bytes from 192.168.1.107: icmp_seq=55 ttl=64 time=4.00 ms
+64 bytes from 192.168.1.107: icmp_seq=56 ttl=64 time=23.8 ms
+64 bytes from 192.168.1.107: icmp_seq=57 ttl=64 time=3.71 ms
+64 bytes from 192.168.1.107: icmp_seq=58 ttl=64 time=62.2 ms
+64 bytes from 192.168.1.107: icmp_seq=59 ttl=64 time=6.14 ms
+64 bytes from 192.168.1.107: icmp_seq=60 ttl=64 time=2.80 ms
+64 bytes from 192.168.1.107: icmp_seq=61 ttl=64 time=7.30 ms
+64 bytes from 192.168.1.107: icmp_seq=62 ttl=64 time=5.53 ms
+64 bytes from 192.168.1.107: icmp_seq=63 ttl=64 time=3.23 ms
+64 bytes from 192.168.1.107: icmp_seq=64 ttl=64 time=7.46 ms
+64 bytes from 192.168.1.107: icmp_seq=65 ttl=64 time=4.38 ms
+64 bytes from 192.168.1.107: icmp_seq=66 ttl=64 time=4.41 ms
+64 bytes from 192.168.1.107: icmp_seq=67 ttl=64 time=2.85 ms
+64 bytes from 192.168.1.107: icmp_seq=68 ttl=64 time=5.46 ms
+64 bytes from 192.168.1.107: icmp_seq=69 ttl=64 time=4.07 ms
+64 bytes from 192.168.1.107: icmp_seq=70 ttl=64 time=4.85 ms
+64 bytes from 192.168.1.107: icmp_seq=71 ttl=64 time=6.18 ms
+64 bytes from 192.168.1.107: icmp_seq=72 ttl=64 time=4.62 ms
+64 bytes from 192.168.1.107: icmp_seq=73 ttl=64 time=3.14 ms
+64 bytes from 192.168.1.107: icmp_seq=74 ttl=64 time=11.4 ms
+64 bytes from 192.168.1.107: icmp_seq=75 ttl=64 time=3.21 ms
+64 bytes from 192.168.1.107: icmp_seq=76 ttl=64 time=3.72 ms
+64 bytes from 192.168.1.107: icmp_seq=77 ttl=64 time=42.5 ms
+64 bytes from 192.168.1.107: icmp_seq=78 ttl=64 time=3.95 ms
+64 bytes from 192.168.1.107: icmp_seq=79 ttl=64 time=3.28 ms
+64 bytes from 192.168.1.107: icmp_seq=80 ttl=64 time=3.38 ms
+64 bytes from 192.168.1.107: icmp_seq=81 ttl=64 time=13.9 ms
+64 bytes from 192.168.1.107: icmp_seq=82 ttl=64 time=3.99 ms
+64 bytes from 192.168.1.107: icmp_seq=83 ttl=64 time=6.55 ms
+64 bytes from 192.168.1.107: icmp_seq=84 ttl=64 time=9.51 ms
+64 bytes from 192.168.1.107: icmp_seq=85 ttl=64 time=3.29 ms
+64 bytes from 192.168.1.107: icmp_seq=86 ttl=64 time=5.10 ms
+64 bytes from 192.168.1.107: icmp_seq=87 ttl=64 time=5.54 ms
+64 bytes from 192.168.1.107: icmp_seq=88 ttl=64 time=4.40 ms
+64 bytes from 192.168.1.107: icmp_seq=89 ttl=64 time=4.84 ms
+64 bytes from 192.168.1.107: icmp_seq=90 ttl=64 time=3.39 ms
+64 bytes from 192.168.1.107: icmp_seq=91 ttl=64 time=3.01 ms
+64 bytes from 192.168.1.107: icmp_seq=92 ttl=64 time=21.0 ms
+64 bytes from 192.168.1.107: icmp_seq=93 ttl=64 time=14.7 ms
+64 bytes from 192.168.1.107: icmp_seq=94 ttl=64 time=7.02 ms
+64 bytes from 192.168.1.107: icmp_seq=95 ttl=64 time=4.05 ms
+64 bytes from 192.168.1.107: icmp_seq=96 ttl=64 time=9.24 ms
+64 bytes from 192.168.1.107: icmp_seq=97 ttl=64 time=6.13 ms
+64 bytes from 192.168.1.107: icmp_seq=98 ttl=64 time=7.94 ms
+64 bytes from 192.168.1.107: icmp_seq=99 ttl=64 time=5.25 ms
+64 bytes from 192.168.1.107: icmp_seq=100 ttl=64 time=13.8 ms
+64 bytes from 192.168.1.107: icmp_seq=101 ttl=64 time=13.4 ms
+64 bytes from 192.168.1.107: icmp_seq=102 ttl=64 time=5.51 ms
+64 bytes from 192.168.1.107: icmp_seq=103 ttl=64 time=14.5 ms
+64 bytes from 192.168.1.107: icmp_seq=104 ttl=64 time=6.34 ms
+64 bytes from 192.168.1.107: icmp_seq=105 ttl=64 time=3.21 ms
+64 bytes from 192.168.1.107: icmp_seq=106 ttl=64 time=2.95 ms
+64 bytes from 192.168.1.107: icmp_seq=107 ttl=64 time=8.09 ms
+64 bytes from 192.168.1.107: icmp_seq=108 ttl=64 time=4.96 ms
+64 bytes from 192.168.1.107: icmp_seq=109 ttl=64 time=19.7 ms
+64 bytes from 192.168.1.107: icmp_seq=110 ttl=64 time=6.96 ms
+64 bytes from 192.168.1.107: icmp_seq=111 ttl=64 time=3.04 ms
+64 bytes from 192.168.1.107: icmp_seq=112 ttl=64 time=12.6 ms
+64 bytes from 192.168.1.107: icmp_seq=113 ttl=64 time=4.54 ms
+64 bytes from 192.168.1.107: icmp_seq=114 ttl=64 time=12.9 ms
+64 bytes from 192.168.1.107: icmp_seq=115 ttl=64 time=3.04 ms
+64 bytes from 192.168.1.107: icmp_seq=116 ttl=64 time=14.0 ms
+64 bytes from 192.168.1.107: icmp_seq=117 ttl=64 time=8.37 ms
+64 bytes from 192.168.1.107: icmp_seq=118 ttl=64 time=8.08 ms
+64 bytes from 192.168.1.107: icmp_seq=119 ttl=64 time=8.90 ms
+64 bytes from 192.168.1.107: icmp_seq=120 ttl=64 time=14.2 ms
+64 bytes from 192.168.1.107: icmp_seq=121 ttl=64 time=3.92 ms
+64 bytes from 192.168.1.107: icmp_seq=122 ttl=64 time=4.40 ms
+64 bytes from 192.168.1.107: icmp_seq=123 ttl=64 time=6.96 ms
+64 bytes from 192.168.1.107: icmp_seq=124 ttl=64 time=3.84 ms
+64 bytes from 192.168.1.107: icmp_seq=125 ttl=64 time=22.7 ms
+64 bytes from 192.168.1.107: icmp_seq=126 ttl=64 time=4.76 ms
+64 bytes from 192.168.1.107: icmp_seq=127 ttl=64 time=3.27 ms
+64 bytes from 192.168.1.107: icmp_seq=128 ttl=64 time=8.95 ms
+64 bytes from 192.168.1.107: icmp_seq=129 ttl=64 time=18.1 ms
+64 bytes from 192.168.1.107: icmp_seq=130 ttl=64 time=19.4 ms
+64 bytes from 192.168.1.107: icmp_seq=131 ttl=64 time=3.62 ms
+64 bytes from 192.168.1.107: icmp_seq=132 ttl=64 time=18.1 ms
+64 bytes from 192.168.1.107: icmp_seq=133 ttl=64 time=12.2 ms
+64 bytes from 192.168.1.107: icmp_seq=134 ttl=64 time=14.9 ms
+64 bytes from 192.168.1.107: icmp_seq=135 ttl=64 time=11.5 ms
+64 bytes from 192.168.1.107: icmp_seq=136 ttl=64 time=5.85 ms
+64 bytes from 192.168.1.107: icmp_seq=137 ttl=64 time=6.18 ms
+64 bytes from 192.168.1.107: icmp_seq=138 ttl=64 time=11.4 ms
+64 bytes from 192.168.1.107: icmp_seq=139 ttl=64 time=3.48 ms
+64 bytes from 192.168.1.107: icmp_seq=140 ttl=64 time=14.9 ms
+64 bytes from 192.168.1.107: icmp_seq=141 ttl=64 time=4.36 ms
+64 bytes from 192.168.1.107: icmp_seq=142 ttl=64 time=21.1 ms
+64 bytes from 192.168.1.107: icmp_seq=143 ttl=64 time=4.54 ms
+64 bytes from 192.168.1.107: icmp_seq=144 ttl=64 time=4.71 ms
+64 bytes from 192.168.1.107: icmp_seq=145 ttl=64 time=8.77 ms
+64 bytes from 192.168.1.107: icmp_seq=146 ttl=64 time=11.2 ms
+64 bytes from 192.168.1.107: icmp_seq=147 ttl=64 time=4.82 ms
+64 bytes from 192.168.1.107: icmp_seq=148 ttl=64 time=7.43 ms
+64 bytes from 192.168.1.107: icmp_seq=149 ttl=64 time=2.94 ms
+64 bytes from 192.168.1.107: icmp_seq=150 ttl=64 time=8.82 ms
+64 bytes from 192.168.1.107: icmp_seq=151 ttl=64 time=14.4 ms
+64 bytes from 192.168.1.107: icmp_seq=152 ttl=64 time=18.3 ms
+64 bytes from 192.168.1.107: icmp_seq=153 ttl=64 time=9.96 ms
+64 bytes from 192.168.1.107: icmp_seq=154 ttl=64 time=3.02 ms
+64 bytes from 192.168.1.107: icmp_seq=155 ttl=64 time=24.7 ms
+64 bytes from 192.168.1.107: icmp_seq=156 ttl=64 time=20.8 ms
+64 bytes from 192.168.1.107: icmp_seq=157 ttl=64 time=19.2 ms
+64 bytes from 192.168.1.107: icmp_seq=158 ttl=64 time=12.1 ms
+64 bytes from 192.168.1.107: icmp_seq=159 ttl=64 time=3.82 ms
+64 bytes from 192.168.1.107: icmp_seq=160 ttl=64 time=13.7 ms
+64 bytes from 192.168.1.107: icmp_seq=161 ttl=64 time=5.89 ms
+64 bytes from 192.168.1.107: icmp_seq=162 ttl=64 time=6.24 ms
+64 bytes from 192.168.1.107: icmp_seq=163 ttl=64 time=2.96 ms
+64 bytes from 192.168.1.107: icmp_seq=164 ttl=64 time=23.5 ms
+64 bytes from 192.168.1.107: icmp_seq=165 ttl=64 time=15.2 ms
+64 bytes from 192.168.1.107: icmp_seq=166 ttl=64 time=6.90 ms
+64 bytes from 192.168.1.107: icmp_seq=167 ttl=64 time=8.10 ms
+64 bytes from 192.168.1.107: icmp_seq=168 ttl=64 time=7.21 ms
+64 bytes from 192.168.1.107: icmp_seq=169 ttl=64 time=13.3 ms
+64 bytes from 192.168.1.107: icmp_seq=170 ttl=64 time=3.49 ms
+64 bytes from 192.168.1.107: icmp_seq=171 ttl=64 time=13.1 ms
+64 bytes from 192.168.1.107: icmp_seq=172 ttl=64 time=15.6 ms
+64 bytes from 192.168.1.107: icmp_seq=173 ttl=64 time=2.96 ms
+64 bytes from 192.168.1.107: icmp_seq=174 ttl=64 time=3.02 ms
+64 bytes from 192.168.1.107: icmp_seq=175 ttl=64 time=3.01 ms
+64 bytes from 192.168.1.107: icmp_seq=176 ttl=64 time=3.60 ms
+64 bytes from 192.168.1.107: icmp_seq=177 ttl=64 time=7.90 ms
+64 bytes from 192.168.1.107: icmp_seq=178 ttl=64 time=24.2 ms
+64 bytes from 192.168.1.107: icmp_seq=179 ttl=64 time=4.60 ms
+64 bytes from 192.168.1.107: icmp_seq=180 ttl=64 time=19.6 ms
+64 bytes from 192.168.1.107: icmp_seq=181 ttl=64 time=54.7 ms
+64 bytes from 192.168.1.107: icmp_seq=182 ttl=64 time=11.2 ms
+64 bytes from 192.168.1.107: icmp_seq=183 ttl=64 time=106 ms
+64 bytes from 192.168.1.107: icmp_seq=184 ttl=64 time=28.2 ms
+64 bytes from 192.168.1.107: icmp_seq=185 ttl=64 time=8.32 ms
+64 bytes from 192.168.1.107: icmp_seq=186 ttl=64 time=4.05 ms
+64 bytes from 192.168.1.107: icmp_seq=187 ttl=64 time=8.42 ms
+64 bytes from 192.168.1.107: icmp_seq=188 ttl=64 time=4.13 ms
+64 bytes from 192.168.1.107: icmp_seq=189 ttl=64 time=3.64 ms
+64 bytes from 192.168.1.107: icmp_seq=190 ttl=64 time=13.4 ms
+64 bytes from 192.168.1.107: icmp_seq=191 ttl=64 time=2.72 ms
+64 bytes from 192.168.1.107: icmp_seq=192 ttl=64 time=5.62 ms
+64 bytes from 192.168.1.107: icmp_seq=193 ttl=64 time=6.79 ms
+64 bytes from 192.168.1.107: icmp_seq=194 ttl=64 time=3.43 ms
+64 bytes from 192.168.1.107: icmp_seq=195 ttl=64 time=19.3 ms
+64 bytes from 192.168.1.107: icmp_seq=196 ttl=64 time=8.91 ms
+64 bytes from 192.168.1.107: icmp_seq=197 ttl=64 time=15.4 ms
+64 bytes from 192.168.1.107: icmp_seq=198 ttl=64 time=3.22 ms
+64 bytes from 192.168.1.107: icmp_seq=199 ttl=64 time=11.4 ms
+64 bytes from 192.168.1.107: icmp_seq=200 ttl=64 time=3.45 ms
+64 bytes from 192.168.1.107: icmp_seq=201 ttl=64 time=9.05 ms
+64 bytes from 192.168.1.107: icmp_seq=202 ttl=64 time=7.71 ms
+64 bytes from 192.168.1.107: icmp_seq=204 ttl=64 time=57.7 ms
+64 bytes from 192.168.1.107: icmp_seq=205 ttl=64 time=5.32 ms
+64 bytes from 192.168.1.107: icmp_seq=206 ttl=64 time=4.19 ms
+64 bytes from 192.168.1.107: icmp_seq=207 ttl=64 time=10.1 ms
+64 bytes from 192.168.1.107: icmp_seq=208 ttl=64 time=5.56 ms
+64 bytes from 192.168.1.107: icmp_seq=209 ttl=64 time=15.5 ms
+64 bytes from 192.168.1.107: icmp_seq=210 ttl=64 time=5.25 ms
+64 bytes from 192.168.1.107: icmp_seq=211 ttl=64 time=10.3 ms
+64 bytes from 192.168.1.107: icmp_seq=212 ttl=64 time=17.0 ms
+64 bytes from 192.168.1.107: icmp_seq=213 ttl=64 time=10.4 ms
+64 bytes from 192.168.1.107: icmp_seq=214 ttl=64 time=15.3 ms
+64 bytes from 192.168.1.107: icmp_seq=215 ttl=64 time=7.69 ms
+64 bytes from 192.168.1.107: icmp_seq=216 ttl=64 time=4.17 ms
+64 bytes from 192.168.1.107: icmp_seq=217 ttl=64 time=5.83 ms
+64 bytes from 192.168.1.107: icmp_seq=218 ttl=64 time=4.28 ms
+64 bytes from 192.168.1.107: icmp_seq=219 ttl=64 time=4.41 ms
+64 bytes from 192.168.1.107: icmp_seq=220 ttl=64 time=3.66 ms
+64 bytes from 192.168.1.107: icmp_seq=221 ttl=64 time=7.76 ms
+64 bytes from 192.168.1.107: icmp_seq=222 ttl=64 time=4.20 ms
+64 bytes from 192.168.1.107: icmp_seq=223 ttl=64 time=2.93 ms
+64 bytes from 192.168.1.107: icmp_seq=224 ttl=64 time=12.3 ms
+64 bytes from 192.168.1.107: icmp_seq=225 ttl=64 time=9.52 ms
+64 bytes from 192.168.1.107: icmp_seq=226 ttl=64 time=4.39 ms
+64 bytes from 192.168.1.107: icmp_seq=227 ttl=64 time=2.88 ms
+64 bytes from 192.168.1.107: icmp_seq=228 ttl=64 time=3.08 ms
+64 bytes from 192.168.1.107: icmp_seq=229 ttl=64 time=5.91 ms
+^C
+--- 192.168.1.107 ping statistics ---
+229 packets transmitted, 228 received, 0.436681% packet loss, time 228402ms
+rtt min/avg/max/mdev = 2.218/9.637/105.643/11.722 ms
+^C[32m2023-05-16 16:38:38.954[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-16 16:38:38.955[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+Cannot find device "wlp40s"
+Cannot find device "wlp40s"
+[32m2023-05-16 16:38:39.001[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 1kbps
+[32m2023-05-16 16:39:40.583[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-16 16:39:40.583[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1kbps (minimum: 1kbps) and priority: 0[0m
+[32m2023-05-16 16:39:40.584[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+PING 192.168.1.107 (192.168.1.107) from 192.168.1.61 wlp4s0: 56(84) bytes of data.
+64 bytes from 192.168.1.107: icmp_seq=1 ttl=64 time=3.99 ms
+64 bytes from 192.168.1.107: icmp_seq=2 ttl=64 time=3.97 ms
+64 bytes from 192.168.1.107: icmp_seq=3 ttl=64 time=2.88 ms
+64 bytes from 192.168.1.107: icmp_seq=4 ttl=64 time=9.30 ms
+64 bytes from 192.168.1.107: icmp_seq=5 ttl=64 time=9.57 ms
+64 bytes from 192.168.1.107: icmp_seq=6 ttl=64 time=4.88 ms
+64 bytes from 192.168.1.107: icmp_seq=7 ttl=64 time=24.9 ms
+64 bytes from 192.168.1.107: icmp_seq=8 ttl=64 time=4.75 ms
+64 bytes from 192.168.1.107: icmp_seq=9 ttl=64 time=5.54 ms
+64 bytes from 192.168.1.107: icmp_seq=10 ttl=64 time=102 ms
+64 bytes from 192.168.1.107: icmp_seq=11 ttl=64 time=41.7 ms
+64 bytes from 192.168.1.107: icmp_seq=13 ttl=64 time=3.01 ms
+64 bytes from 192.168.1.107: icmp_seq=14 ttl=64 time=5.78 ms
+64 bytes from 192.168.1.107: icmp_seq=15 ttl=64 time=3.47 ms
+64 bytes from 192.168.1.107: icmp_seq=16 ttl=64 time=2.42 ms
+64 bytes from 192.168.1.107: icmp_seq=17 ttl=64 time=9.99 ms
+64 bytes from 192.168.1.107: icmp_seq=18 ttl=64 time=3.06 ms
+64 bytes from 192.168.1.107: icmp_seq=19 ttl=64 time=123 ms
+64 bytes from 192.168.1.107: icmp_seq=20 ttl=64 time=60.0 ms
+64 bytes from 192.168.1.107: icmp_seq=21 ttl=64 time=3.89 ms
+64 bytes from 192.168.1.107: icmp_seq=22 ttl=64 time=13.3 ms
+64 bytes from 192.168.1.107: icmp_seq=23 ttl=64 time=13.3 ms
+64 bytes from 192.168.1.107: icmp_seq=24 ttl=64 time=12.2 ms
+64 bytes from 192.168.1.107: icmp_seq=25 ttl=64 time=8.65 ms
+64 bytes from 192.168.1.107: icmp_seq=26 ttl=64 time=7.47 ms
+64 bytes from 192.168.1.107: icmp_seq=27 ttl=64 time=3.18 ms
+64 bytes from 192.168.1.107: icmp_seq=28 ttl=64 time=5.67 ms
+64 bytes from 192.168.1.107: icmp_seq=29 ttl=64 time=4.30 ms
+64 bytes from 192.168.1.107: icmp_seq=30 ttl=64 time=2.97 ms
+64 bytes from 192.168.1.107: icmp_seq=31 ttl=64 time=9.95 ms
+64 bytes from 192.168.1.107: icmp_seq=32 ttl=64 time=2.97 ms
+64 bytes from 192.168.1.107: icmp_seq=33 ttl=64 time=7.03 ms
+64 bytes from 192.168.1.107: icmp_seq=34 ttl=64 time=5.04 ms
+64 bytes from 192.168.1.107: icmp_seq=35 ttl=64 time=3.80 ms
+64 bytes from 192.168.1.107: icmp_seq=36 ttl=64 time=2.89 ms
+64 bytes from 192.168.1.107: icmp_seq=37 ttl=64 time=9.01 ms
+64 bytes from 192.168.1.107: icmp_seq=38 ttl=64 time=3.18 ms
+64 bytes from 192.168.1.107: icmp_seq=39 ttl=64 time=5.08 ms
+64 bytes from 192.168.1.107: icmp_seq=40 ttl=64 time=3.30 ms
+64 bytes from 192.168.1.107: icmp_seq=41 ttl=64 time=3.11 ms
+64 bytes from 192.168.1.107: icmp_seq=42 ttl=64 time=4.54 ms
+64 bytes from 192.168.1.107: icmp_seq=43 ttl=64 time=11.1 ms
+64 bytes from 192.168.1.107: icmp_seq=44 ttl=64 time=8.21 ms
+64 bytes from 192.168.1.107: icmp_seq=45 ttl=64 time=3.70 ms
+64 bytes from 192.168.1.107: icmp_seq=46 ttl=64 time=4.17 ms
+64 bytes from 192.168.1.107: icmp_seq=47 ttl=64 time=3.02 ms
+64 bytes from 192.168.1.107: icmp_seq=48 ttl=64 time=14.4 ms
+64 bytes from 192.168.1.107: icmp_seq=49 ttl=64 time=3.02 ms
+64 bytes from 192.168.1.107: icmp_seq=50 ttl=64 time=9.82 ms
+64 bytes from 192.168.1.107: icmp_seq=51 ttl=64 time=9.45 ms
+64 bytes from 192.168.1.107: icmp_seq=52 ttl=64 time=6.90 ms
+64 bytes from 192.168.1.107: icmp_seq=53 ttl=64 time=101 ms
+64 bytes from 192.168.1.107: icmp_seq=54 ttl=64 time=42.4 ms
+64 bytes from 192.168.1.107: icmp_seq=55 ttl=64 time=84.8 ms
+64 bytes from 192.168.1.107: icmp_seq=56 ttl=64 time=3.18 ms
+64 bytes from 192.168.1.107: icmp_seq=57 ttl=64 time=16.4 ms
+64 bytes from 192.168.1.107: icmp_seq=58 ttl=64 time=13.8 ms
+64 bytes from 192.168.1.107: icmp_seq=59 ttl=64 time=3.42 ms
+64 bytes from 192.168.1.107: icmp_seq=60 ttl=64 time=12.6 ms
+64 bytes from 192.168.1.107: icmp_seq=61 ttl=64 time=3.73 ms
+64 bytes from 192.168.1.107: icmp_seq=62 ttl=64 time=3.75 ms
+64 bytes from 192.168.1.107: icmp_seq=63 ttl=64 time=3.07 ms
+64 bytes from 192.168.1.107: icmp_seq=64 ttl=64 time=3.19 ms
+64 bytes from 192.168.1.107: icmp_seq=65 ttl=64 time=5.96 ms
+64 bytes from 192.168.1.107: icmp_seq=66 ttl=64 time=14.6 ms
+64 bytes from 192.168.1.107: icmp_seq=67 ttl=64 time=3.18 ms
+64 bytes from 192.168.1.107: icmp_seq=68 ttl=64 time=10.1 ms
+64 bytes from 192.168.1.107: icmp_seq=69 ttl=64 time=7.43 ms
+64 bytes from 192.168.1.107: icmp_seq=70 ttl=64 time=2.63 ms
+64 bytes from 192.168.1.107: icmp_seq=71 ttl=64 time=2.92 ms
+64 bytes from 192.168.1.107: icmp_seq=72 ttl=64 time=2.93 ms
+64 bytes from 192.168.1.107: icmp_seq=73 ttl=64 time=3.06 ms
+64 bytes from 192.168.1.107: icmp_seq=74 ttl=64 time=2.81 ms
+64 bytes from 192.168.1.107: icmp_seq=75 ttl=64 time=6.03 ms
+64 bytes from 192.168.1.107: icmp_seq=76 ttl=64 time=2.95 ms
+64 bytes from 192.168.1.107: icmp_seq=77 ttl=64 time=3.79 ms
+64 bytes from 192.168.1.107: icmp_seq=78 ttl=64 time=5.25 ms
+64 bytes from 192.168.1.107: icmp_seq=79 ttl=64 time=16.5 ms
+64 bytes from 192.168.1.107: icmp_seq=80 ttl=64 time=2.85 ms
+64 bytes from 192.168.1.107: icmp_seq=81 ttl=64 time=12.4 ms
+64 bytes from 192.168.1.107: icmp_seq=82 ttl=64 time=3.15 ms
+64 bytes from 192.168.1.107: icmp_seq=83 ttl=64 time=14.9 ms
+64 bytes from 192.168.1.107: icmp_seq=84 ttl=64 time=3.32 ms
+64 bytes from 192.168.1.107: icmp_seq=85 ttl=64 time=6.59 ms
+64 bytes from 192.168.1.107: icmp_seq=86 ttl=64 time=3.22 ms
+64 bytes from 192.168.1.107: icmp_seq=87 ttl=64 time=88.1 ms
+64 bytes from 192.168.1.107: icmp_seq=88 ttl=64 time=31.0 ms
+64 bytes from 192.168.1.107: icmp_seq=89 ttl=64 time=68.8 ms
+64 bytes from 192.168.1.107: icmp_seq=90 ttl=64 time=3.34 ms
+64 bytes from 192.168.1.107: icmp_seq=91 ttl=64 time=3.21 ms
+64 bytes from 192.168.1.107: icmp_seq=92 ttl=64 time=12.6 ms
+64 bytes from 192.168.1.107: icmp_seq=93 ttl=64 time=3.40 ms
+64 bytes from 192.168.1.107: icmp_seq=94 ttl=64 time=10.4 ms
+64 bytes from 192.168.1.107: icmp_seq=95 ttl=64 time=11.4 ms
+64 bytes from 192.168.1.107: icmp_seq=96 ttl=64 time=4.94 ms
+64 bytes from 192.168.1.107: icmp_seq=97 ttl=64 time=4.54 ms
+64 bytes from 192.168.1.107: icmp_seq=98 ttl=64 time=2.79 ms
+64 bytes from 192.168.1.107: icmp_seq=99 ttl=64 time=3.11 ms
+64 bytes from 192.168.1.107: icmp_seq=100 ttl=64 time=3.04 ms
+64 bytes from 192.168.1.107: icmp_seq=101 ttl=64 time=2.94 ms
+64 bytes from 192.168.1.107: icmp_seq=102 ttl=64 time=3.04 ms
+64 bytes from 192.168.1.107: icmp_seq=103 ttl=64 time=3.25 ms
+64 bytes from 192.168.1.107: icmp_seq=104 ttl=64 time=5.64 ms
+64 bytes from 192.168.1.107: icmp_seq=105 ttl=64 time=10.0 ms
+64 bytes from 192.168.1.107: icmp_seq=106 ttl=64 time=9.23 ms
+64 bytes from 192.168.1.107: icmp_seq=107 ttl=64 time=6.95 ms
+64 bytes from 192.168.1.107: icmp_seq=108 ttl=64 time=3.37 ms
+64 bytes from 192.168.1.107: icmp_seq=109 ttl=64 time=3.00 ms
+64 bytes from 192.168.1.107: icmp_seq=110 ttl=64 time=12.1 ms
+64 bytes from 192.168.1.107: icmp_seq=111 ttl=64 time=3.15 ms
+64 bytes from 192.168.1.107: icmp_seq=112 ttl=64 time=3.03 ms
+64 bytes from 192.168.1.107: icmp_seq=113 ttl=64 time=7.55 ms
+64 bytes from 192.168.1.107: icmp_seq=114 ttl=64 time=2.95 ms
+64 bytes from 192.168.1.107: icmp_seq=115 ttl=64 time=11.4 ms
+64 bytes from 192.168.1.107: icmp_seq=116 ttl=64 time=3.40 ms
+64 bytes from 192.168.1.107: icmp_seq=117 ttl=64 time=14.8 ms
+64 bytes from 192.168.1.107: icmp_seq=118 ttl=64 time=9.07 ms
+64 bytes from 192.168.1.107: icmp_seq=119 ttl=64 time=3.45 ms
+64 bytes from 192.168.1.107: icmp_seq=120 ttl=64 time=39.3 ms
+64 bytes from 192.168.1.107: icmp_seq=121 ttl=64 time=57.6 ms
+64 bytes from 192.168.1.107: icmp_seq=122 ttl=64 time=3.11 ms
+64 bytes from 192.168.1.107: icmp_seq=123 ttl=64 time=43.4 ms
+64 bytes from 192.168.1.107: icmp_seq=124 ttl=64 time=5.72 ms
+64 bytes from 192.168.1.107: icmp_seq=125 ttl=64 time=5.24 ms
+64 bytes from 192.168.1.107: icmp_seq=126 ttl=64 time=3.07 ms
+64 bytes from 192.168.1.107: icmp_seq=127 ttl=64 time=5.07 ms
+64 bytes from 192.168.1.107: icmp_seq=128 ttl=64 time=3.00 ms
+64 bytes from 192.168.1.107: icmp_seq=129 ttl=64 time=11.7 ms
+64 bytes from 192.168.1.107: icmp_seq=130 ttl=64 time=2.99 ms
+64 bytes from 192.168.1.107: icmp_seq=131 ttl=64 time=5.34 ms
+64 bytes from 192.168.1.107: icmp_seq=132 ttl=64 time=3.20 ms
+64 bytes from 192.168.1.107: icmp_seq=133 ttl=64 time=3.94 ms
+64 bytes from 192.168.1.107: icmp_seq=134 ttl=64 time=9.95 ms
+64 bytes from 192.168.1.107: icmp_seq=135 ttl=64 time=2.94 ms
+64 bytes from 192.168.1.107: icmp_seq=136 ttl=64 time=8.37 ms
+64 bytes from 192.168.1.107: icmp_seq=137 ttl=64 time=6.50 ms
+64 bytes from 192.168.1.107: icmp_seq=138 ttl=64 time=8.26 ms
+64 bytes from 192.168.1.107: icmp_seq=139 ttl=64 time=4.25 ms
+64 bytes from 192.168.1.107: icmp_seq=140 ttl=64 time=5.73 ms
+64 bytes from 192.168.1.107: icmp_seq=141 ttl=64 time=9.48 ms
+64 bytes from 192.168.1.107: icmp_seq=142 ttl=64 time=5.61 ms
+64 bytes from 192.168.1.107: icmp_seq=143 ttl=64 time=5.36 ms
+64 bytes from 192.168.1.107: icmp_seq=144 ttl=64 time=4.57 ms
+64 bytes from 192.168.1.107: icmp_seq=145 ttl=64 time=5.85 ms
+64 bytes from 192.168.1.107: icmp_seq=146 ttl=64 time=3.24 ms
+64 bytes from 192.168.1.107: icmp_seq=147 ttl=64 time=6.85 ms
+64 bytes from 192.168.1.107: icmp_seq=148 ttl=64 time=7.57 ms
+64 bytes from 192.168.1.107: icmp_seq=149 ttl=64 time=3.07 ms
+64 bytes from 192.168.1.107: icmp_seq=150 ttl=64 time=3.77 ms
+64 bytes from 192.168.1.107: icmp_seq=151 ttl=64 time=6.05 ms
+64 bytes from 192.168.1.107: icmp_seq=152 ttl=64 time=3.20 ms
+64 bytes from 192.168.1.107: icmp_seq=153 ttl=64 time=3.18 ms
+64 bytes from 192.168.1.107: icmp_seq=154 ttl=64 time=5.55 ms
+64 bytes from 192.168.1.107: icmp_seq=155 ttl=64 time=3.62 ms
+64 bytes from 192.168.1.107: icmp_seq=156 ttl=64 time=5.11 ms
+64 bytes from 192.168.1.107: icmp_seq=157 ttl=64 time=4.52 ms
+64 bytes from 192.168.1.107: icmp_seq=158 ttl=64 time=4.19 ms
+64 bytes from 192.168.1.107: icmp_seq=159 ttl=64 time=3.63 ms
+64 bytes from 192.168.1.107: icmp_seq=160 ttl=64 time=4.77 ms
+64 bytes from 192.168.1.107: icmp_seq=161 ttl=64 time=6.43 ms
+64 bytes from 192.168.1.107: icmp_seq=162 ttl=64 time=5.26 ms
+64 bytes from 192.168.1.107: icmp_seq=163 ttl=64 time=3.78 ms
+64 bytes from 192.168.1.107: icmp_seq=164 ttl=64 time=8.66 ms
+64 bytes from 192.168.1.107: icmp_seq=165 ttl=64 time=6.56 ms
+64 bytes from 192.168.1.107: icmp_seq=166 ttl=64 time=3.88 ms
+64 bytes from 192.168.1.107: icmp_seq=167 ttl=64 time=8.64 ms
+64 bytes from 192.168.1.107: icmp_seq=168 ttl=64 time=4.46 ms
+64 bytes from 192.168.1.107: icmp_seq=169 ttl=64 time=3.98 ms
+64 bytes from 192.168.1.107: icmp_seq=170 ttl=64 time=5.44 ms
+64 bytes from 192.168.1.107: icmp_seq=171 ttl=64 time=5.81 ms
+64 bytes from 192.168.1.107: icmp_seq=172 ttl=64 time=4.03 ms
+64 bytes from 192.168.1.107: icmp_seq=173 ttl=64 time=2.97 ms
+64 bytes from 192.168.1.107: icmp_seq=174 ttl=64 time=11.1 ms
+64 bytes from 192.168.1.107: icmp_seq=175 ttl=64 time=11.1 ms
+64 bytes from 192.168.1.107: icmp_seq=176 ttl=64 time=7.60 ms
+64 bytes from 192.168.1.107: icmp_seq=177 ttl=64 time=3.80 ms
+64 bytes from 192.168.1.107: icmp_seq=178 ttl=64 time=4.17 ms
+64 bytes from 192.168.1.107: icmp_seq=179 ttl=64 time=12.5 ms
+64 bytes from 192.168.1.107: icmp_seq=180 ttl=64 time=14.5 ms
+64 bytes from 192.168.1.107: icmp_seq=181 ttl=64 time=7.77 ms
+64 bytes from 192.168.1.107: icmp_seq=182 ttl=64 time=4.47 ms
+64 bytes from 192.168.1.107: icmp_seq=183 ttl=64 time=3.24 ms
+64 bytes from 192.168.1.107: icmp_seq=184 ttl=64 time=4.27 ms
+64 bytes from 192.168.1.107: icmp_seq=185 ttl=64 time=11.3 ms
+64 bytes from 192.168.1.107: icmp_seq=186 ttl=64 time=3.90 ms
+64 bytes from 192.168.1.107: icmp_seq=187 ttl=64 time=6.74 ms
+64 bytes from 192.168.1.107: icmp_seq=188 ttl=64 time=7.46 ms
+64 bytes from 192.168.1.107: icmp_seq=189 ttl=64 time=3.41 ms
+64 bytes from 192.168.1.107: icmp_seq=190 ttl=64 time=4.60 ms
+64 bytes from 192.168.1.107: icmp_seq=191 ttl=64 time=9.65 ms
+64 bytes from 192.168.1.107: icmp_seq=192 ttl=64 time=7.65 ms
+64 bytes from 192.168.1.107: icmp_seq=193 ttl=64 time=3.74 ms
+64 bytes from 192.168.1.107: icmp_seq=194 ttl=64 time=4.72 ms
+64 bytes from 192.168.1.107: icmp_seq=195 ttl=64 time=3.67 ms
+64 bytes from 192.168.1.107: icmp_seq=196 ttl=64 time=8.78 ms
+64 bytes from 192.168.1.107: icmp_seq=197 ttl=64 time=5.33 ms
+64 bytes from 192.168.1.107: icmp_seq=198 ttl=64 time=5.70 ms
+64 bytes from 192.168.1.107: icmp_seq=199 ttl=64 time=4.26 ms
+64 bytes from 192.168.1.107: icmp_seq=200 ttl=64 time=4.20 ms
+64 bytes from 192.168.1.107: icmp_seq=201 ttl=64 time=4.33 ms
+64 bytes from 192.168.1.107: icmp_seq=202 ttl=64 time=2.94 ms
+64 bytes from 192.168.1.107: icmp_seq=203 ttl=64 time=3.59 ms
+64 bytes from 192.168.1.107: icmp_seq=204 ttl=64 time=15.6 ms
+64 bytes from 192.168.1.107: icmp_seq=205 ttl=64 time=3.67 ms
+64 bytes from 192.168.1.107: icmp_seq=206 ttl=64 time=5.94 ms
+64 bytes from 192.168.1.107: icmp_seq=207 ttl=64 time=3.86 ms
+64 bytes from 192.168.1.107: icmp_seq=208 ttl=64 time=3.06 ms
+64 bytes from 192.168.1.107: icmp_seq=209 ttl=64 time=2.60 ms
+64 bytes from 192.168.1.107: icmp_seq=210 ttl=64 time=5.10 ms
+64 bytes from 192.168.1.107: icmp_seq=211 ttl=64 time=3.41 ms
+64 bytes from 192.168.1.107: icmp_seq=212 ttl=64 time=5.28 ms
+64 bytes from 192.168.1.107: icmp_seq=213 ttl=64 time=6.60 ms
+64 bytes from 192.168.1.107: icmp_seq=214 ttl=64 time=7.64 ms
+64 bytes from 192.168.1.107: icmp_seq=215 ttl=64 time=3.37 ms
+64 bytes from 192.168.1.107: icmp_seq=216 ttl=64 time=7.14 ms
+64 bytes from 192.168.1.107: icmp_seq=217 ttl=64 time=6.32 ms
+64 bytes from 192.168.1.107: icmp_seq=218 ttl=64 time=3.38 ms
+64 bytes from 192.168.1.107: icmp_seq=219 ttl=64 time=5.91 ms
+64 bytes from 192.168.1.107: icmp_seq=220 ttl=64 time=6.16 ms
+64 bytes from 192.168.1.107: icmp_seq=221 ttl=64 time=6.32 ms
+64 bytes from 192.168.1.107: icmp_seq=222 ttl=64 time=2.99 ms
+64 bytes from 192.168.1.107: icmp_seq=223 ttl=64 time=4.49 ms
+64 bytes from 192.168.1.107: icmp_seq=224 ttl=64 time=8.82 ms
+64 bytes from 192.168.1.107: icmp_seq=225 ttl=64 time=4.50 ms
+64 bytes from 192.168.1.107: icmp_seq=226 ttl=64 time=6.10 ms
+64 bytes from 192.168.1.107: icmp_seq=227 ttl=64 time=3.18 ms
+64 bytes from 192.168.1.107: icmp_seq=228 ttl=64 time=3.23 ms
+64 bytes from 192.168.1.107: icmp_seq=229 ttl=64 time=2.86 ms
+64 bytes from 192.168.1.107: icmp_seq=230 ttl=64 time=6.10 ms
+64 bytes from 192.168.1.107: icmp_seq=231 ttl=64 time=7.33 ms
+64 bytes from 192.168.1.107: icmp_seq=232 ttl=64 time=5.53 ms
+64 bytes from 192.168.1.107: icmp_seq=233 ttl=64 time=3.58 ms
+64 bytes from 192.168.1.107: icmp_seq=234 ttl=64 time=6.44 ms
+64 bytes from 192.168.1.107: icmp_seq=235 ttl=64 time=10.7 ms
+64 bytes from 192.168.1.107: icmp_seq=236 ttl=64 time=4.30 ms
+64 bytes from 192.168.1.107: icmp_seq=237 ttl=64 time=6.23 ms
+64 bytes from 192.168.1.107: icmp_seq=238 ttl=64 time=4.79 ms
+64 bytes from 192.168.1.107: icmp_seq=239 ttl=64 time=5.33 ms
+64 bytes from 192.168.1.107: icmp_seq=240 ttl=64 time=6.75 ms
+64 bytes from 192.168.1.107: icmp_seq=241 ttl=64 time=5.25 ms
+64 bytes from 192.168.1.107: icmp_seq=242 ttl=64 time=7.75 ms
+64 bytes from 192.168.1.107: icmp_seq=243 ttl=64 time=3.78 ms
+64 bytes from 192.168.1.107: icmp_seq=244 ttl=64 time=14.0 ms
+64 bytes from 192.168.1.107: icmp_seq=245 ttl=64 time=6.11 ms
+64 bytes from 192.168.1.107: icmp_seq=246 ttl=64 time=9.35 ms
+64 bytes from 192.168.1.107: icmp_seq=247 ttl=64 time=3.02 ms
+64 bytes from 192.168.1.107: icmp_seq=248 ttl=64 time=8.20 ms
+64 bytes from 192.168.1.107: icmp_seq=249 ttl=64 time=3.46 ms
+64 bytes from 192.168.1.107: icmp_seq=250 ttl=64 time=3.43 ms
+64 bytes from 192.168.1.107: icmp_seq=251 ttl=64 time=3.89 ms
+64 bytes from 192.168.1.107: icmp_seq=252 ttl=64 time=3.19 ms
+64 bytes from 192.168.1.107: icmp_seq=253 ttl=64 time=8.16 ms
+64 bytes from 192.168.1.107: icmp_seq=254 ttl=64 time=6.57 ms
+64 bytes from 192.168.1.107: icmp_seq=255 ttl=64 time=8.58 ms
+64 bytes from 192.168.1.107: icmp_seq=256 ttl=64 time=3.27 ms
+64 bytes from 192.168.1.107: icmp_seq=257 ttl=64 time=12.5 ms
+64 bytes from 192.168.1.107: icmp_seq=258 ttl=64 time=11.5 ms
+64 bytes from 192.168.1.107: icmp_seq=259 ttl=64 time=6.70 ms
+64 bytes from 192.168.1.107: icmp_seq=260 ttl=64 time=5.27 ms
+64 bytes from 192.168.1.107: icmp_seq=261 ttl=64 time=5.40 ms
+64 bytes from 192.168.1.107: icmp_seq=262 ttl=64 time=7.80 ms
+64 bytes from 192.168.1.107: icmp_seq=263 ttl=64 time=8.29 ms
+64 bytes from 192.168.1.107: icmp_seq=264 ttl=64 time=20.4 ms
+64 bytes from 192.168.1.107: icmp_seq=265 ttl=64 time=5.14 ms
+64 bytes from 192.168.1.107: icmp_seq=266 ttl=64 time=3.29 ms
+64 bytes from 192.168.1.107: icmp_seq=267 ttl=64 time=11.1 ms
+64 bytes from 192.168.1.107: icmp_seq=268 ttl=64 time=8.94 ms
+64 bytes from 192.168.1.107: icmp_seq=269 ttl=64 time=9.17 ms
+64 bytes from 192.168.1.107: icmp_seq=270 ttl=64 time=2.97 ms
+64 bytes from 192.168.1.107: icmp_seq=271 ttl=64 time=14.9 ms
+64 bytes from 192.168.1.107: icmp_seq=272 ttl=64 time=4.74 ms
+64 bytes from 192.168.1.107: icmp_seq=273 ttl=64 time=5.14 ms
+64 bytes from 192.168.1.107: icmp_seq=274 ttl=64 time=3.37 ms
+64 bytes from 192.168.1.107: icmp_seq=275 ttl=64 time=8.53 ms
+64 bytes from 192.168.1.107: icmp_seq=276 ttl=64 time=6.36 ms
+64 bytes from 192.168.1.107: icmp_seq=277 ttl=64 time=4.41 ms
+64 bytes from 192.168.1.107: icmp_seq=278 ttl=64 time=105 ms
+64 bytes from 192.168.1.107: icmp_seq=279 ttl=64 time=3.19 ms
+64 bytes from 192.168.1.107: icmp_seq=280 ttl=64 time=4.47 ms
+64 bytes from 192.168.1.107: icmp_seq=281 ttl=64 time=10.2 ms
+64 bytes from 192.168.1.107: icmp_seq=282 ttl=64 time=6.35 ms
+64 bytes from 192.168.1.107: icmp_seq=283 ttl=64 time=13.0 ms
+64 bytes from 192.168.1.107: icmp_seq=284 ttl=64 time=5.45 ms
+64 bytes from 192.168.1.107: icmp_seq=285 ttl=64 time=3.58 ms
+64 bytes from 192.168.1.107: icmp_seq=286 ttl=64 time=3.00 ms
+64 bytes from 192.168.1.107: icmp_seq=287 ttl=64 time=11.4 ms
+64 bytes from 192.168.1.107: icmp_seq=288 ttl=64 time=20.1 ms
+64 bytes from 192.168.1.107: icmp_seq=289 ttl=64 time=15.4 ms
+64 bytes from 192.168.1.107: icmp_seq=290 ttl=64 time=12.2 ms
+64 bytes from 192.168.1.107: icmp_seq=291 ttl=64 time=3.19 ms
+64 bytes from 192.168.1.107: icmp_seq=292 ttl=64 time=8.79 ms
+64 bytes from 192.168.1.107: icmp_seq=293 ttl=64 time=3.44 ms
+64 bytes from 192.168.1.107: icmp_seq=294 ttl=64 time=6.01 ms
+64 bytes from 192.168.1.107: icmp_seq=295 ttl=64 time=5.80 ms
+64 bytes from 192.168.1.107: icmp_seq=296 ttl=64 time=13.3 ms
+64 bytes from 192.168.1.107: icmp_seq=297 ttl=64 time=3.26 ms
+64 bytes from 192.168.1.107: icmp_seq=298 ttl=64 time=8.79 ms
+64 bytes from 192.168.1.107: icmp_seq=299 ttl=64 time=3.04 ms
+64 bytes from 192.168.1.107: icmp_seq=300 ttl=64 time=11.5 ms
+64 bytes from 192.168.1.107: icmp_seq=301 ttl=64 time=3.59 ms
+64 bytes from 192.168.1.107: icmp_seq=302 ttl=64 time=5.68 ms
+64 bytes from 192.168.1.107: icmp_seq=303 ttl=64 time=3.78 ms
+64 bytes from 192.168.1.107: icmp_seq=304 ttl=64 time=10.5 ms
+64 bytes from 192.168.1.107: icmp_seq=305 ttl=64 time=7.87 ms
+64 bytes from 192.168.1.107: icmp_seq=306 ttl=64 time=117 ms
+64 bytes from 192.168.1.107: icmp_seq=307 ttl=64 time=2451 ms
+64 bytes from 192.168.1.107: icmp_seq=308 ttl=64 time=4462 ms
+64 bytes from 192.168.1.107: icmp_seq=309 ttl=64 time=4806 ms
+64 bytes from 192.168.1.107: icmp_seq=310 ttl=64 time=5013 ms
+64 bytes from 192.168.1.107: icmp_seq=311 ttl=64 time=4464 ms
+64 bytes from 192.168.1.107: icmp_seq=312 ttl=64 time=3636 ms
+64 bytes from 192.168.1.107: icmp_seq=313 ttl=64 time=2897 ms
+64 bytes from 192.168.1.107: icmp_seq=314 ttl=64 time=3124 ms
+64 bytes from 192.168.1.107: icmp_seq=315 ttl=64 time=2320 ms
+64 bytes from 192.168.1.107: icmp_seq=316 ttl=64 time=1691 ms
+64 bytes from 192.168.1.107: icmp_seq=317 ttl=64 time=832 ms
+64 bytes from 192.168.1.107: icmp_seq=318 ttl=64 time=27.0 ms
+64 bytes from 192.168.1.107: icmp_seq=319 ttl=64 time=11.9 ms
+64 bytes from 192.168.1.107: icmp_seq=320 ttl=64 time=60.7 ms
+64 bytes from 192.168.1.107: icmp_seq=321 ttl=64 time=966 ms
+64 bytes from 192.168.1.107: icmp_seq=322 ttl=64 time=1658 ms
+64 bytes from 192.168.1.107: icmp_seq=323 ttl=64 time=2301 ms
+64 bytes from 192.168.1.107: icmp_seq=324 ttl=64 time=3381 ms
+64 bytes from 192.168.1.107: icmp_seq=325 ttl=64 time=4190 ms
+64 bytes from 192.168.1.107: icmp_seq=326 ttl=64 time=3712 ms
+64 bytes from 192.168.1.107: icmp_seq=327 ttl=64 time=3605 ms
+64 bytes from 192.168.1.107: icmp_seq=328 ttl=64 time=2949 ms
+64 bytes from 192.168.1.107: icmp_seq=329 ttl=64 time=2085 ms
+64 bytes from 192.168.1.107: icmp_seq=330 ttl=64 time=1655 ms
+64 bytes from 192.168.1.107: icmp_seq=331 ttl=64 time=916 ms
+64 bytes from 192.168.1.107: icmp_seq=332 ttl=64 time=178 ms
+64 bytes from 192.168.1.107: icmp_seq=333 ttl=64 time=4.16 ms
+64 bytes from 192.168.1.107: icmp_seq=334 ttl=64 time=11.8 ms
+64 bytes from 192.168.1.107: icmp_seq=335 ttl=64 time=9.43 ms
+64 bytes from 192.168.1.107: icmp_seq=336 ttl=64 time=9.19 ms
+64 bytes from 192.168.1.107: icmp_seq=337 ttl=64 time=6.92 ms
+64 bytes from 192.168.1.107: icmp_seq=338 ttl=64 time=234 ms
+64 bytes from 192.168.1.107: icmp_seq=339 ttl=64 time=3.99 ms
+64 bytes from 192.168.1.107: icmp_seq=340 ttl=64 time=17.0 ms
+64 bytes from 192.168.1.107: icmp_seq=341 ttl=64 time=11.3 ms
+64 bytes from 192.168.1.107: icmp_seq=342 ttl=64 time=7.12 ms
+64 bytes from 192.168.1.107: icmp_seq=343 ttl=64 time=2.66 ms
+64 bytes from 192.168.1.107: icmp_seq=344 ttl=64 time=3.71 ms
+64 bytes from 192.168.1.107: icmp_seq=345 ttl=64 time=5.41 ms
+64 bytes from 192.168.1.107: icmp_seq=346 ttl=64 time=23.9 ms
+64 bytes from 192.168.1.107: icmp_seq=347 ttl=64 time=4.28 ms
+64 bytes from 192.168.1.107: icmp_seq=348 ttl=64 time=9.33 ms
+64 bytes from 192.168.1.107: icmp_seq=349 ttl=64 time=6.94 ms
+64 bytes from 192.168.1.107: icmp_seq=350 ttl=64 time=2.93 ms
+64 bytes from 192.168.1.107: icmp_seq=351 ttl=64 time=3.69 ms
+64 bytes from 192.168.1.107: icmp_seq=352 ttl=64 time=2.91 ms
+64 bytes from 192.168.1.107: icmp_seq=353 ttl=64 time=11.6 ms
+64 bytes from 192.168.1.107: icmp_seq=354 ttl=64 time=9.71 ms
+64 bytes from 192.168.1.107: icmp_seq=355 ttl=64 time=7.64 ms
+64 bytes from 192.168.1.107: icmp_seq=356 ttl=64 time=5.43 ms
+64 bytes from 192.168.1.107: icmp_seq=357 ttl=64 time=3.93 ms
+64 bytes from 192.168.1.107: icmp_seq=358 ttl=64 time=22.4 ms
+64 bytes from 192.168.1.107: icmp_seq=359 ttl=64 time=11.7 ms
+64 bytes from 192.168.1.107: icmp_seq=360 ttl=64 time=8.37 ms
+64 bytes from 192.168.1.107: icmp_seq=361 ttl=64 time=6.63 ms
+64 bytes from 192.168.1.107: icmp_seq=362 ttl=64 time=2.93 ms
+64 bytes from 192.168.1.107: icmp_seq=363 ttl=64 time=4.20 ms
+64 bytes from 192.168.1.107: icmp_seq=364 ttl=64 time=11.6 ms
+64 bytes from 192.168.1.107: icmp_seq=365 ttl=64 time=4.65 ms
+64 bytes from 192.168.1.107: icmp_seq=366 ttl=64 time=7.35 ms
+64 bytes from 192.168.1.107: icmp_seq=367 ttl=64 time=15.2 ms
+64 bytes from 192.168.1.107: icmp_seq=368 ttl=64 time=13.4 ms
+64 bytes from 192.168.1.107: icmp_seq=369 ttl=64 time=3.08 ms
+64 bytes from 192.168.1.107: icmp_seq=370 ttl=64 time=10.3 ms
+64 bytes from 192.168.1.107: icmp_seq=371 ttl=64 time=10.1 ms
+64 bytes from 192.168.1.107: icmp_seq=372 ttl=64 time=4.86 ms
+64 bytes from 192.168.1.107: icmp_seq=373 ttl=64 time=24.4 ms
+64 bytes from 192.168.1.107: icmp_seq=374 ttl=64 time=6.77 ms
+64 bytes from 192.168.1.107: icmp_seq=375 ttl=64 time=3.09 ms
+64 bytes from 192.168.1.107: icmp_seq=376 ttl=64 time=10.2 ms
+64 bytes from 192.168.1.107: icmp_seq=377 ttl=64 time=10.1 ms
+^C
+--- 192.168.1.107 ping statistics ---
+377 packets transmitted, 376 received, 0.265252% packet loss, time 376995ms
+rtt min/avg/max/mdev = 2.420/177.986/5012.521/736.595 ms, pipe 5
+^C[32m2023-05-16 16:46:01.348[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-16 16:46:01.349[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-16 16:46:01.369[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 1kbps
+[32m2023-05-16 16:48:05.247[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-16 16:48:05.247[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1kbps (minimum: 1kbps) and priority: 0[0m
+[32m2023-05-16 16:48:05.248[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+PING 192.168.1.107 (192.168.1.107) from 192.168.1.61 wlp4s0: 56(84) bytes of data.
+64 bytes from 192.168.1.107: icmp_seq=1 ttl=64 time=7.49 ms
+64 bytes from 192.168.1.107: icmp_seq=2 ttl=64 time=5.79 ms
+64 bytes from 192.168.1.107: icmp_seq=3 ttl=64 time=3.91 ms
+64 bytes from 192.168.1.107: icmp_seq=4 ttl=64 time=12.9 ms
+64 bytes from 192.168.1.107: icmp_seq=5 ttl=64 time=4.91 ms
+64 bytes from 192.168.1.107: icmp_seq=6 ttl=64 time=2.99 ms
+64 bytes from 192.168.1.107: icmp_seq=7 ttl=64 time=9.17 ms
+64 bytes from 192.168.1.107: icmp_seq=8 ttl=64 time=3.88 ms
+64 bytes from 192.168.1.107: icmp_seq=9 ttl=64 time=6.49 ms
+64 bytes from 192.168.1.107: icmp_seq=10 ttl=64 time=4.31 ms
+64 bytes from 192.168.1.107: icmp_seq=11 ttl=64 time=3.73 ms
+64 bytes from 192.168.1.107: icmp_seq=12 ttl=64 time=3.02 ms
+64 bytes from 192.168.1.107: icmp_seq=13 ttl=64 time=4.02 ms
+64 bytes from 192.168.1.107: icmp_seq=14 ttl=64 time=8.45 ms
+64 bytes from 192.168.1.107: icmp_seq=15 ttl=64 time=7.04 ms
+64 bytes from 192.168.1.107: icmp_seq=16 ttl=64 time=5.31 ms
+64 bytes from 192.168.1.107: icmp_seq=17 ttl=64 time=2.60 ms
+64 bytes from 192.168.1.107: icmp_seq=18 ttl=64 time=2.99 ms
+64 bytes from 192.168.1.107: icmp_seq=19 ttl=64 time=10.4 ms
+64 bytes from 192.168.1.107: icmp_seq=20 ttl=64 time=3.50 ms
+64 bytes from 192.168.1.107: icmp_seq=21 ttl=64 time=8.90 ms
+64 bytes from 192.168.1.107: icmp_seq=22 ttl=64 time=7.39 ms
+64 bytes from 192.168.1.107: icmp_seq=23 ttl=64 time=5.73 ms
+64 bytes from 192.168.1.107: icmp_seq=24 ttl=64 time=3.18 ms
+64 bytes from 192.168.1.107: icmp_seq=25 ttl=64 time=2.90 ms
+64 bytes from 192.168.1.107: icmp_seq=26 ttl=64 time=2.89 ms
+64 bytes from 192.168.1.107: icmp_seq=27 ttl=64 time=9.17 ms
+64 bytes from 192.168.1.107: icmp_seq=28 ttl=64 time=12.5 ms
+64 bytes from 192.168.1.107: icmp_seq=29 ttl=64 time=4.12 ms
+64 bytes from 192.168.1.107: icmp_seq=30 ttl=64 time=4.11 ms
+64 bytes from 192.168.1.107: icmp_seq=31 ttl=64 time=4.63 ms
+64 bytes from 192.168.1.107: icmp_seq=32 ttl=64 time=10.6 ms
+64 bytes from 192.168.1.107: icmp_seq=33 ttl=64 time=9.09 ms
+64 bytes from 192.168.1.107: icmp_seq=34 ttl=64 time=28.6 ms
+64 bytes from 192.168.1.107: icmp_seq=35 ttl=64 time=5.27 ms
+64 bytes from 192.168.1.107: icmp_seq=36 ttl=64 time=12.1 ms
+64 bytes from 192.168.1.107: icmp_seq=37 ttl=64 time=7.83 ms
+64 bytes from 192.168.1.107: icmp_seq=38 ttl=64 time=5.59 ms
+64 bytes from 192.168.1.107: icmp_seq=39 ttl=64 time=15.3 ms
+64 bytes from 192.168.1.107: icmp_seq=40 ttl=64 time=3.50 ms
+64 bytes from 192.168.1.107: icmp_seq=41 ttl=64 time=14.6 ms
+64 bytes from 192.168.1.107: icmp_seq=42 ttl=64 time=15.5 ms
+64 bytes from 192.168.1.107: icmp_seq=43 ttl=64 time=4.06 ms
+64 bytes from 192.168.1.107: icmp_seq=44 ttl=64 time=3.25 ms
+64 bytes from 192.168.1.107: icmp_seq=45 ttl=64 time=15.5 ms
+64 bytes from 192.168.1.107: icmp_seq=46 ttl=64 time=5.37 ms
+64 bytes from 192.168.1.107: icmp_seq=47 ttl=64 time=5.58 ms
+64 bytes from 192.168.1.107: icmp_seq=48 ttl=64 time=12.4 ms
+64 bytes from 192.168.1.107: icmp_seq=49 ttl=64 time=10.3 ms
+64 bytes from 192.168.1.107: icmp_seq=50 ttl=64 time=8.86 ms
+64 bytes from 192.168.1.107: icmp_seq=51 ttl=64 time=2.75 ms
+64 bytes from 192.168.1.107: icmp_seq=52 ttl=64 time=3.02 ms
+64 bytes from 192.168.1.107: icmp_seq=53 ttl=64 time=4.83 ms
+64 bytes from 192.168.1.107: icmp_seq=54 ttl=64 time=5.21 ms
+64 bytes from 192.168.1.107: icmp_seq=55 ttl=64 time=14.2 ms
+64 bytes from 192.168.1.107: icmp_seq=56 ttl=64 time=3.03 ms
+64 bytes from 192.168.1.107: icmp_seq=57 ttl=64 time=8.76 ms
+64 bytes from 192.168.1.107: icmp_seq=58 ttl=64 time=8.34 ms
+64 bytes from 192.168.1.107: icmp_seq=59 ttl=64 time=14.3 ms
+64 bytes from 192.168.1.107: icmp_seq=60 ttl=64 time=4.64 ms
+64 bytes from 192.168.1.107: icmp_seq=61 ttl=64 time=9.66 ms
+64 bytes from 192.168.1.107: icmp_seq=62 ttl=64 time=9.95 ms
+64 bytes from 192.168.1.107: icmp_seq=63 ttl=64 time=3.72 ms
+64 bytes from 192.168.1.107: icmp_seq=64 ttl=64 time=7.23 ms
+64 bytes from 192.168.1.107: icmp_seq=65 ttl=64 time=5.04 ms
+64 bytes from 192.168.1.107: icmp_seq=66 ttl=64 time=3.09 ms
+64 bytes from 192.168.1.107: icmp_seq=67 ttl=64 time=11.4 ms
+64 bytes from 192.168.1.107: icmp_seq=68 ttl=64 time=10.2 ms
+64 bytes from 192.168.1.107: icmp_seq=69 ttl=64 time=2.84 ms
+64 bytes from 192.168.1.107: icmp_seq=70 ttl=64 time=6.63 ms
+64 bytes from 192.168.1.107: icmp_seq=71 ttl=64 time=4.40 ms
+64 bytes from 192.168.1.107: icmp_seq=72 ttl=64 time=2.89 ms
+64 bytes from 192.168.1.107: icmp_seq=73 ttl=64 time=4.92 ms
+64 bytes from 192.168.1.107: icmp_seq=74 ttl=64 time=3.18 ms
+64 bytes from 192.168.1.107: icmp_seq=75 ttl=64 time=2.90 ms
+64 bytes from 192.168.1.107: icmp_seq=76 ttl=64 time=3.37 ms
+64 bytes from 192.168.1.107: icmp_seq=77 ttl=64 time=3.05 ms
+64 bytes from 192.168.1.107: icmp_seq=78 ttl=64 time=8.89 ms
+64 bytes from 192.168.1.107: icmp_seq=79 ttl=64 time=3.01 ms
+64 bytes from 192.168.1.107: icmp_seq=80 ttl=64 time=3.39 ms
+64 bytes from 192.168.1.107: icmp_seq=81 ttl=64 time=5.33 ms
+64 bytes from 192.168.1.107: icmp_seq=82 ttl=64 time=8.63 ms
+64 bytes from 192.168.1.107: icmp_seq=83 ttl=64 time=11.9 ms
+64 bytes from 192.168.1.107: icmp_seq=84 ttl=64 time=4.20 ms
+64 bytes from 192.168.1.107: icmp_seq=85 ttl=64 time=12.5 ms
+64 bytes from 192.168.1.107: icmp_seq=86 ttl=64 time=4.77 ms
+64 bytes from 192.168.1.107: icmp_seq=87 ttl=64 time=9.78 ms
+64 bytes from 192.168.1.107: icmp_seq=88 ttl=64 time=3.21 ms
+64 bytes from 192.168.1.107: icmp_seq=89 ttl=64 time=6.19 ms
+64 bytes from 192.168.1.107: icmp_seq=90 ttl=64 time=64.9 ms
+64 bytes from 192.168.1.107: icmp_seq=91 ttl=64 time=68.2 ms
+64 bytes from 192.168.1.107: icmp_seq=92 ttl=64 time=8.30 ms
+64 bytes from 192.168.1.107: icmp_seq=93 ttl=64 time=66.8 ms
+64 bytes from 192.168.1.107: icmp_seq=94 ttl=64 time=6.30 ms
+64 bytes from 192.168.1.107: icmp_seq=95 ttl=64 time=6.94 ms
+64 bytes from 192.168.1.107: icmp_seq=96 ttl=64 time=3.01 ms
+64 bytes from 192.168.1.107: icmp_seq=97 ttl=64 time=11.5 ms
+64 bytes from 192.168.1.107: icmp_seq=98 ttl=64 time=10.6 ms
+64 bytes from 192.168.1.107: icmp_seq=99 ttl=64 time=6.62 ms
+64 bytes from 192.168.1.107: icmp_seq=100 ttl=64 time=7.61 ms
+64 bytes from 192.168.1.107: icmp_seq=101 ttl=64 time=3.68 ms
+64 bytes from 192.168.1.107: icmp_seq=102 ttl=64 time=4.64 ms
+64 bytes from 192.168.1.107: icmp_seq=103 ttl=64 time=8.73 ms
+64 bytes from 192.168.1.107: icmp_seq=104 ttl=64 time=2.92 ms
+64 bytes from 192.168.1.107: icmp_seq=105 ttl=64 time=8.71 ms
+64 bytes from 192.168.1.107: icmp_seq=106 ttl=64 time=2.91 ms
+64 bytes from 192.168.1.107: icmp_seq=107 ttl=64 time=7.76 ms
+64 bytes from 192.168.1.107: icmp_seq=108 ttl=64 time=3.00 ms
+64 bytes from 192.168.1.107: icmp_seq=109 ttl=64 time=8.88 ms
+64 bytes from 192.168.1.107: icmp_seq=110 ttl=64 time=2.88 ms
+64 bytes from 192.168.1.107: icmp_seq=111 ttl=64 time=3.20 ms
+64 bytes from 192.168.1.107: icmp_seq=112 ttl=64 time=3.73 ms
+64 bytes from 192.168.1.107: icmp_seq=113 ttl=64 time=5.44 ms
+64 bytes from 192.168.1.107: icmp_seq=114 ttl=64 time=6.66 ms
+64 bytes from 192.168.1.107: icmp_seq=115 ttl=64 time=7.84 ms
+64 bytes from 192.168.1.107: icmp_seq=116 ttl=64 time=5.17 ms
+64 bytes from 192.168.1.107: icmp_seq=117 ttl=64 time=4.26 ms
+64 bytes from 192.168.1.107: icmp_seq=118 ttl=64 time=3.05 ms
+64 bytes from 192.168.1.107: icmp_seq=119 ttl=64 time=10.5 ms
+64 bytes from 192.168.1.107: icmp_seq=120 ttl=64 time=14.9 ms
+64 bytes from 192.168.1.107: icmp_seq=121 ttl=64 time=12.8 ms
+64 bytes from 192.168.1.107: icmp_seq=122 ttl=64 time=7.68 ms
+64 bytes from 192.168.1.107: icmp_seq=123 ttl=64 time=11.1 ms
+64 bytes from 192.168.1.107: icmp_seq=124 ttl=64 time=53.5 ms
+64 bytes from 192.168.1.107: icmp_seq=125 ttl=64 time=56.2 ms
+64 bytes from 192.168.1.107: icmp_seq=126 ttl=64 time=3.59 ms
+64 bytes from 192.168.1.107: icmp_seq=127 ttl=64 time=56.4 ms
+64 bytes from 192.168.1.107: icmp_seq=128 ttl=64 time=9.09 ms
+64 bytes from 192.168.1.107: icmp_seq=129 ttl=64 time=6.39 ms
+64 bytes from 192.168.1.107: icmp_seq=130 ttl=64 time=8.70 ms
+64 bytes from 192.168.1.107: icmp_seq=131 ttl=64 time=10.8 ms
+64 bytes from 192.168.1.107: icmp_seq=132 ttl=64 time=11.4 ms
+64 bytes from 192.168.1.107: icmp_seq=133 ttl=64 time=3.27 ms
+64 bytes from 192.168.1.107: icmp_seq=134 ttl=64 time=12.9 ms
+64 bytes from 192.168.1.107: icmp_seq=135 ttl=64 time=17.8 ms
+64 bytes from 192.168.1.107: icmp_seq=136 ttl=64 time=11.1 ms
+64 bytes from 192.168.1.107: icmp_seq=137 ttl=64 time=3.69 ms
+64 bytes from 192.168.1.107: icmp_seq=138 ttl=64 time=9.98 ms
+64 bytes from 192.168.1.107: icmp_seq=139 ttl=64 time=11.3 ms
+64 bytes from 192.168.1.107: icmp_seq=140 ttl=64 time=7.67 ms
+64 bytes from 192.168.1.107: icmp_seq=141 ttl=64 time=3.12 ms
+64 bytes from 192.168.1.107: icmp_seq=142 ttl=64 time=8.32 ms
+64 bytes from 192.168.1.107: icmp_seq=143 ttl=64 time=3.15 ms
+64 bytes from 192.168.1.107: icmp_seq=144 ttl=64 time=16.2 ms
+64 bytes from 192.168.1.107: icmp_seq=145 ttl=64 time=11.1 ms
+64 bytes from 192.168.1.107: icmp_seq=146 ttl=64 time=8.05 ms
+64 bytes from 192.168.1.107: icmp_seq=147 ttl=64 time=3.36 ms
+64 bytes from 192.168.1.107: icmp_seq=148 ttl=64 time=8.50 ms
+64 bytes from 192.168.1.107: icmp_seq=149 ttl=64 time=4.46 ms
+64 bytes from 192.168.1.107: icmp_seq=150 ttl=64 time=6.99 ms
+64 bytes from 192.168.1.107: icmp_seq=151 ttl=64 time=14.7 ms
+64 bytes from 192.168.1.107: icmp_seq=152 ttl=64 time=3.05 ms
+64 bytes from 192.168.1.107: icmp_seq=153 ttl=64 time=12.4 ms
+64 bytes from 192.168.1.107: icmp_seq=154 ttl=64 time=5.71 ms
+64 bytes from 192.168.1.107: icmp_seq=155 ttl=64 time=3.30 ms
+64 bytes from 192.168.1.107: icmp_seq=156 ttl=64 time=7.94 ms
+64 bytes from 192.168.1.107: icmp_seq=157 ttl=64 time=3.99 ms
+64 bytes from 192.168.1.107: icmp_seq=158 ttl=64 time=29.8 ms
+64 bytes from 192.168.1.107: icmp_seq=159 ttl=64 time=31.7 ms
+64 bytes from 192.168.1.107: icmp_seq=160 ttl=64 time=5.67 ms
+64 bytes from 192.168.1.107: icmp_seq=161 ttl=64 time=32.5 ms
+64 bytes from 192.168.1.107: icmp_seq=162 ttl=64 time=6.92 ms
+64 bytes from 192.168.1.107: icmp_seq=163 ttl=64 time=4.08 ms
+64 bytes from 192.168.1.107: icmp_seq=164 ttl=64 time=3.33 ms
+64 bytes from 192.168.1.107: icmp_seq=165 ttl=64 time=5.87 ms
+64 bytes from 192.168.1.107: icmp_seq=166 ttl=64 time=3.06 ms
+64 bytes from 192.168.1.107: icmp_seq=167 ttl=64 time=5.55 ms
+64 bytes from 192.168.1.107: icmp_seq=168 ttl=64 time=2.94 ms
+64 bytes from 192.168.1.107: icmp_seq=169 ttl=64 time=9.22 ms
+64 bytes from 192.168.1.107: icmp_seq=170 ttl=64 time=4.87 ms
+64 bytes from 192.168.1.107: icmp_seq=171 ttl=64 time=8.43 ms
+64 bytes from 192.168.1.107: icmp_seq=172 ttl=64 time=8.78 ms
+64 bytes from 192.168.1.107: icmp_seq=173 ttl=64 time=4.83 ms
+64 bytes from 192.168.1.107: icmp_seq=174 ttl=64 time=5.71 ms
+64 bytes from 192.168.1.107: icmp_seq=175 ttl=64 time=4.40 ms
+64 bytes from 192.168.1.107: icmp_seq=176 ttl=64 time=3.24 ms
+64 bytes from 192.168.1.107: icmp_seq=177 ttl=64 time=6.92 ms
+64 bytes from 192.168.1.107: icmp_seq=178 ttl=64 time=4.45 ms
+64 bytes from 192.168.1.107: icmp_seq=179 ttl=64 time=12.4 ms
+64 bytes from 192.168.1.107: icmp_seq=180 ttl=64 time=4.15 ms
+64 bytes from 192.168.1.107: icmp_seq=181 ttl=64 time=3.96 ms
+64 bytes from 192.168.1.107: icmp_seq=182 ttl=64 time=2.83 ms
+64 bytes from 192.168.1.107: icmp_seq=183 ttl=64 time=14.1 ms
+64 bytes from 192.168.1.107: icmp_seq=184 ttl=64 time=11.8 ms
+64 bytes from 192.168.1.107: icmp_seq=185 ttl=64 time=12.8 ms
+64 bytes from 192.168.1.107: icmp_seq=186 ttl=64 time=3.56 ms
+64 bytes from 192.168.1.107: icmp_seq=187 ttl=64 time=4.78 ms
+64 bytes from 192.168.1.107: icmp_seq=188 ttl=64 time=4.31 ms
+64 bytes from 192.168.1.107: icmp_seq=189 ttl=64 time=4.87 ms
+64 bytes from 192.168.1.107: icmp_seq=190 ttl=64 time=2.89 ms
+64 bytes from 192.168.1.107: icmp_seq=191 ttl=64 time=8.45 ms
+64 bytes from 192.168.1.107: icmp_seq=192 ttl=64 time=11.9 ms
+64 bytes from 192.168.1.107: icmp_seq=193 ttl=64 time=13.9 ms
+64 bytes from 192.168.1.107: icmp_seq=194 ttl=64 time=109 ms
+64 bytes from 192.168.1.107: icmp_seq=195 ttl=64 time=20.8 ms
+64 bytes from 192.168.1.107: icmp_seq=196 ttl=64 time=3.07 ms
+64 bytes from 192.168.1.107: icmp_seq=197 ttl=64 time=5.36 ms
+64 bytes from 192.168.1.107: icmp_seq=198 ttl=64 time=6.55 ms
+64 bytes from 192.168.1.107: icmp_seq=199 ttl=64 time=3.34 ms
+64 bytes from 192.168.1.107: icmp_seq=200 ttl=64 time=3.20 ms
+64 bytes from 192.168.1.107: icmp_seq=201 ttl=64 time=7.27 ms
+64 bytes from 192.168.1.107: icmp_seq=202 ttl=64 time=19.8 ms
+64 bytes from 192.168.1.107: icmp_seq=203 ttl=64 time=3.29 ms
+64 bytes from 192.168.1.107: icmp_seq=204 ttl=64 time=2.92 ms
+64 bytes from 192.168.1.107: icmp_seq=205 ttl=64 time=3.02 ms
+64 bytes from 192.168.1.107: icmp_seq=206 ttl=64 time=16.7 ms
+64 bytes from 192.168.1.107: icmp_seq=207 ttl=64 time=3.79 ms
+64 bytes from 192.168.1.107: icmp_seq=208 ttl=64 time=2.91 ms
+64 bytes from 192.168.1.107: icmp_seq=209 ttl=64 time=10.1 ms
+64 bytes from 192.168.1.107: icmp_seq=210 ttl=64 time=5.75 ms
+64 bytes from 192.168.1.107: icmp_seq=211 ttl=64 time=5.19 ms
+64 bytes from 192.168.1.107: icmp_seq=212 ttl=64 time=3.50 ms
+64 bytes from 192.168.1.107: icmp_seq=213 ttl=64 time=3.57 ms
+64 bytes from 192.168.1.107: icmp_seq=214 ttl=64 time=9.94 ms
+64 bytes from 192.168.1.107: icmp_seq=215 ttl=64 time=6.45 ms
+64 bytes from 192.168.1.107: icmp_seq=216 ttl=64 time=4.02 ms
+64 bytes from 192.168.1.107: icmp_seq=217 ttl=64 time=11.0 ms
+64 bytes from 192.168.1.107: icmp_seq=218 ttl=64 time=5.93 ms
+64 bytes from 192.168.1.107: icmp_seq=219 ttl=64 time=12.0 ms
+64 bytes from 192.168.1.107: icmp_seq=220 ttl=64 time=12.9 ms
+64 bytes from 192.168.1.107: icmp_seq=221 ttl=64 time=3.01 ms
+64 bytes from 192.168.1.107: icmp_seq=222 ttl=64 time=8.38 ms
+64 bytes from 192.168.1.107: icmp_seq=223 ttl=64 time=2.92 ms
+64 bytes from 192.168.1.107: icmp_seq=224 ttl=64 time=5.01 ms
+64 bytes from 192.168.1.107: icmp_seq=225 ttl=64 time=3.12 ms
+64 bytes from 192.168.1.107: icmp_seq=226 ttl=64 time=5.76 ms
+64 bytes from 192.168.1.107: icmp_seq=227 ttl=64 time=3.16 ms
+64 bytes from 192.168.1.107: icmp_seq=228 ttl=64 time=8.98 ms
+64 bytes from 192.168.1.107: icmp_seq=229 ttl=64 time=17.8 ms
+64 bytes from 192.168.1.107: icmp_seq=230 ttl=64 time=6.14 ms
+64 bytes from 192.168.1.107: icmp_seq=231 ttl=64 time=16.6 ms
+64 bytes from 192.168.1.107: icmp_seq=232 ttl=64 time=110 ms
+64 bytes from 192.168.1.107: icmp_seq=233 ttl=64 time=4.80 ms
+64 bytes from 192.168.1.107: icmp_seq=234 ttl=64 time=3.21 ms
+64 bytes from 192.168.1.107: icmp_seq=235 ttl=64 time=7.14 ms
+64 bytes from 192.168.1.107: icmp_seq=236 ttl=64 time=5.10 ms
+64 bytes from 192.168.1.107: icmp_seq=237 ttl=64 time=3.29 ms
+64 bytes from 192.168.1.107: icmp_seq=238 ttl=64 time=7.62 ms
+64 bytes from 192.168.1.107: icmp_seq=239 ttl=64 time=4.06 ms
+64 bytes from 192.168.1.107: icmp_seq=240 ttl=64 time=4.32 ms
+64 bytes from 192.168.1.107: icmp_seq=241 ttl=64 time=3.10 ms
+64 bytes from 192.168.1.107: icmp_seq=242 ttl=64 time=5.56 ms
+64 bytes from 192.168.1.107: icmp_seq=243 ttl=64 time=3.66 ms
+64 bytes from 192.168.1.107: icmp_seq=244 ttl=64 time=11.1 ms
+64 bytes from 192.168.1.107: icmp_seq=245 ttl=64 time=4.22 ms
+64 bytes from 192.168.1.107: icmp_seq=246 ttl=64 time=3.19 ms
+64 bytes from 192.168.1.107: icmp_seq=247 ttl=64 time=16.4 ms
+64 bytes from 192.168.1.107: icmp_seq=248 ttl=64 time=7.09 ms
+64 bytes from 192.168.1.107: icmp_seq=249 ttl=64 time=5.22 ms
+64 bytes from 192.168.1.107: icmp_seq=250 ttl=64 time=4.29 ms
+64 bytes from 192.168.1.107: icmp_seq=251 ttl=64 time=8.92 ms
+64 bytes from 192.168.1.107: icmp_seq=252 ttl=64 time=4.39 ms
+64 bytes from 192.168.1.107: icmp_seq=253 ttl=64 time=3.12 ms
+64 bytes from 192.168.1.107: icmp_seq=254 ttl=64 time=3.05 ms
+64 bytes from 192.168.1.107: icmp_seq=255 ttl=64 time=12.3 ms
+64 bytes from 192.168.1.107: icmp_seq=256 ttl=64 time=6.20 ms
+64 bytes from 192.168.1.107: icmp_seq=257 ttl=64 time=3.08 ms
+64 bytes from 192.168.1.107: icmp_seq=258 ttl=64 time=3.23 ms
+64 bytes from 192.168.1.107: icmp_seq=259 ttl=64 time=4.42 ms
+64 bytes from 192.168.1.107: icmp_seq=260 ttl=64 time=6.06 ms
+64 bytes from 192.168.1.107: icmp_seq=261 ttl=64 time=10.1 ms
+64 bytes from 192.168.1.107: icmp_seq=262 ttl=64 time=12.1 ms
+64 bytes from 192.168.1.107: icmp_seq=263 ttl=64 time=10.7 ms
+64 bytes from 192.168.1.107: icmp_seq=264 ttl=64 time=2.96 ms
+64 bytes from 192.168.1.107: icmp_seq=265 ttl=64 time=3.51 ms
+64 bytes from 192.168.1.107: icmp_seq=266 ttl=64 time=3.79 ms
+64 bytes from 192.168.1.107: icmp_seq=267 ttl=64 time=3.02 ms
+64 bytes from 192.168.1.107: icmp_seq=268 ttl=64 time=3.83 ms
+64 bytes from 192.168.1.107: icmp_seq=269 ttl=64 time=6.19 ms
+64 bytes from 192.168.1.107: icmp_seq=270 ttl=64 time=5.39 ms
+64 bytes from 192.168.1.107: icmp_seq=271 ttl=64 time=5.95 ms
+64 bytes from 192.168.1.107: icmp_seq=272 ttl=64 time=5.98 ms
+64 bytes from 192.168.1.107: icmp_seq=273 ttl=64 time=3.22 ms
+64 bytes from 192.168.1.107: icmp_seq=274 ttl=64 time=11.2 ms
+64 bytes from 192.168.1.107: icmp_seq=275 ttl=64 time=2.85 ms
+64 bytes from 192.168.1.107: icmp_seq=276 ttl=64 time=9.17 ms
+64 bytes from 192.168.1.107: icmp_seq=277 ttl=64 time=3.80 ms
+64 bytes from 192.168.1.107: icmp_seq=278 ttl=64 time=3.99 ms
+64 bytes from 192.168.1.107: icmp_seq=279 ttl=64 time=4.29 ms
+64 bytes from 192.168.1.107: icmp_seq=280 ttl=64 time=4.10 ms
+64 bytes from 192.168.1.107: icmp_seq=281 ttl=64 time=5.54 ms
+64 bytes from 192.168.1.107: icmp_seq=282 ttl=64 time=4.14 ms
+64 bytes from 192.168.1.107: icmp_seq=283 ttl=64 time=4.53 ms
+64 bytes from 192.168.1.107: icmp_seq=284 ttl=64 time=6.11 ms
+64 bytes from 192.168.1.107: icmp_seq=285 ttl=64 time=4.33 ms
+64 bytes from 192.168.1.107: icmp_seq=286 ttl=64 time=1735 ms
+64 bytes from 192.168.1.107: icmp_seq=287 ttl=64 time=1758 ms
+64 bytes from 192.168.1.107: icmp_seq=288 ttl=64 time=1687 ms
+64 bytes from 192.168.1.107: icmp_seq=289 ttl=64 time=1255 ms
+64 bytes from 192.168.1.107: icmp_seq=290 ttl=64 time=618 ms
+64 bytes from 192.168.1.107: icmp_seq=291 ttl=64 time=493 ms
+64 bytes from 192.168.1.107: icmp_seq=292 ttl=64 time=5.72 ms
+64 bytes from 192.168.1.107: icmp_seq=293 ttl=64 time=4.15 ms
+64 bytes from 192.168.1.107: icmp_seq=294 ttl=64 time=6.38 ms
+64 bytes from 192.168.1.107: icmp_seq=295 ttl=64 time=3.45 ms
+64 bytes from 192.168.1.107: icmp_seq=296 ttl=64 time=11.0 ms
+64 bytes from 192.168.1.107: icmp_seq=297 ttl=64 time=4.23 ms
+64 bytes from 192.168.1.107: icmp_seq=298 ttl=64 time=3.23 ms
+64 bytes from 192.168.1.107: icmp_seq=299 ttl=64 time=3.13 ms
+64 bytes from 192.168.1.107: icmp_seq=300 ttl=64 time=3.64 ms
+64 bytes from 192.168.1.107: icmp_seq=301 ttl=64 time=3.38 ms
+64 bytes from 192.168.1.107: icmp_seq=302 ttl=64 time=8.30 ms
+64 bytes from 192.168.1.107: icmp_seq=303 ttl=64 time=8.81 ms
+64 bytes from 192.168.1.107: icmp_seq=304 ttl=64 time=2.74 ms
+64 bytes from 192.168.1.107: icmp_seq=305 ttl=64 time=4.08 ms
+64 bytes from 192.168.1.107: icmp_seq=306 ttl=64 time=3.13 ms
+64 bytes from 192.168.1.107: icmp_seq=307 ttl=64 time=10.4 ms
+64 bytes from 192.168.1.107: icmp_seq=308 ttl=64 time=9.63 ms
+64 bytes from 192.168.1.107: icmp_seq=309 ttl=64 time=3.23 ms
+64 bytes from 192.168.1.107: icmp_seq=310 ttl=64 time=4.80 ms
+64 bytes from 192.168.1.107: icmp_seq=311 ttl=64 time=3.81 ms
+64 bytes from 192.168.1.107: icmp_seq=312 ttl=64 time=6.00 ms
+64 bytes from 192.168.1.107: icmp_seq=313 ttl=64 time=10.2 ms
+64 bytes from 192.168.1.107: icmp_seq=314 ttl=64 time=6.26 ms
+64 bytes from 192.168.1.107: icmp_seq=315 ttl=64 time=3.13 ms
+64 bytes from 192.168.1.107: icmp_seq=316 ttl=64 time=4.11 ms
+64 bytes from 192.168.1.107: icmp_seq=317 ttl=64 time=3.17 ms
+64 bytes from 192.168.1.107: icmp_seq=318 ttl=64 time=2.99 ms
+64 bytes from 192.168.1.107: icmp_seq=319 ttl=64 time=2.91 ms
+64 bytes from 192.168.1.107: icmp_seq=320 ttl=64 time=7.86 ms
+64 bytes from 192.168.1.107: icmp_seq=321 ttl=64 time=7.62 ms
+64 bytes from 192.168.1.107: icmp_seq=322 ttl=64 time=6.79 ms
+64 bytes from 192.168.1.107: icmp_seq=323 ttl=64 time=13.1 ms
+64 bytes from 192.168.1.107: icmp_seq=324 ttl=64 time=3.05 ms
+64 bytes from 192.168.1.107: icmp_seq=325 ttl=64 time=3.02 ms
+64 bytes from 192.168.1.107: icmp_seq=326 ttl=64 time=2.94 ms
+64 bytes from 192.168.1.107: icmp_seq=327 ttl=64 time=8.50 ms
+64 bytes from 192.168.1.107: icmp_seq=328 ttl=64 time=3.07 ms
+64 bytes from 192.168.1.107: icmp_seq=329 ttl=64 time=4.52 ms
+64 bytes from 192.168.1.107: icmp_seq=330 ttl=64 time=4.27 ms
+64 bytes from 192.168.1.107: icmp_seq=331 ttl=64 time=3.74 ms
+64 bytes from 192.168.1.107: icmp_seq=332 ttl=64 time=3.24 ms
+64 bytes from 192.168.1.107: icmp_seq=333 ttl=64 time=33.3 ms
+64 bytes from 192.168.1.107: icmp_seq=334 ttl=64 time=5.27 ms
+64 bytes from 192.168.1.107: icmp_seq=335 ttl=64 time=6.33 ms
+64 bytes from 192.168.1.107: icmp_seq=336 ttl=64 time=3.44 ms
+64 bytes from 192.168.1.107: icmp_seq=337 ttl=64 time=4.56 ms
+64 bytes from 192.168.1.107: icmp_seq=338 ttl=64 time=3.35 ms
+64 bytes from 192.168.1.107: icmp_seq=339 ttl=64 time=32.0 ms
+64 bytes from 192.168.1.107: icmp_seq=340 ttl=64 time=127 ms
+64 bytes from 192.168.1.107: icmp_seq=341 ttl=64 time=47.5 ms
+64 bytes from 192.168.1.107: icmp_seq=342 ttl=64 time=5.83 ms
+64 bytes from 192.168.1.107: icmp_seq=343 ttl=64 time=4.56 ms
+64 bytes from 192.168.1.107: icmp_seq=344 ttl=64 time=3.27 ms
+64 bytes from 192.168.1.107: icmp_seq=345 ttl=64 time=6.32 ms
+64 bytes from 192.168.1.107: icmp_seq=346 ttl=64 time=4.56 ms
+64 bytes from 192.168.1.107: icmp_seq=347 ttl=64 time=3.96 ms
+64 bytes from 192.168.1.107: icmp_seq=348 ttl=64 time=2.82 ms
+64 bytes from 192.168.1.107: icmp_seq=349 ttl=64 time=3.45 ms
+64 bytes from 192.168.1.107: icmp_seq=350 ttl=64 time=4.22 ms
+64 bytes from 192.168.1.107: icmp_seq=351 ttl=64 time=6.51 ms
+64 bytes from 192.168.1.107: icmp_seq=352 ttl=64 time=2.86 ms
+64 bytes from 192.168.1.107: icmp_seq=353 ttl=64 time=4.91 ms
+64 bytes from 192.168.1.107: icmp_seq=354 ttl=64 time=8.41 ms
+64 bytes from 192.168.1.107: icmp_seq=355 ttl=64 time=5.10 ms
+64 bytes from 192.168.1.107: icmp_seq=356 ttl=64 time=5.87 ms
+64 bytes from 192.168.1.107: icmp_seq=357 ttl=64 time=4.37 ms
+64 bytes from 192.168.1.107: icmp_seq=358 ttl=64 time=6.71 ms
+64 bytes from 192.168.1.107: icmp_seq=359 ttl=64 time=5.09 ms
+64 bytes from 192.168.1.107: icmp_seq=360 ttl=64 time=11.5 ms
+64 bytes from 192.168.1.107: icmp_seq=361 ttl=64 time=7.15 ms
+64 bytes from 192.168.1.107: icmp_seq=362 ttl=64 time=5.70 ms
+64 bytes from 192.168.1.107: icmp_seq=363 ttl=64 time=3.56 ms
+64 bytes from 192.168.1.107: icmp_seq=364 ttl=64 time=3.06 ms
+64 bytes from 192.168.1.107: icmp_seq=365 ttl=64 time=4.32 ms
+64 bytes from 192.168.1.107: icmp_seq=366 ttl=64 time=3.72 ms
+64 bytes from 192.168.1.107: icmp_seq=367 ttl=64 time=6.79 ms
+64 bytes from 192.168.1.107: icmp_seq=368 ttl=64 time=11.4 ms
+64 bytes from 192.168.1.107: icmp_seq=369 ttl=64 time=6.75 ms
+64 bytes from 192.168.1.107: icmp_seq=370 ttl=64 time=12.0 ms
+64 bytes from 192.168.1.107: icmp_seq=371 ttl=64 time=2.96 ms
+64 bytes from 192.168.1.107: icmp_seq=372 ttl=64 time=9.06 ms
+^C
+--- 192.168.1.107 ping statistics ---
+372 packets transmitted, 372 received, 0% packet loss, time 371663ms
+rtt min/avg/max/mdev = 2.601/28.898/1757.557/171.385 ms, pipe 2
+^C[32m2023-05-16 16:54:20.695[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-16 16:54:20.696[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-16 16:54:20.717[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 1kbps
+[32m2023-05-16 16:56:37.231[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-16 16:56:37.231[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1kbps (minimum: 1kbps) and priority: 0[0m
+[32m2023-05-16 16:56:37.232[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+PING 192.168.1.107 (192.168.1.107) from 192.168.1.61 wlp4s0: 56(84) bytes of data.
+64 bytes from 192.168.1.107: icmp_seq=1 ttl=64 time=4.28 ms
+64 bytes from 192.168.1.107: icmp_seq=2 ttl=64 time=13.8 ms
+64 bytes from 192.168.1.107: icmp_seq=3 ttl=64 time=3.15 ms
+64 bytes from 192.168.1.107: icmp_seq=4 ttl=64 time=5.30 ms
+64 bytes from 192.168.1.107: icmp_seq=5 ttl=64 time=3.30 ms
+64 bytes from 192.168.1.107: icmp_seq=6 ttl=64 time=6.32 ms
+64 bytes from 192.168.1.107: icmp_seq=7 ttl=64 time=3.51 ms
+64 bytes from 192.168.1.107: icmp_seq=8 ttl=64 time=3.25 ms
+64 bytes from 192.168.1.107: icmp_seq=9 ttl=64 time=3.15 ms
+64 bytes from 192.168.1.107: icmp_seq=10 ttl=64 time=4.77 ms
+64 bytes from 192.168.1.107: icmp_seq=11 ttl=64 time=12.2 ms
+64 bytes from 192.168.1.107: icmp_seq=12 ttl=64 time=4.53 ms
+64 bytes from 192.168.1.107: icmp_seq=13 ttl=64 time=3.81 ms
+64 bytes from 192.168.1.107: icmp_seq=14 ttl=64 time=8.62 ms
+64 bytes from 192.168.1.107: icmp_seq=15 ttl=64 time=10.8 ms
+64 bytes from 192.168.1.107: icmp_seq=16 ttl=64 time=4.74 ms
+64 bytes from 192.168.1.107: icmp_seq=17 ttl=64 time=4.92 ms
+64 bytes from 192.168.1.107: icmp_seq=18 ttl=64 time=6.01 ms
+64 bytes from 192.168.1.107: icmp_seq=19 ttl=64 time=3.77 ms
+64 bytes from 192.168.1.107: icmp_seq=20 ttl=64 time=3.01 ms
+64 bytes from 192.168.1.107: icmp_seq=21 ttl=64 time=6.66 ms
+64 bytes from 192.168.1.107: icmp_seq=22 ttl=64 time=4.33 ms
+64 bytes from 192.168.1.107: icmp_seq=23 ttl=64 time=7.20 ms
+64 bytes from 192.168.1.107: icmp_seq=24 ttl=64 time=5.48 ms
+64 bytes from 192.168.1.107: icmp_seq=25 ttl=64 time=4.28 ms
+64 bytes from 192.168.1.107: icmp_seq=26 ttl=64 time=16.5 ms
+64 bytes from 192.168.1.107: icmp_seq=27 ttl=64 time=4.99 ms
+64 bytes from 192.168.1.107: icmp_seq=28 ttl=64 time=4.87 ms
+64 bytes from 192.168.1.107: icmp_seq=29 ttl=64 time=8.16 ms
+64 bytes from 192.168.1.107: icmp_seq=30 ttl=64 time=3.16 ms
+64 bytes from 192.168.1.107: icmp_seq=31 ttl=64 time=78.0 ms
+64 bytes from 192.168.1.107: icmp_seq=32 ttl=64 time=3.50 ms
+64 bytes from 192.168.1.107: icmp_seq=33 ttl=64 time=92.8 ms
+64 bytes from 192.168.1.107: icmp_seq=34 ttl=64 time=33.5 ms
+64 bytes from 192.168.1.107: icmp_seq=35 ttl=64 time=4.22 ms
+64 bytes from 192.168.1.107: icmp_seq=36 ttl=64 time=7.97 ms
+64 bytes from 192.168.1.107: icmp_seq=37 ttl=64 time=6.76 ms
+64 bytes from 192.168.1.107: icmp_seq=38 ttl=64 time=2.46 ms
+64 bytes from 192.168.1.107: icmp_seq=39 ttl=64 time=3.34 ms
+64 bytes from 192.168.1.107: icmp_seq=40 ttl=64 time=7.02 ms
+64 bytes from 192.168.1.107: icmp_seq=41 ttl=64 time=4.02 ms
+64 bytes from 192.168.1.107: icmp_seq=42 ttl=64 time=3.23 ms
+64 bytes from 192.168.1.107: icmp_seq=43 ttl=64 time=6.42 ms
+64 bytes from 192.168.1.107: icmp_seq=44 ttl=64 time=4.27 ms
+64 bytes from 192.168.1.107: icmp_seq=45 ttl=64 time=3.07 ms
+64 bytes from 192.168.1.107: icmp_seq=46 ttl=64 time=3.35 ms
+64 bytes from 192.168.1.107: icmp_seq=47 ttl=64 time=9.22 ms
+64 bytes from 192.168.1.107: icmp_seq=48 ttl=64 time=3.01 ms
+64 bytes from 192.168.1.107: icmp_seq=49 ttl=64 time=8.93 ms
+64 bytes from 192.168.1.107: icmp_seq=50 ttl=64 time=7.10 ms
+64 bytes from 192.168.1.107: icmp_seq=51 ttl=64 time=4.42 ms
+64 bytes from 192.168.1.107: icmp_seq=52 ttl=64 time=3.93 ms
+64 bytes from 192.168.1.107: icmp_seq=53 ttl=64 time=4.49 ms
+64 bytes from 192.168.1.107: icmp_seq=54 ttl=64 time=12.7 ms
+64 bytes from 192.168.1.107: icmp_seq=55 ttl=64 time=4.14 ms
+64 bytes from 192.168.1.107: icmp_seq=56 ttl=64 time=6.86 ms
+64 bytes from 192.168.1.107: icmp_seq=57 ttl=64 time=8.85 ms
+64 bytes from 192.168.1.107: icmp_seq=58 ttl=64 time=6.00 ms
+64 bytes from 192.168.1.107: icmp_seq=59 ttl=64 time=3.47 ms
+64 bytes from 192.168.1.107: icmp_seq=60 ttl=64 time=3.13 ms
+64 bytes from 192.168.1.107: icmp_seq=61 ttl=64 time=4.24 ms
+64 bytes from 192.168.1.107: icmp_seq=62 ttl=64 time=3.40 ms
+64 bytes from 192.168.1.107: icmp_seq=63 ttl=64 time=3.30 ms
+64 bytes from 192.168.1.107: icmp_seq=64 ttl=64 time=3.45 ms
+64 bytes from 192.168.1.107: icmp_seq=65 ttl=64 time=58.3 ms
+64 bytes from 192.168.1.107: icmp_seq=66 ttl=64 time=10.3 ms
+64 bytes from 192.168.1.107: icmp_seq=67 ttl=64 time=73.7 ms
+64 bytes from 192.168.1.107: icmp_seq=68 ttl=64 time=13.8 ms
+64 bytes from 192.168.1.107: icmp_seq=69 ttl=64 time=6.23 ms
+64 bytes from 192.168.1.107: icmp_seq=70 ttl=64 time=2.79 ms
+64 bytes from 192.168.1.107: icmp_seq=71 ttl=64 time=2.65 ms
+64 bytes from 192.168.1.107: icmp_seq=72 ttl=64 time=5.23 ms
+64 bytes from 192.168.1.107: icmp_seq=73 ttl=64 time=3.23 ms
+64 bytes from 192.168.1.107: icmp_seq=74 ttl=64 time=9.04 ms
+64 bytes from 192.168.1.107: icmp_seq=75 ttl=64 time=7.78 ms
+64 bytes from 192.168.1.107: icmp_seq=76 ttl=64 time=4.77 ms
+64 bytes from 192.168.1.107: icmp_seq=77 ttl=64 time=6.11 ms
+64 bytes from 192.168.1.107: icmp_seq=78 ttl=64 time=2.95 ms
+64 bytes from 192.168.1.107: icmp_seq=79 ttl=64 time=10.0 ms
+64 bytes from 192.168.1.107: icmp_seq=80 ttl=64 time=12.7 ms
+64 bytes from 192.168.1.107: icmp_seq=81 ttl=64 time=9.17 ms
+64 bytes from 192.168.1.107: icmp_seq=82 ttl=64 time=3.09 ms
+64 bytes from 192.168.1.107: icmp_seq=83 ttl=64 time=6.61 ms
+64 bytes from 192.168.1.107: icmp_seq=84 ttl=64 time=3.89 ms
+64 bytes from 192.168.1.107: icmp_seq=85 ttl=64 time=9.81 ms
+64 bytes from 192.168.1.107: icmp_seq=86 ttl=64 time=10.9 ms
+64 bytes from 192.168.1.107: icmp_seq=87 ttl=64 time=20.1 ms
+64 bytes from 192.168.1.107: icmp_seq=88 ttl=64 time=5.42 ms
+64 bytes from 192.168.1.107: icmp_seq=89 ttl=64 time=8.57 ms
+64 bytes from 192.168.1.107: icmp_seq=90 ttl=64 time=11.7 ms
+64 bytes from 192.168.1.107: icmp_seq=91 ttl=64 time=16.8 ms
+64 bytes from 192.168.1.107: icmp_seq=92 ttl=64 time=14.7 ms
+64 bytes from 192.168.1.107: icmp_seq=93 ttl=64 time=4.93 ms
+64 bytes from 192.168.1.107: icmp_seq=94 ttl=64 time=4.15 ms
+64 bytes from 192.168.1.107: icmp_seq=95 ttl=64 time=68.3 ms
+64 bytes from 192.168.1.107: icmp_seq=96 ttl=64 time=4.74 ms
+64 bytes from 192.168.1.107: icmp_seq=97 ttl=64 time=82.4 ms
+64 bytes from 192.168.1.107: icmp_seq=98 ttl=64 time=10.2 ms
+64 bytes from 192.168.1.107: icmp_seq=99 ttl=64 time=6.02 ms
+64 bytes from 192.168.1.107: icmp_seq=100 ttl=64 time=14.0 ms
+64 bytes from 192.168.1.107: icmp_seq=101 ttl=64 time=12.8 ms
+64 bytes from 192.168.1.107: icmp_seq=102 ttl=64 time=22.2 ms
+64 bytes from 192.168.1.107: icmp_seq=103 ttl=64 time=18.1 ms
+64 bytes from 192.168.1.107: icmp_seq=104 ttl=64 time=9.45 ms
+64 bytes from 192.168.1.107: icmp_seq=105 ttl=64 time=7.92 ms
+64 bytes from 192.168.1.107: icmp_seq=106 ttl=64 time=29.9 ms
+64 bytes from 192.168.1.107: icmp_seq=107 ttl=64 time=6.69 ms
+64 bytes from 192.168.1.107: icmp_seq=108 ttl=64 time=5.01 ms
+64 bytes from 192.168.1.107: icmp_seq=109 ttl=64 time=12.4 ms
+64 bytes from 192.168.1.107: icmp_seq=110 ttl=64 time=10.9 ms
+64 bytes from 192.168.1.107: icmp_seq=111 ttl=64 time=10.5 ms
+64 bytes from 192.168.1.107: icmp_seq=112 ttl=64 time=3.17 ms
+64 bytes from 192.168.1.107: icmp_seq=113 ttl=64 time=11.7 ms
+64 bytes from 192.168.1.107: icmp_seq=114 ttl=64 time=3.16 ms
+64 bytes from 192.168.1.107: icmp_seq=115 ttl=64 time=11.5 ms
+64 bytes from 192.168.1.107: icmp_seq=116 ttl=64 time=3.32 ms
+64 bytes from 192.168.1.107: icmp_seq=117 ttl=64 time=15.4 ms
+64 bytes from 192.168.1.107: icmp_seq=118 ttl=64 time=6.79 ms
+64 bytes from 192.168.1.107: icmp_seq=119 ttl=64 time=7.05 ms
+64 bytes from 192.168.1.107: icmp_seq=120 ttl=64 time=5.78 ms
+64 bytes from 192.168.1.107: icmp_seq=121 ttl=64 time=14.9 ms
+64 bytes from 192.168.1.107: icmp_seq=122 ttl=64 time=8.65 ms
+64 bytes from 192.168.1.107: icmp_seq=123 ttl=64 time=4.78 ms
+64 bytes from 192.168.1.107: icmp_seq=124 ttl=64 time=5.36 ms
+64 bytes from 192.168.1.107: icmp_seq=125 ttl=64 time=6.75 ms
+64 bytes from 192.168.1.107: icmp_seq=126 ttl=64 time=3.07 ms
+64 bytes from 192.168.1.107: icmp_seq=127 ttl=64 time=4.29 ms
+64 bytes from 192.168.1.107: icmp_seq=128 ttl=64 time=10.6 ms
+64 bytes from 192.168.1.107: icmp_seq=129 ttl=64 time=5.96 ms
+64 bytes from 192.168.1.107: icmp_seq=130 ttl=64 time=6.00 ms
+64 bytes from 192.168.1.107: icmp_seq=131 ttl=64 time=2.98 ms
+64 bytes from 192.168.1.107: icmp_seq=132 ttl=64 time=2.91 ms
+64 bytes from 192.168.1.107: icmp_seq=133 ttl=64 time=2.97 ms
+64 bytes from 192.168.1.107: icmp_seq=134 ttl=64 time=113 ms
+64 bytes from 192.168.1.107: icmp_seq=135 ttl=64 time=230 ms
+64 bytes from 192.168.1.107: icmp_seq=136 ttl=64 time=30.5 ms
+64 bytes from 192.168.1.107: icmp_seq=137 ttl=64 time=3.19 ms
+64 bytes from 192.168.1.107: icmp_seq=138 ttl=64 time=4.43 ms
+64 bytes from 192.168.1.107: icmp_seq=139 ttl=64 time=16.8 ms
+64 bytes from 192.168.1.107: icmp_seq=140 ttl=64 time=10.0 ms
+64 bytes from 192.168.1.107: icmp_seq=141 ttl=64 time=4.54 ms
+64 bytes from 192.168.1.107: icmp_seq=142 ttl=64 time=3.06 ms
+64 bytes from 192.168.1.107: icmp_seq=143 ttl=64 time=8.22 ms
+64 bytes from 192.168.1.107: icmp_seq=144 ttl=64 time=7.68 ms
+64 bytes from 192.168.1.107: icmp_seq=145 ttl=64 time=100 ms
+64 bytes from 192.168.1.107: icmp_seq=146 ttl=64 time=10.3 ms
+64 bytes from 192.168.1.107: icmp_seq=147 ttl=64 time=3.18 ms
+64 bytes from 192.168.1.107: icmp_seq=148 ttl=64 time=4.71 ms
+64 bytes from 192.168.1.107: icmp_seq=149 ttl=64 time=7.68 ms
+64 bytes from 192.168.1.107: icmp_seq=150 ttl=64 time=3.76 ms
+64 bytes from 192.168.1.107: icmp_seq=151 ttl=64 time=3.09 ms
+64 bytes from 192.168.1.107: icmp_seq=152 ttl=64 time=8.70 ms
+64 bytes from 192.168.1.107: icmp_seq=153 ttl=64 time=3.15 ms
+^C
+--- 192.168.1.107 ping statistics ---
+153 packets transmitted, 153 received, 0% packet loss, time 152264ms
+rtt min/avg/max/mdev = 2.457/12.796/230.456/25.272 ms
+^C[32m2023-05-16 16:59:12.927[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-16 16:59:12.929[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-16 16:59:12.952[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 1kbps
+[32m2023-05-16 17:03:01.136[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-16 17:03:01.136[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1kbps (minimum: 1kbps) and priority: 0[0m
+[32m2023-05-16 17:03:01.137[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+PING 192.168.1.107 (192.168.1.107) from 192.168.1.61 wlp4s0: 56(84) bytes of data.
+64 bytes from 192.168.1.107: icmp_seq=1 ttl=64 time=12.3 ms
+64 bytes from 192.168.1.107: icmp_seq=2 ttl=64 time=3.45 ms
+64 bytes from 192.168.1.107: icmp_seq=3 ttl=64 time=2.65 ms
+64 bytes from 192.168.1.107: icmp_seq=4 ttl=64 time=12.2 ms
+64 bytes from 192.168.1.107: icmp_seq=5 ttl=64 time=10.4 ms
+64 bytes from 192.168.1.107: icmp_seq=6 ttl=64 time=21.5 ms
+64 bytes from 192.168.1.107: icmp_seq=7 ttl=64 time=6.19 ms
+64 bytes from 192.168.1.107: icmp_seq=8 ttl=64 time=7.09 ms
+64 bytes from 192.168.1.107: icmp_seq=9 ttl=64 time=11.3 ms
+64 bytes from 192.168.1.107: icmp_seq=10 ttl=64 time=20.1 ms
+64 bytes from 192.168.1.107: icmp_seq=11 ttl=64 time=3.72 ms
+64 bytes from 192.168.1.107: icmp_seq=12 ttl=64 time=10.4 ms
+64 bytes from 192.168.1.107: icmp_seq=13 ttl=64 time=7.21 ms
+64 bytes from 192.168.1.107: icmp_seq=14 ttl=64 time=7.18 ms
+64 bytes from 192.168.1.107: icmp_seq=15 ttl=64 time=3.29 ms
+64 bytes from 192.168.1.107: icmp_seq=16 ttl=64 time=6.04 ms
+64 bytes from 192.168.1.107: icmp_seq=17 ttl=64 time=3.78 ms
+64 bytes from 192.168.1.107: icmp_seq=18 ttl=64 time=8.05 ms
+64 bytes from 192.168.1.107: icmp_seq=19 ttl=64 time=4.03 ms
+64 bytes from 192.168.1.107: icmp_seq=20 ttl=64 time=6.62 ms
+64 bytes from 192.168.1.107: icmp_seq=21 ttl=64 time=4.43 ms
+64 bytes from 192.168.1.107: icmp_seq=22 ttl=64 time=4.95 ms
+64 bytes from 192.168.1.107: icmp_seq=23 ttl=64 time=3.40 ms
+64 bytes from 192.168.1.107: icmp_seq=24 ttl=64 time=10.9 ms
+64 bytes from 192.168.1.107: icmp_seq=25 ttl=64 time=3.05 ms
+64 bytes from 192.168.1.107: icmp_seq=26 ttl=64 time=5.11 ms
+64 bytes from 192.168.1.107: icmp_seq=27 ttl=64 time=4.80 ms
+64 bytes from 192.168.1.107: icmp_seq=28 ttl=64 time=13.6 ms
+64 bytes from 192.168.1.107: icmp_seq=29 ttl=64 time=3.03 ms
+64 bytes from 192.168.1.107: icmp_seq=30 ttl=64 time=4.72 ms
+64 bytes from 192.168.1.107: icmp_seq=31 ttl=64 time=110 ms
+64 bytes from 192.168.1.107: icmp_seq=32 ttl=64 time=84.8 ms
+64 bytes from 192.168.1.107: icmp_seq=33 ttl=64 time=24.6 ms
+64 bytes from 192.168.1.107: icmp_seq=34 ttl=64 time=99.2 ms
+64 bytes from 192.168.1.107: icmp_seq=35 ttl=64 time=5.20 ms
+64 bytes from 192.168.1.107: icmp_seq=36 ttl=64 time=3.71 ms
+64 bytes from 192.168.1.107: icmp_seq=37 ttl=64 time=4.00 ms
+64 bytes from 192.168.1.107: icmp_seq=38 ttl=64 time=3.32 ms
+64 bytes from 192.168.1.107: icmp_seq=39 ttl=64 time=3.50 ms
+64 bytes from 192.168.1.107: icmp_seq=40 ttl=64 time=3.33 ms
+64 bytes from 192.168.1.107: icmp_seq=41 ttl=64 time=7.02 ms
+64 bytes from 192.168.1.107: icmp_seq=42 ttl=64 time=20.1 ms
+64 bytes from 192.168.1.107: icmp_seq=43 ttl=64 time=3.81 ms
+64 bytes from 192.168.1.107: icmp_seq=44 ttl=64 time=9.16 ms
+64 bytes from 192.168.1.107: icmp_seq=45 ttl=64 time=7.15 ms
+64 bytes from 192.168.1.107: icmp_seq=46 ttl=64 time=5.66 ms
+64 bytes from 192.168.1.107: icmp_seq=47 ttl=64 time=3.26 ms
+64 bytes from 192.168.1.107: icmp_seq=48 ttl=64 time=3.08 ms
+64 bytes from 192.168.1.107: icmp_seq=49 ttl=64 time=2.88 ms
+64 bytes from 192.168.1.107: icmp_seq=50 ttl=64 time=3.37 ms
+64 bytes from 192.168.1.107: icmp_seq=51 ttl=64 time=4.76 ms
+64 bytes from 192.168.1.107: icmp_seq=52 ttl=64 time=7.20 ms
+64 bytes from 192.168.1.107: icmp_seq=53 ttl=64 time=4.71 ms
+64 bytes from 192.168.1.107: icmp_seq=54 ttl=64 time=6.31 ms
+64 bytes from 192.168.1.107: icmp_seq=55 ttl=64 time=3.18 ms
+64 bytes from 192.168.1.107: icmp_seq=56 ttl=64 time=3.07 ms
+64 bytes from 192.168.1.107: icmp_seq=57 ttl=64 time=8.07 ms
+64 bytes from 192.168.1.107: icmp_seq=58 ttl=64 time=5.47 ms
+64 bytes from 192.168.1.107: icmp_seq=59 ttl=64 time=6.45 ms
+64 bytes from 192.168.1.107: icmp_seq=60 ttl=64 time=4.15 ms
+64 bytes from 192.168.1.107: icmp_seq=61 ttl=64 time=5.60 ms
+64 bytes from 192.168.1.107: icmp_seq=62 ttl=64 time=3.86 ms
+64 bytes from 192.168.1.107: icmp_seq=63 ttl=64 time=4.17 ms
+64 bytes from 192.168.1.107: icmp_seq=64 ttl=64 time=7.74 ms
+64 bytes from 192.168.1.107: icmp_seq=65 ttl=64 time=95.1 ms
+64 bytes from 192.168.1.107: icmp_seq=66 ttl=64 time=71.5 ms
+64 bytes from 192.168.1.107: icmp_seq=67 ttl=64 time=9.98 ms
+64 bytes from 192.168.1.107: icmp_seq=68 ttl=64 time=87.8 ms
+64 bytes from 192.168.1.107: icmp_seq=69 ttl=64 time=4.64 ms
+64 bytes from 192.168.1.107: icmp_seq=70 ttl=64 time=3.65 ms
+64 bytes from 192.168.1.107: icmp_seq=71 ttl=64 time=3.21 ms
+64 bytes from 192.168.1.107: icmp_seq=72 ttl=64 time=6.07 ms
+64 bytes from 192.168.1.107: icmp_seq=73 ttl=64 time=19.9 ms
+64 bytes from 192.168.1.107: icmp_seq=74 ttl=64 time=24.6 ms
+64 bytes from 192.168.1.107: icmp_seq=75 ttl=64 time=3.13 ms
+64 bytes from 192.168.1.107: icmp_seq=76 ttl=64 time=4.27 ms
+64 bytes from 192.168.1.107: icmp_seq=77 ttl=64 time=20.8 ms
+64 bytes from 192.168.1.107: icmp_seq=78 ttl=64 time=4.88 ms
+64 bytes from 192.168.1.107: icmp_seq=79 ttl=64 time=5.29 ms
+64 bytes from 192.168.1.107: icmp_seq=80 ttl=64 time=3.49 ms
+64 bytes from 192.168.1.107: icmp_seq=81 ttl=64 time=6.55 ms
+64 bytes from 192.168.1.107: icmp_seq=82 ttl=64 time=11.0 ms
+64 bytes from 192.168.1.107: icmp_seq=83 ttl=64 time=9.03 ms
+64 bytes from 192.168.1.107: icmp_seq=84 ttl=64 time=15.0 ms
+64 bytes from 192.168.1.107: icmp_seq=85 ttl=64 time=16.5 ms
+64 bytes from 192.168.1.107: icmp_seq=86 ttl=64 time=4.92 ms
+64 bytes from 192.168.1.107: icmp_seq=87 ttl=64 time=16.9 ms
+64 bytes from 192.168.1.107: icmp_seq=88 ttl=64 time=5.34 ms
+64 bytes from 192.168.1.107: icmp_seq=89 ttl=64 time=7.11 ms
+64 bytes from 192.168.1.107: icmp_seq=90 ttl=64 time=19.7 ms
+64 bytes from 192.168.1.107: icmp_seq=91 ttl=64 time=13.2 ms
+64 bytes from 192.168.1.107: icmp_seq=92 ttl=64 time=24.7 ms
+64 bytes from 192.168.1.107: icmp_seq=93 ttl=64 time=6.33 ms
+64 bytes from 192.168.1.107: icmp_seq=94 ttl=64 time=4.73 ms
+64 bytes from 192.168.1.107: icmp_seq=95 ttl=64 time=5.83 ms
+64 bytes from 192.168.1.107: icmp_seq=96 ttl=64 time=8.26 ms
+64 bytes from 192.168.1.107: icmp_seq=97 ttl=64 time=6.42 ms
+64 bytes from 192.168.1.107: icmp_seq=98 ttl=64 time=4.45 ms
+64 bytes from 192.168.1.107: icmp_seq=99 ttl=64 time=6.13 ms
+64 bytes from 192.168.1.107: icmp_seq=100 ttl=64 time=9.30 ms
+64 bytes from 192.168.1.107: icmp_seq=101 ttl=64 time=4.59 ms
+64 bytes from 192.168.1.107: icmp_seq=102 ttl=64 time=7.57 ms
+64 bytes from 192.168.1.107: icmp_seq=103 ttl=64 time=3.86 ms
+64 bytes from 192.168.1.107: icmp_seq=104 ttl=64 time=16.3 ms
+64 bytes from 192.168.1.107: icmp_seq=105 ttl=64 time=7.62 ms
+64 bytes from 192.168.1.107: icmp_seq=106 ttl=64 time=3.01 ms
+64 bytes from 192.168.1.107: icmp_seq=107 ttl=64 time=15.7 ms
+64 bytes from 192.168.1.107: icmp_seq=108 ttl=64 time=6.87 ms
+64 bytes from 192.168.1.107: icmp_seq=109 ttl=64 time=6.51 ms
+64 bytes from 192.168.1.107: icmp_seq=110 ttl=64 time=3.33 ms
+64 bytes from 192.168.1.107: icmp_seq=111 ttl=64 time=4.68 ms
+64 bytes from 192.168.1.107: icmp_seq=112 ttl=64 time=11.1 ms
+64 bytes from 192.168.1.107: icmp_seq=113 ttl=64 time=23.5 ms
+64 bytes from 192.168.1.107: icmp_seq=114 ttl=64 time=6.54 ms
+64 bytes from 192.168.1.107: icmp_seq=115 ttl=64 time=5.10 ms
+64 bytes from 192.168.1.107: icmp_seq=116 ttl=64 time=3.56 ms
+64 bytes from 192.168.1.107: icmp_seq=117 ttl=64 time=2.93 ms
+64 bytes from 192.168.1.107: icmp_seq=118 ttl=64 time=13.5 ms
+64 bytes from 192.168.1.107: icmp_seq=119 ttl=64 time=8.27 ms
+^C
+--- 192.168.1.107 ping statistics ---
+119 packets transmitted, 119 received, 0% packet loss, time 118192ms
+rtt min/avg/max/mdev = 2.646/12.032/110.171/19.262 ms
+^C[32m2023-05-16 17:05:03.536[0m | [1mINFO    [0m | [36mtraffictoll.__main__[0m:[36mmain[0m:[36m19[0m - [1mAborted[0m
+[32m2023-05-16 17:05:03.537[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36m_clean_up[0m:[36m72[0m - [1mCleaning up QDiscs[0m
+[32m2023-05-16 17:05:03.559[0m | [1mINFO    [0m | [36mtraffictoll.tc[0m:[36m_clean_up[0m:[36m31[0m - [1mCleaning up IFB device[0m
+Setting datarate of the specified interface to: 1kbps
+[32m2023-05-16 17:11:05.835[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m118[0m - [1mNo global upload rate specified, upload traffic prioritization won't work[0m
+[32m2023-05-16 17:11:05.835[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m146[0m - [1mSetting up global class with max download rate: 1kbps (minimum: 1kbps) and priority: 0[0m
+[32m2023-05-16 17:11:05.835[0m | [1mINFO    [0m | [36mtraffictoll.cli[0m:[36mmain[0m:[36m176[0m - [1mSetting up global class with unlimited upload rate (minimum: 10kbps) and priority: 0[0m
+PING 192.168.1.107 (192.168.1.107) from 192.168.1.61 wlp4s0: 56(84) bytes of data.
+64 bytes from 192.168.1.107: icmp_seq=1 ttl=64 time=9.50 ms
+64 bytes from 192.168.1.107: icmp_seq=2 ttl=64 time=3.08 ms
+64 bytes from 192.168.1.107: icmp_seq=3 ttl=64 time=5.09 ms
+64 bytes from 192.168.1.107: icmp_seq=4 ttl=64 time=4.73 ms
+64 bytes from 192.168.1.107: icmp_seq=5 ttl=64 time=5.33 ms
+64 bytes from 192.168.1.107: icmp_seq=6 ttl=64 time=4.40 ms
+64 bytes from 192.168.1.107: icmp_seq=7 ttl=64 time=4.03 ms
+64 bytes from 192.168.1.107: icmp_seq=8 ttl=64 time=5.31 ms
+64 bytes from 192.168.1.107: icmp_seq=9 ttl=64 time=4.33 ms
+64 bytes from 192.168.1.107: icmp_seq=10 ttl=64 time=5.08 ms
+64 bytes from 192.168.1.107: icmp_seq=11 ttl=64 time=6.10 ms
+64 bytes from 192.168.1.107: icmp_seq=12 ttl=64 time=5.28 ms
+64 bytes from 192.168.1.107: icmp_seq=13 ttl=64 time=8.56 ms
+64 bytes from 192.168.1.107: icmp_seq=14 ttl=64 time=2.65 ms
+64 bytes from 192.168.1.107: icmp_seq=15 ttl=64 time=6.58 ms
+64 bytes from 192.168.1.107: icmp_seq=16 ttl=64 time=5.53 ms
+64 bytes from 192.168.1.107: icmp_seq=17 ttl=64 time=7.61 ms
+64 bytes from 192.168.1.107: icmp_seq=18 ttl=64 time=6.15 ms
+64 bytes from 192.168.1.107: icmp_seq=19 ttl=64 time=70.7 ms
+64 bytes from 192.168.1.107: icmp_seq=20 ttl=64 time=158 ms
+64 bytes from 192.168.1.107: icmp_seq=21 ttl=64 time=244 ms
+64 bytes from 192.168.1.107: icmp_seq=22 ttl=64 time=331 ms
+64 bytes from 192.168.1.107: icmp_seq=23 ttl=64 time=419 ms
+64 bytes from 192.168.1.107: icmp_seq=24 ttl=64 time=506 ms
+64 bytes from 192.168.1.107: icmp_seq=25 ttl=64 time=593 ms
+64 bytes from 192.168.1.107: icmp_seq=26 ttl=64 time=675 ms
+64 bytes from 192.168.1.107: icmp_seq=27 ttl=64 time=762 ms
+64 bytes from 192.168.1.107: icmp_seq=28 ttl=64 time=848 ms
+64 bytes from 192.168.1.107: icmp_seq=29 ttl=64 time=936 ms
+64 bytes from 192.168.1.107: icmp_seq=30 ttl=64 time=1205 ms
+64 bytes from 192.168.1.107: icmp_seq=31 ttl=64 time=1292 ms
+64 bytes from 192.168.1.107: icmp_seq=32 ttl=64 time=1378 ms
+64 bytes from 192.168.1.107: icmp_seq=33 ttl=64 time=1465 ms
+64 bytes from 192.168.1.107: icmp_seq=34 ttl=64 time=1542 ms
+64 bytes from 192.168.1.107: icmp_seq=35 ttl=64 time=1924 ms
+64 bytes from 192.168.1.107: icmp_seq=36 ttl=64 time=2893 ms
+64 bytes from 192.168.1.107: icmp_seq=37 ttl=64 time=3862 ms
+64 bytes from 192.168.1.107: icmp_seq=38 ttl=64 time=4831 ms
+64 bytes from 192.168.1.107: icmp_seq=39 ttl=64 time=4918 ms
+64 bytes from 192.168.1.107: icmp_seq=40 ttl=64 time=5004 ms
+64 bytes from 192.168.1.107: icmp_seq=498 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=560 ttl=64 time=6269 ms
+64 bytes from 192.168.1.107: icmp_seq=578 ttl=64 time=6268 ms
+64 bytes from 192.168.1.107: icmp_seq=649 ttl=64 time=6267 ms
+64 bytes from 192.168.1.107: icmp_seq=658 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=667 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=694 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=721 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=765 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=792 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=854 ttl=64 time=6267 ms
+64 bytes from 192.168.1.107: icmp_seq=872 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=899 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=917 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=952 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=979 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=988 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=1014 ttl=64 time=6269 ms
+64 bytes from 192.168.1.107: icmp_seq=1050 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=1059 ttl=64 time=6264 ms
+64 bytes from 192.168.1.107: icmp_seq=1200 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=1279 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=1384 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=1401 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=1514 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=1523 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=1584 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=1627 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=1671 ttl=64 time=6267 ms
+64 bytes from 192.168.1.107: icmp_seq=1707 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=1814 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=1831 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=1840 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=1885 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=1920 ttl=64 time=6264 ms
+64 bytes from 192.168.1.107: icmp_seq=1929 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=2044 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=2053 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=2062 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=2140 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=2281 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=2297 ttl=64 time=6280 ms
+64 bytes from 192.168.1.107: icmp_seq=2352 ttl=64 time=6264 ms
+64 bytes from 192.168.1.107: icmp_seq=2404 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=2431 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=2483 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=2499 ttl=64 time=6270 ms
+64 bytes from 192.168.1.107: icmp_seq=2508 ttl=64 time=6270 ms
+64 bytes from 192.168.1.107: icmp_seq=2527 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=2571 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=2658 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=2684 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=2693 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=2728 ttl=64 time=6269 ms
+64 bytes from 192.168.1.107: icmp_seq=2791 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=2818 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=2861 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=2879 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=2923 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=2985 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=3020 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=3107 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=3115 ttl=64 time=6268 ms
+64 bytes from 192.168.1.107: icmp_seq=3133 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=3186 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=3222 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=3256 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=3274 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=3309 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=3318 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=3379 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=3423 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=3511 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=3520 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=3581 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=3607 ttl=64 time=6269 ms
+64 bytes from 192.168.1.107: icmp_seq=3687 ttl=64 time=6271 ms
+64 bytes from 192.168.1.107: icmp_seq=3714 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=3758 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=3767 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=3836 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=3854 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=3932 ttl=64 time=6264 ms
+64 bytes from 192.168.1.107: icmp_seq=3950 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=3985 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=4003 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=4021 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=4128 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=4171 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=4224 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=4330 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=4339 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=4392 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=4426 ttl=64 time=6270 ms
+64 bytes from 192.168.1.107: icmp_seq=4445 ttl=64 time=6247 ms
+64 bytes from 192.168.1.107: icmp_seq=4498 ttl=64 time=6251 ms
+64 bytes from 192.168.1.107: icmp_seq=4515 ttl=64 time=6250 ms
+64 bytes from 192.168.1.107: icmp_seq=4550 ttl=64 time=6251 ms
+64 bytes from 192.168.1.107: icmp_seq=4593 ttl=64 time=6248 ms
+64 bytes from 192.168.1.107: icmp_seq=4647 ttl=64 time=6242 ms
+64 bytes from 192.168.1.107: icmp_seq=4655 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=4682 ttl=64 time=6249 ms
+64 bytes from 192.168.1.107: icmp_seq=5324 ttl=64 time=6251 ms
+64 bytes from 192.168.1.107: icmp_seq=7614 ttl=64 time=6230 ms
+64 bytes from 192.168.1.107: icmp_seq=14707 ttl=64 time=6242 ms
+64 bytes from 192.168.1.107: icmp_seq=17464 ttl=64 time=6230 ms
+64 bytes from 192.168.1.107: icmp_seq=17606 ttl=64 time=6234 ms
+64 bytes from 192.168.1.107: icmp_seq=17704 ttl=64 time=6234 ms
+64 bytes from 192.168.1.107: icmp_seq=26663 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=29540 ttl=64 time=6248 ms
+64 bytes from 192.168.1.107: icmp_seq=30566 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=30584 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=31358 ttl=64 time=6249 ms
+64 bytes from 192.168.1.107: icmp_seq=31607 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=31616 ttl=64 time=6250 ms
+64 bytes from 192.168.1.107: icmp_seq=31678 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=31687 ttl=64 time=6253 ms
+64 bytes from 192.168.1.107: icmp_seq=31696 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=31714 ttl=64 time=6251 ms
+64 bytes from 192.168.1.107: icmp_seq=31768 ttl=64 time=6245 ms
+64 bytes from 192.168.1.107: icmp_seq=31785 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=31794 ttl=64 time=6253 ms
+64 bytes from 192.168.1.107: icmp_seq=31812 ttl=64 time=6251 ms
+64 bytes from 192.168.1.107: icmp_seq=32007 ttl=64 time=6251 ms
+64 bytes from 192.168.1.107: icmp_seq=32042 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=32105 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=32122 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=32131 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=32149 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=32167 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=32175 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=32183 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=32201 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=32237 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=32245 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=32253 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=32279 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=32297 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=32314 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=32689 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=32709 ttl=64 time=6358 ms
+64 bytes from 192.168.1.107: icmp_seq=32871 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=32933 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=32959 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=33022 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=33066 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=33120 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=33138 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=33164 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=33200 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=33226 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=33253 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=33315 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=33359 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=33386 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=33413 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=33431 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=33466 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=33581 ttl=64 time=6253 ms
+64 bytes from 192.168.1.107: icmp_seq=33686 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=33703 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=33738 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=33790 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=33887 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=33905 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=33914 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=33922 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=33931 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=33940 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=33948 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=33957 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=33974 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=33991 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34009 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=34035 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34044 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=34097 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=34124 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=34150 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34176 ttl=64 time=6269 ms
+64 bytes from 192.168.1.107: icmp_seq=34185 ttl=64 time=6268 ms
+64 bytes from 192.168.1.107: icmp_seq=34194 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=34203 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=34212 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=34221 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=34283 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34300 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=34326 ttl=64 time=6269 ms
+64 bytes from 192.168.1.107: icmp_seq=34335 ttl=64 time=6267 ms
+64 bytes from 192.168.1.107: icmp_seq=34344 ttl=64 time=6267 ms
+64 bytes from 192.168.1.107: icmp_seq=34353 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=34388 ttl=64 time=6268 ms
+64 bytes from 192.168.1.107: icmp_seq=34406 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=34415 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=34424 ttl=64 time=6264 ms
+64 bytes from 192.168.1.107: icmp_seq=34442 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=34484 ttl=64 time=6272 ms
+64 bytes from 192.168.1.107: icmp_seq=34494 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34502 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=34528 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34536 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=34588 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=34596 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34709 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=34727 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=34735 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34778 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=34796 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=34822 ttl=64 time=6267 ms
+64 bytes from 192.168.1.107: icmp_seq=34857 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34883 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34900 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=34916 ttl=64 time=6270 ms
+64 bytes from 192.168.1.107: icmp_seq=34968 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=34976 ttl=64 time=6272 ms
+64 bytes from 192.168.1.107: icmp_seq=34994 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=35020 ttl=64 time=6270 ms
+64 bytes from 192.168.1.107: icmp_seq=35029 ttl=64 time=6269 ms
+64 bytes from 192.168.1.107: icmp_seq=35080 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=35106 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=35124 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=35132 ttl=64 time=6268 ms
+64 bytes from 192.168.1.107: icmp_seq=35141 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=35149 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=35167 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=35175 ttl=64 time=6269 ms
+64 bytes from 192.168.1.107: icmp_seq=35184 ttl=64 time=6267 ms
+64 bytes from 192.168.1.107: icmp_seq=35238 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=35264 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=35394 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=35532 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=35826 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=35887 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=35905 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=35914 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=35976 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=36003 ttl=64 time=6253 ms
+64 bytes from 192.168.1.107: icmp_seq=36011 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=36030 ttl=64 time=6250 ms
+64 bytes from 192.168.1.107: icmp_seq=36047 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=36100 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=36162 ttl=64 time=6267 ms
+64 bytes from 192.168.1.107: icmp_seq=36171 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=36207 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=36260 ttl=64 time=6267 ms
+64 bytes from 192.168.1.107: icmp_seq=36269 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=36287 ttl=64 time=6264 ms
+64 bytes from 192.168.1.107: icmp_seq=36305 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=36323 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=38272 ttl=64 time=6241 ms
+64 bytes from 192.168.1.107: icmp_seq=38441 ttl=64 time=6244 ms
+64 bytes from 192.168.1.107: icmp_seq=40026 ttl=64 time=6246 ms
+64 bytes from 192.168.1.107: icmp_seq=40052 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=40248 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=40319 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=40638 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=41128 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=41261 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=42331 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=42554 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=42643 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=43069 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=44342 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=44842 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=44860 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=44878 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=44949 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=44967 ttl=64 time=6253 ms
+64 bytes from 192.168.1.107: icmp_seq=45038 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=45082 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=45118 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=45171 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=45198 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=45242 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=45260 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=45331 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=45358 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=45394 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=45551 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=45560 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=45578 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=45622 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=45648 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=45692 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=45745 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=45762 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=45815 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=45823 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=45850 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=45868 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=45885 ttl=64 time=6264 ms
+64 bytes from 192.168.1.107: icmp_seq=45938 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=45991 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=46017 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=46035 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=46062 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=46115 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=46141 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=46255 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=46290 ttl=64 time=6268 ms
+64 bytes from 192.168.1.107: icmp_seq=46308 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=46386 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=46429 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=46499 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=46543 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=46561 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=46578 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=46674 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=46683 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=46798 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=46867 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=46912 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=46921 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=46947 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=46956 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=46974 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=46991 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=47035 ttl=64 time=6267 ms
+64 bytes from 192.168.1.107: icmp_seq=47071 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=47115 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=47132 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=47140 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=47220 ttl=64 time=6263 ms
+64 bytes from 192.168.1.107: icmp_seq=47318 ttl=64 time=6264 ms
+64 bytes from 192.168.1.107: icmp_seq=47471 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=47656 ttl=64 time=6361 ms
+64 bytes from 192.168.1.107: icmp_seq=47798 ttl=64 time=6270 ms
+64 bytes from 192.168.1.107: icmp_seq=47834 ttl=64 time=6264 ms
+64 bytes from 192.168.1.107: icmp_seq=47879 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=47906 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=47950 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=47977 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=48013 ttl=64 time=6251 ms
+64 bytes from 192.168.1.107: icmp_seq=48030 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=48048 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=48057 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=48075 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=48128 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=48137 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=48173 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=48200 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=48306 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=48350 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=48368 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=48465 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=48490 ttl=64 time=6269 ms
+64 bytes from 192.168.1.107: icmp_seq=48526 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=48535 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=48570 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=48595 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=48612 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=48620 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=48655 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=48673 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=48698 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=48716 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=48725 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=48918 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=48926 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=49015 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=49042 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=49050 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=49059 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=49077 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=49085 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=49093 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=49128 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=49137 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=49214 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=49274 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=49300 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=49309 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=49345 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=49389 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=49433 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=49452 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=49460 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=49469 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=49485 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=49521 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=49539 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=49651 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=49678 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=49757 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=49783 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=49810 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=49870 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=49888 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=49941 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=49949 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=50010 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=50070 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=50096 ttl=64 time=6250 ms
+64 bytes from 192.168.1.107: icmp_seq=50104 ttl=64 time=6261 ms
+64 bytes from 192.168.1.107: icmp_seq=50131 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=50377 ttl=64 time=6260 ms
+64 bytes from 192.168.1.107: icmp_seq=50952 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=51148 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=51211 ttl=64 time=6251 ms
+64 bytes from 192.168.1.107: icmp_seq=51548 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=51788 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=51815 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=52144 ttl=64 time=6258 ms
+64 bytes from 192.168.1.107: icmp_seq=52926 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=53060 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=53229 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=53440 ttl=64 time=6337 ms
+64 bytes from 192.168.1.107: icmp_seq=56168 ttl=64 time=6231 ms
+64 bytes from 192.168.1.107: icmp_seq=56186 ttl=64 time=6326 ms
+64 bytes from 192.168.1.107: icmp_seq=59199 ttl=64 time=6226 ms
+64 bytes from 192.168.1.107: icmp_seq=62031 ttl=64 time=6313 ms
+64 bytes from 192.168.1.107: icmp_seq=64480 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=64534 ttl=64 time=6251 ms
+64 bytes from 192.168.1.107: icmp_seq=64605 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=64943 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=335 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=344 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=362 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=380 ttl=64 time=6250 ms
+64 bytes from 192.168.1.107: icmp_seq=415 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=522 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=531 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=619 ttl=64 time=6266 ms
+64 bytes from 192.168.1.107: icmp_seq=628 ttl=64 time=6265 ms
+64 bytes from 192.168.1.107: icmp_seq=655 ttl=64 time=6262 ms
+64 bytes from 192.168.1.107: icmp_seq=744 ttl=64 time=6247 ms
+64 bytes from 192.168.1.107: icmp_seq=771 ttl=64 time=6244 ms
+64 bytes from 192.168.1.107: icmp_seq=789 ttl=64 time=6242 ms
+64 bytes from 192.168.1.107: icmp_seq=833 ttl=64 time=6249 ms
+64 bytes from 192.168.1.107: icmp_seq=842 ttl=64 time=6247 ms
+64 bytes from 192.168.1.107: icmp_seq=887 ttl=64 time=6243 ms
+64 bytes from 192.168.1.107: icmp_seq=921 ttl=64 time=6244 ms
+64 bytes from 192.168.1.107: icmp_seq=938 ttl=64 time=6245 ms
+64 bytes from 192.168.1.107: icmp_seq=964 ttl=64 time=6243 ms
+64 bytes from 192.168.1.107: icmp_seq=2496 ttl=64 time=6246 ms
+64 bytes from 192.168.1.107: icmp_seq=8623 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=8869 ttl=64 time=6256 ms
+64 bytes from 192.168.1.107: icmp_seq=9520 ttl=64 time=6249 ms
+64 bytes from 192.168.1.107: icmp_seq=9537 ttl=64 time=6257 ms
+64 bytes from 192.168.1.107: icmp_seq=9627 ttl=64 time=6247 ms
+64 bytes from 192.168.1.107: icmp_seq=9645 ttl=64 time=6246 ms
+64 bytes from 192.168.1.107: icmp_seq=9672 ttl=64 time=6243 ms
+64 bytes from 192.168.1.107: icmp_seq=9698 ttl=64 time=6251 ms
+64 bytes from 192.168.1.107: icmp_seq=9716 ttl=64 time=6249 ms
+64 bytes from 192.168.1.107: icmp_seq=9734 ttl=64 time=6247 ms
+64 bytes from 192.168.1.107: icmp_seq=9743 ttl=64 time=6246 ms
+64 bytes from 192.168.1.107: icmp_seq=9752 ttl=64 time=6244 ms
+64 bytes from 192.168.1.107: icmp_seq=10168 ttl=64 time=6254 ms
+64 bytes from 192.168.1.107: icmp_seq=10670 ttl=64 time=6255 ms
+64 bytes from 192.168.1.107: icmp_seq=10697 ttl=64 time=6252 ms
+64 bytes from 192.168.1.107: icmp_seq=11353 ttl=64 time=6259 ms
+64 bytes from 192.168.1.107: icmp_seq=11559 ttl=64 time=6247 ms
+64 bytes from 192.168.1.107: icmp_seq=12210 ttl=64 time=6247 ms
