@@ -54,6 +54,7 @@ class Network():
             new_thread.start()
             
     def receive(self, conn:socket.socket, threadID):
+        frame = ""
         #print("The thread for receiving data has been started ", threading.get_ident())
         while self.running:    
             sensorData = conn.recv(2048).decode()           # Receive incoming data. 
