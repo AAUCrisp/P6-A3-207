@@ -62,20 +62,12 @@ class Network():
             readyCount = sensorData.count(EOT)
             for partition in sensorData.split(EOT):
                 if not partition == "":
+                    print(partition)
                     frame += partition
                     if readyCount > 0:
                         self.data.put({"recvTime":recvTime, "data":frame, "id":threadID})
                         frame = ""
                         readyCount -= 1
-                #frame += portion
-                #if EOT in frame:
-                    #print(frame)
-                    #self.lock.acquire()                                            # Lock the following code, such that only one thread can access it. 
-                    #self.data.put({"recvTime":recvTime, "data":frame.split(EOT)[0], "id":threadID})        # Write the received data from the thread to a variable shared by all the threads in this process. 
-                    #self.lock.release()                                                         # Release the lock once the task above is finished. 
-                    #frame = frame.split(EOT, 1)[1]
-                #else:
-                    #frame += sensorData
                 else:
                     self.threads.remove((threading.current_thread(), conn))
                     return                                            # catch keyboardinterrupts to shut down socket elegantly
