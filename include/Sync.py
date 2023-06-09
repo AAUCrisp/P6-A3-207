@@ -76,7 +76,7 @@ class Sync(threading.Thread):
 
 
 # This function is a modified version of the one found at: https://github.com/cf-natali/ntplib/blob/08d0f7ef766715a52f472901de5e382c8f773855/ntplib.py#L286
-def requestNTP(host, clock:Clock, version=2, port="ntp", timeout=5, address_family=socket.AF_UNSPEC, interface:str = "lo"):  # pylint: disable=no-self-use,too-many-arguments
+def requestNTP(host, clock:Clock, version=2, port="ntp", timeout=120, address_family=socket.AF_UNSPEC, interface:str = "lo"):  # pylint: disable=no-self-use,too-many-arguments
         """Query a NTP server.
         Parameters:
         host           -- server name/address
