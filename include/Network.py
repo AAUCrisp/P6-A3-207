@@ -68,9 +68,10 @@ class Network():
                         self.data.put({"recvTime":recvTime, "data":frame, "id":threadID})
                         frame = ""
                         readyCount -= 1
-                else:
-                    self.threads.remove((threading.current_thread(), conn))
-                    return                                            # catch keyboardinterrupts to shut down socket elegantly
+            else:
+                print("killing thread")
+                self.threads.remove((threading.current_thread(), conn))
+                return                                            # catch keyboardinterrupts to shut down socket elegantly
             
     def popData(self) -> dict:
         return self.data.get()
