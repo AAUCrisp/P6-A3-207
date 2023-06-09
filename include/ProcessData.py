@@ -8,6 +8,8 @@ EON =   "\uFFFD"
 """End Of Packet seperator"""
 OFF = "\uFFFC"
 
+EOT = "\uFFFB"
+
 
 class ProcessData:
     """This class will define a data frame and build it, it can also recursively unpack a data frame"""
@@ -120,7 +122,7 @@ class ProcessData:
             data += f'{OFF}{str(self.RTO)}'
         if self.GT:
             data += f'{OFF}{str(self.GT)}'
-        data += f'{EON}{str(self.payload)}'
+        data += f'{EON}{str(self.payload)}{EOT}'
 
         return data
     
