@@ -2,7 +2,6 @@ import socket
 import threading
 from include.NetTechnology import NetTechnology
 from include.ProcessData import EOT
-from include.setup import verbose
 from time import time
 from queue import Queue
 
@@ -63,8 +62,6 @@ class Network():
             readyCount = sensorData.count(EOT)
             for partition in sensorData.split(EOT):
                 if not partition == "":
-                    if verbose:
-                        print(f'Network partition: {partition}')
                     frame += partition
                     if readyCount > 0:
                         self.data.put({"recvTime":recvTime, "data":frame, "id":threadID})
