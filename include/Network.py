@@ -62,6 +62,7 @@ class Network():
             if not sensorData == "":
                 frame += sensorData
                 if EOT in frame:
+                    print(frame)
                     #self.lock.acquire()                                            # Lock the following code, such that only one thread can access it. 
                     self.data.put({"recvTime":recvTime, "data":frame.split(EOT)[0], "id":threadID})        # Write the received data from the thread to a variable shared by all the threads in this process. 
                     #self.lock.release()                                                         # Release the lock once the task above is finished. 
