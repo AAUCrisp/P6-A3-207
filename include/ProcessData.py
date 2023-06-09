@@ -8,6 +8,8 @@ EON =   "\uFFFD"
 """End Of Packet seperator"""
 OFF = "\uFFFC"
 
+EOT = "\uFFFB"
+
 
 class ProcessData:
     """This class will define a data frame and build it, it can also recursively unpack a data frame"""
