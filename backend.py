@@ -82,7 +82,7 @@ def unpack(packet, recvIP, recvTime):
             lastIP = frameData[3]
         
         else:
-            nodeData[i]['payload'] = nodes[i+1].split(EOT)[0]
+            nodeData[i]['payload'] = nodes[i+1]
 
 
     # nodeData[layers-1]['payload'] = nodes[layers-1]

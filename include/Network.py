@@ -95,7 +95,7 @@ class Network():
 
     def transmit(self, message:str):
         try:
-            self.transmitSock.sendall(message.encode("utf8"))
+            self.transmitSock.sendall(f'{message}{EOT}'.encode("utf8"))
         except:
             self.close()
         
